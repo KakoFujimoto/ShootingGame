@@ -1,59 +1,96 @@
 #include "DxLib.h" //DXライブラリのインクルード
 #include "shootingGame.h" // ヘッダーファイルをインクルード
-#include <stdlib.h>
+#include <cstdlib>
+#include <array>
 
 // 定数の定義
-const int WIDTH = 1200, HEIGHT = 720; // ウィンドウの幅と高さのピクセル数
-const int FPS = 60; // フレームレート
-const int IMG_ENEMY_MAX = 5; // 敵の画像の枚数（種類）
-const int BULLET_MAX = 100; // 自機が発射する弾の最大数
-const int ENEMY_MAX = 100; // 敵機の数の最大値
-const int STAGE_DISTANCE = FPS * 60; // ステージの長さ
-const int PLAYER_SHIELD_MAX = 8; // 自機のシールドの最大値
-const int EFFECT_MAX = 100; // エフェクトの最大数
-const int ITEM_TYPE = 3; // アイテムの種類
-const int WEAPON_LV_MAX = 10; // 武器レベルの最大値
-const int PLAYER_SPEED_MAX = 20; // 自機の速さの最大値
-enum { ENE_BULLET, ENE_ZAKO1, ENE_ZAKO2, ENE_ZAKO3, ENE_BOSS }; // 敵機の種類
-enum { EFF_EXPLODE, EFF_RECOVER }; // エフェクトの種類
-enum { TITLE, PLAY, OVER, CLEAR }; // シーンを分けるための列挙定数
+namespace GameConfig {
+    constexpr int WIDTH = 1200; // ウィンドウの幅
+    constexpr int HEIGHT = 720; // ウィンドウの高さ
+    constexpr int FPS = 60; // フレームレート
+    constexpr int IMG_ENEMY_MAX = 5; // 敵の画像の枚数（種類）
+    constexpr int BULLET_MAX = 100; // 自機が発射する弾の最大数
+    constexpr int ENEMY_MAX = 100; // 敵機の数の最大値
+    constexpr int STAGE_DISTANCE = FPS * 60; // ステージの長さ
+    constexpr int PLAYER_SHIELD_MAX = 8; // 自機のシールドの最大値
+    constexpr int EFFECT_MAX = 100; // エフェクトの最大数
+    constexpr int ITEM_TYPE = 3; // アイテムの種類
+    constexpr int WEAPON_LV_MAX = 10; // 武器レベルの最大値
+    constexpr int PLAYER_SPEED_MAX = 20; // 自機の速さの最大値
+}
+
+// 敵機の種類
+enum EnemyType {
+    ENE_BULLET,
+    ENE_ZAKO1,
+    ENE_ZAKO2,
+    ENE_ZAK03,
+    ENE_BOSS
+};
+
+// エフェクトの種類
+enum EffectType {
+    EFF_EXPLODE,
+    EFF_RECOVER
+};
+
+// シーンの種類
+enum SceneType {
+    TITLE,
+    PLAY,
+    OVER,
+    CLEAR
+};
+
+
 
 // グローバル変数
 // ここでゲームに用いる変数や配列を定義する
-int imgGalaxy, imgFloor, imgWallL, imgWallR; // 背景画像
-int imgFighter, imgBullet; // 自機と自機の弾の画像
-int imgEnemy[IMG_ENEMY_MAX]; // 敵機の画像
-int imgExplosion; // 爆発演出の画像
-int imgItem; // アイテムの画像
-int bgm, jinOver, jinClear, seExpl, seItem, seShot; // 音の読み込み用
-int distance = 0; // ステージ終端までの距離
-int bossIdx = 0; // ボスを代入した配列のインデックス
-int stage = 1; // ステージ
-int score = 0; // スコア
-int hisco = 10000; // ハイスコア
-int noDamage = 0; // 無敵状態
-int weaponLv = 1; // 自機の武器のレベル（同時に発射される弾数）
-int scene = TITLE; // シーンを管理
-int timer = 0; // 時間の進行を管理
+namespace GameData {
+    // --- 画像 ---
+    int imgGalaxy, imgFloor, imgWallL, imgWallR; // 背景画像
+    int imgFighter, imgBullet; // 自機と自機の弾の画像
+    int imgEnemy[IMG_ENEMY_MAX]; // 敵機の画像
+    int imgExplosion; // 爆発演出の画像
+    int imgItem; // アイテムの画像
 
-struct OBJECT player; // 自機用の構造体変数
-struct OBJECT bullet[BULLET_MAX]; // 弾用の構造体の配列
-struct OBJECT enemy[ENEMY_MAX]; // 敵機用の構造体の配列
-struct OBJECT effect[EFFECT_MAX]; // エフェクト用の構造体の配列
-struct OBJECT item; // アイテム用の構造体変数
+    // --- 音 ---
+    int bgm, jinOver, jinClear, seExpl, seItem, seShot; // 音の読み込み用
+
+    // --- ゲーム状態 ---
+    int distance = 0; // ステージ終端までの距離
+    int bossIdx = 0; // ボスを代入した配列のインデックス
+    int stage = 1; // ステージ
+    int score = 0; // スコア
+    int hisco = 10000; // ハイスコア
+    int noDamage = 0; // 無敵状態
+    int weaponLv = 1; // 自機の武器のレベル（同時に発射される弾数）
+    int scene = TITLE; // シーンを管理
+    int timer = 0; // 時間の進行を管理
+
+    // --- オブジェクト ---
+    OBJECT player; // 自機用の構造体変数
+    OBJECT bullet[BULLET_MAX]; // 弾用の構造体の配列
+    OBJECT enemy[ENEMY_MAX]; // 敵機用の構造体の配列
+    OBJECT effect[EFFECT_MAX]; // エフェクト用の構造体の配列
+    OBJECT item; // アイテム用の構造体変数
+}
+
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
     SetWindowText("シューティングゲーム"); // ウィンドウのタイトル
-    SetGraphMode(WIDTH, HEIGHT, 32); // ウィンドウの大きさとカラービット数の指定
+    SetGraphMode(GameConfig::WIDTH, GameConfig::HEIGHT, 32); // ウィンドウの大きさとカラービット数の指定
     ChangeWindowMode(TRUE); // ウィンドウモードで起動
-    if (DxLib_Init() == -1) return -1; // ライブラリ初期化 エラーが起きたら終了
+
+    if (DxLib_Init() == -1)return -1; // ライブラリ初期化 エラーが起きたら終了
+
     SetBackgroundColor(0, 0, 0); // 背景色の指定
     SetDrawScreen(DX_SCREEN_BACK); // 描画面を裏画面にする
 
     initGame(); // 初期化用の関数を呼び出す
     initVariable(); // 【仮】ゲームを完成させる際に呼び出し位置を変える
-    distance = STAGE_DISTANCE; // 【記述位置は仮】ステージの長さを代入
+    GameData::distance = GameConfig::STAGE_DISTANCE; // 【記述位置は仮】ステージの長さを代入
 
     while (1) // メインループ
     {
@@ -61,7 +98,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
         // ゲームの骨組みとなる処理を、ここに記述する
         int spd = 1; // スクロールの速さ
-        if (scene == PLAY && distance == 0) spd = 0; // ボス戦はスクロール停止
+        if (GameData::scene == PLAY && GameData::distance == 0) spd = 0; // ボス戦はスクロール停止
         scrollBG(spd); // 背景のスクロール
         moveEnemy(); // 敵機の制御
         moveBullet(); // 弾の制御
@@ -70,79 +107,79 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         stageMap(); // ステージマップ
         drawParameter(); // 自機のシールドなどのパラメーターを表示
 
-        timer++; // タイマーをカウント
-        switch (scene) // シーンごとに処理を分岐
+        GameData::timer++; // タイマーをカウント
+        switch (GameData::scene) // シーンごとに処理を分岐
         {
         case TITLE: // タイトル画面
-            drawTextC(WIDTH * 0.5, HEIGHT * 0.3, "Shooting Game", 0xffffff, 80);
-            drawTextC(WIDTH * 0.5, HEIGHT * 0.7, "Press SPACE to start.", 0xffffff, 30);
+            drawTextC(GameConfig::WIDTH * 0.5, GameConfig::HEIGHT * 0.3, "Shooting Game", 0xffffff, 80);
+            drawTextC(GameConfig::WIDTH * 0.5, GameConfig::HEIGHT * 0.7, "Press SPACE to start.", 0xffffff, 30);
             if (CheckHitKey(KEY_INPUT_SPACE))
             {
                 initVariable();
-                scene = PLAY;
+                GameData::scene = PLAY;
             }
             break;
 
         case PLAY: // ゲームプレイ画面
             movePlayer(); // 自機の操作
-            if (distance == STAGE_DISTANCE)
+            if (GameData::distance == GameConfig::STAGE_DISTANCE)
             {
-                srand(stage); // ステージのパターンを決める
-                PlaySoundMem(bgm, DX_PLAYTYPE_LOOP); // ＢＧＭループ出力
+                srand(GameData::stage); // ステージのパターンを決める
+                PlaySoundMem(GameData::bgm, DX_PLAYTYPE_LOOP); // ＢＧＭループ出力
             }
-            if (distance > 0) distance--;
-            if (300 < distance && distance % 20 == 0) // ザコ1と2の出現
+            if (GameData::distance > 0) GameData::distance--;
+            if (300 < GameData::distance && GameData::distance % 20 == 0) // ザコ1と2の出現
             {
-                int x = 100 + rand() % (WIDTH - 200);
+                int x = 100 + rand() % (GameConfig::WIDTH - 200);
                 int y = -50;
                 int e = 1 + rand() % 2;
-                if (e == ENE_ZAKO1) setEnemy(x, y, 0, 3, ENE_ZAKO1, imgEnemy[ENE_ZAKO1], 1);
+                if (e == ENE_ZAKO1) setEnemy(x, y, 0, 3, ENE_ZAKO1, GameData::imgEnemy[ENE_ZAKO1], 1);
                 if (e == ENE_ZAKO2) {
                     int vx = 0;
-                    if (player.x < x - 50) vx = -3;
-                    if (player.x > x + 50) vx = 3;
-                    setEnemy(x, -100, vx, 5, ENE_ZAKO2, imgEnemy[ENE_ZAKO2], 3);
+                    if (GameData::player.x < x - 50) vx = -3;
+                    if (GameData::player.x > x + 50) vx = 3;
+                    setEnemy(x, -100, vx, 5, ENE_ZAKO2, GameData::imgEnemy[ENE_ZAKO2], 3);
                 }
             }
-            if (300 < distance && distance < 900 && distance % 30 == 0) // ザコ3の出現
+            if (300 < GameData::distance && GameData::distance < 900 && GameData::distance % 30 == 0) // ザコ3の出現
             {
-                int x = 100 + rand() % (WIDTH - 200);
+                int x = 100 + rand() % (GameConfig::WIDTH - 200);
                 int y = -50;
                 int vy = 40 + rand() % 20;
-                setEnemy(x, -100, 0, vy, ENE_ZAKO3, imgEnemy[ENE_ZAKO3], 5);
-            }
-            if (distance == 1) bossIdx = setEnemy(WIDTH / 2, -120, 0, 1, ENE_BOSS, imgEnemy[ENE_BOSS], 200); // ボス出現
-            if (distance % 800 == 1) setItem(); // アイテムの出現
-            if (player.shield == 0)
+                setEnemy(x, -100, 0, vy, GameData::imgEnemy[ENE_ZAK03], GameData::imgEnemy[ENE_ZAK03], 5);
+            
+            if (GameData::distance == 1) GameData::bossIdx = setEnemy(GameConfig::WIDTH / 2, -120, 0, 1, ENE_BOSS, GameData::imgEnemy[ENE_BOSS], 200); // ボス出現
+            if (GameData::distance % 800 == 1) setItem(); // アイテムの出現
+            if (GameData::player.shield == 0)
             {
-                StopSoundMem(bgm); // ＢＧＭ停止
-                scene = OVER;
-                timer = 0;
+                StopSoundMem(GameData::bgm); // ＢＧＭ停止
+                GameData::scene = OVER;
+                GameData::timer = 0;
                 break;
             }
             break;
 
         case OVER: // ゲームオーバー
-            if (timer < FPS * 3) // 自機が爆発する演出
+            if (GameData::timer < GameConfig::FPS * 3) // 自機が爆発する演出
             {
-                if (timer % 7 == 0) setEffect(player.x + rand() % 81 - 40, player.y + rand() % 81 - 40, EFF_EXPLODE);
+                if (GameData::timer % 7 == 0) setEffect(GameData::player.x + rand() % 81 - 40, GameData::player.y + rand() % 81 - 40, EFF_EXPLODE);
             }
-            else if (timer == FPS * 3)
+            else if (GameData::timer == GameConfig::FPS * 3)
             {
-                PlaySoundMem(jinOver, DX_PLAYTYPE_BACK); // ジングル出力
+                PlaySoundMem(GameData::jinOver, DX_PLAYTYPE_BACK); // ジングル出力
             }
             else
             {
-                drawTextC(WIDTH * 0.5, HEIGHT * 0.3, "GAME OVER", 0xff0000, 80);
+                drawTextC(GameConfig::WIDTH * 0.5, GameConfig::HEIGHT * 0.3, "GAME OVER", 0xff0000, 80);
             }
-            if (timer > FPS * 10) scene = TITLE; // タイトルへ遷移
+            if (GameData::timer > GameConfig::FPS * 10) GameData::scene = TITLE; // タイトルへ遷移
             break;
 
         case CLEAR: // ステージクリア
             movePlayer(); // 自機の処理
-            if (timer < FPS * 3) // ボスが爆発する演出
+            if (GameData::timer < GameConfig::FPS * 3) // ボスが爆発する演出
             {
-                if (timer % 7 == 0) setEffect(enemy[bossIdx].x + rand() % 201 - 100, enemy[bossIdx].y + rand() % 201 - 100, EFF_EXPLODE);
+                if (GameData::timer % 7 == 0) setEffect(GameData::enemy[bossIdx].x + rand() % 201 - 100, enemy[bossIdx].y + rand() % 201 - 100, EFF_EXPLODE);
             }
             else if (timer == FPS * 3)
             {
