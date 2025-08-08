@@ -218,33 +218,32 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	void initGame(void)
 	{
 		// 背景用の画像の読み込み
-		imgGalaxy = LoadGraph("image/bg0.png");
-		imgFloor = LoadGraph("image/bg1.png");
-		imgWallL = LoadGraph("image/bg2.png");
-		imgWallR = LoadGraph("image/bg3.png");
+		GameData::imgGalaxy = LoadGraph("image/bg0.png");
+		GameData::imgFloor = LoadGraph("image/bg1.png");
+		GameData::imgWallL = LoadGraph("image/bg2.png");
+		GameData::imgWallR = LoadGraph("image/bg3.png");
 		// 自機と自機の弾の画像の読み込み
-		imgFighter = LoadGraph("image/fighter.png");
-		imgBullet = LoadGraph("image/bullet.png");
+		GameData::imgFighter = LoadGraph("image/fighter.png");
+		GameData::imgBullet = LoadGraph("image/bullet.png");
 		// 敵機の画像の読み込み
-		for (int i = 0; i < IMG_ENEMY_MAX; i++) {
-			char file[] = "image/enemy*.png";
-			file[11] = (char)('0' + i);
-			imgEnemy[i] = LoadGraph(file);
+		for (int i = 0; i < GameConfig::IMG_ENEMY_MAX; i++) {
+			std::string file = "image/enemy" + std::to_string(i) + ".png";
+			GameData::imgEnemy[i] = LoadGraph(file.c_str());
 		}
 		// その他の画像の読み込み
-		imgExplosion = LoadGraph("image/explosion.png"); // 爆発演出
-		imgItem = LoadGraph("image/item.png"); // アイテム
+		GameData::imgExplosion = LoadGraph("image/explosion.png"); // 爆発演出
+		GameData::imgItem = LoadGraph("image/item.png"); // アイテム
 
 		// サウンドの読み込みと音量設定
-		bgm = LoadSoundMem("sound/bgm.mp3");
-		jinOver = LoadSoundMem("sound/gameover.mp3");
-		jinClear = LoadSoundMem("sound/stageclear.mp3");
-		seExpl = LoadSoundMem("sound/explosion.mp3");
-		seItem = LoadSoundMem("sound/item.mp3");
-		seShot = LoadSoundMem("sound/shot.mp3");
-		ChangeVolumeSoundMem(128, bgm);
-		ChangeVolumeSoundMem(128, jinOver);
-		ChangeVolumeSoundMem(128, jinClear);
+		GameData::bgm = LoadSoundMem("sound/bgm.mp3");
+		GameData::jinOver = LoadSoundMem("sound/gameover.mp3");
+		GameData::jinClear = LoadSoundMem("sound/stageclear.mp3");
+		GameData::seExpl = LoadSoundMem("sound/explosion.mp3");
+		GameData::seItem = LoadSoundMem("sound/item.mp3");
+		GameData::seShot = LoadSoundMem("sound/shot.mp3");
+		ChangeVolumeSoundMem(128, GameData::bgm);
+		ChangeVolumeSoundMem(128, GameData::jinOver);
+		ChangeVolumeSoundMem(128, GameData::jinClear);
 	}
 
 	// 背景のスクロール
