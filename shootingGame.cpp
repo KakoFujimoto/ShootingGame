@@ -2,6 +2,7 @@
 #include "shootingGame.h" // ヘッダーファイルをインクルード
 #include <cstdlib>
 #include <array>
+#include <string>
 
 // 定数の定義
 namespace GameConfig {
@@ -147,7 +148,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				int y = -50;
 				int vy = 40 + rand() % 20;
 				setEnemy(x, -100, 0, vy, ENE_ZAKO3, GameData::imgEnemy[ENE_ZAKO3], 5);
-
+			}
 				if (GameData::distance == 1) GameData::bossIdx = setEnemy(GameConfig::WIDTH / 2, -120, 0, 1, ENE_BOSS, GameData::imgEnemy[ENE_BOSS], 200); // ボス出現
 				if (GameData::distance % 800 == 1) setItem(); // アイテムの出現
 				if (GameData::player.shield == 0)
@@ -250,31 +251,31 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	void scrollBG(int spd)
 	{
 		static int galaxyY, floorY, wallY; // スクロール位置を管理する変数（静的記憶領域に保持される）
-		galaxyY = (galaxyY + spd) % HEIGHT; // 星空（宇宙）
-		DrawGraph(0, galaxyY - HEIGHT, imgGalaxy, FALSE);
-		DrawGraph(0, galaxyY, imgGalaxy, FALSE);
+		galaxyY = (galaxyY + spd) % GameConfig::HEIGHT; // 星空（宇宙）
+		DrawGraph(0, galaxyY - GameConfig::HEIGHT, GameData::imgGalaxy, FALSE);
+		DrawGraph(0, galaxyY, GameData::imgGalaxy, FALSE);
 		floorY = (floorY + spd * 2) % 120;  // 床
-		for (int i = -1; i < 6; i++) DrawGraph(240, floorY + i * 120, imgFloor, TRUE);
+		for (int i = -1; i < 6; i++) DrawGraph(240, floorY + i * 120, GameData::imgFloor, TRUE);
 		wallY = (wallY + spd * 4) % 240;    // 左右の壁
-		DrawGraph(0, wallY - 240, imgWallL, TRUE);
-		DrawGraph(WIDTH - 300, wallY - 240, imgWallR, TRUE);
+		DrawGraph(0, wallY - 240, GameData::imgWallL, TRUE);
+		DrawGraph(GameConfig::WIDTH - 300, wallY - 240, GameData::imgWallR, TRUE);
 	}
 
 	// ゲーム開始時の初期値を代入する関数
 	void initVariable(void)
 	{
-		player.x = WIDTH / 2;
-		player.y = HEIGHT / 2;
-		player.vx = 5;
-		player.vy = 5;
-		player.shield = PLAYER_SHIELD_MAX;
-		GetGraphSize(imgFighter, &player.wid, &player.hei); // 自機の画像の幅と高さを代入
-		for (int i = 0; i < ENEMY_MAX; i++) enemy[i].state = 0; // 全ての敵機を存在しない状態に
-		score = 0;
-		stage = 1;
-		noDamage = 0;
-		weaponLv = 1;
-		distance = STAGE_DISTANCE;
+		GameData::player.x = GameConfig::WIDTH / 2;
+		GameData::player.y = GameConfig::HEIGHT / 2;
+		GameData::player.vx = 5;
+		GameData::player.vy = 5;
+		GameData::player.shield = GameConfig::PLAYER_SHIELD_MAX;
+		GetGraphSize(GameData::imgFighter, &GameData::player.wid, &GameData::player.hei); // 自機の画像の幅と高さを代入
+		for (int i = 0; i < GameConfig::ENEMY_MAX; i++) GameData::enemy[i].state = 0; // 全ての敵機を存在しない状態に
+		GameData::score = 0;
+		GameData::stage = 1;
+		GameData::noDamage = 0;
+		GameData::weaponLv = 1;
+		GameData::distance = GameConfig::STAGE_DISTANCE;
 	}
 
 	// 中心座標を指定して画像を表示する関数
@@ -291,20 +292,20 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		static char oldSpcKey; // 1つ前のスペースキーの状態を保持する変数
 		static int countSpcKey; // スペースキーを押し続けている間、カウントアップする変数
 		if (CheckHitKey(KEY_INPUT_UP)) { // 上キー
-			player.y -= player.vy;
-			if (player.y < 30) player.y = 30;
+			GameData::player.y -= GameData::player.vy;
+			if (GameData::player.y < 30) GameData::player.y = 30;
 		}
 		if (CheckHitKey(KEY_INPUT_DOWN)) { // 下キー
-			player.y += player.vy;
-			if (player.y > HEIGHT - 30) player.y = HEIGHT - 30;
+			GameData::player.y += GameData::player.vy;
+			if (GameData::player.y > GameConfig::HEIGHT - 30) GameData::player.y = GameConfig::HEIGHT - 30;
 		}
 		if (CheckHitKey(KEY_INPUT_LEFT)) { // 左キー
-			player.x -= player.vx;
-			if (player.x < 30) player.x = 30;
+			GameData::player.x -= GameData::player.vx;
+			if (GameData::player.x < 30) GameData::player.x = 30;
 		}
 		if (CheckHitKey(KEY_INPUT_RIGHT)) { // 右キー
-			player.x += player.vx;
-			if (player.x > WIDTH - 30) player.x = WIDTH - 30;
+			GameData::player.x += GameData::player.vx;
+			if (GameData::player.x > GameConfig::WIDTH - 30) GameData::player.x = GameConfig::WIDTH - 30;
 		}
 		if (CheckHitKey(KEY_INPUT_SPACE)) { // スペースキー
 			if (oldSpcKey == 0) setBullet(); // 押した瞬間、発射
@@ -312,56 +313,56 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			countSpcKey++;
 		}
 		oldSpcKey = CheckHitKey(KEY_INPUT_SPACE); // スペースキーの状態を保持
-		if (noDamage > 0) noDamage--; // 無敵時間のカウント
-		if (noDamage % 4 < 2) drawImage(imgFighter, player.x, player.y); // 自機の描画
+		if (GameData::noDamage > 0) GameData::noDamage--; // 無敵時間のカウント
+		if (GameData::noDamage % 4 < 2) drawImage(GameData::imgFighter, GameData::player.x, GameData::player.y); // 自機の描画
 	}
 
 	// 弾のセット（発射）
 	void setBullet(void)
 	{
-		for (int n = 0; n < weaponLv; n++) {
-			int x = player.x - (weaponLv - 1) * 5 + n * 10;
-			int y = player.y - 20;
-			for (int i = 0; i < BULLET_MAX; i++) {
-				if (bullet[i].state == 0) {
-					bullet[i].x = x;
-					bullet[i].y = y;
-					bullet[i].vx = 0;
-					bullet[i].vy = -40;
-					bullet[i].state = 1;
+		for (int n = 0; n < GameData::weaponLv; n++) {
+			int x = GameData::player.x - (GameData::weaponLv - 1) * 5 + n * 10;
+			int y = GameData::player.y - 20;
+			for (int i = 0; i < GameConfig::BULLET_MAX; i++) {
+				if (GameData::bullet[i].state == 0) {
+					GameData::bullet[i].x = x;
+					GameData::bullet[i].y = y;
+					GameData::bullet[i].vx = 0;
+					GameData::bullet[i].vy = -40;
+					GameData::bullet[i].state = 1;
 					break;
 				}
 			}
 		}
-		PlaySoundMem(seShot, DX_PLAYTYPE_BACK); // 効果音
+		PlaySoundMem(GameData::seShot, DX_PLAYTYPE_BACK); // 効果音
 	}
 
 	// 弾の移動
 	void moveBullet(void)
 	{
-		for (int i = 0; i < BULLET_MAX; i++) {
-			if (bullet[i].state == 0) continue; // 空いている配列なら処理しない
-			bullet[i].x += bullet[i].vx; // ┬ 座標を変化させる
-			bullet[i].y += bullet[i].vy; // ┘
-			drawImage(imgBullet, bullet[i].x, bullet[i].y); // 弾の描画
-			if (bullet[i].y < -100) bullet[i].state = 0; // 画面外に出たら、存在しない状態にする
+		for (int i = 0; i < GameConfig::BULLET_MAX; i++) {
+			if (GameData::bullet[i].state == 0) continue; // 空いている配列なら処理しない
+			GameData::bullet[i].x += GameData::bullet[i].vx; // ┬ 座標を変化させる
+			GameData::bullet[i].y += GameData::bullet[i].vy; // ┘
+			drawImage(GameData::imgBullet, GameData::bullet[i].x, GameData::bullet[i].y); // 弾の描画
+			if (GameData::bullet[i].y < -100) GameData::bullet[i].state = 0; // 画面外に出たら、存在しない状態にする
 		}
 	}
 
 	// 敵機をセットする
 	int setEnemy(int x, int y, int vx, int vy, int ptn, int img, int sld)
 	{
-		for (int i = 0; i < ENEMY_MAX; i++) {
-			if (enemy[i].state == 0) {
-				enemy[i].x = x;
-				enemy[i].y = y;
-				enemy[i].vx = vx;
-				enemy[i].vy = vy;
-				enemy[i].state = 1;
-				enemy[i].pattern = ptn;
-				enemy[i].image = img;
-				enemy[i].shield = sld * stage; // ステージが進むほど敵が固くなる
-				GetGraphSize(img, &enemy[i].wid, &enemy[i].hei); // 画像の幅と高さを代入
+		for (int i = 0; i < GameConfig::ENEMY_MAX; i++) {
+			if (GameData::enemy[i].state == 0) {
+				GameData::enemy[i].x = x;
+				GameData::enemy[i].y = y;
+				GameData::enemy[i].vx = vx;
+				GameData::enemy[i].vy = vy;
+				GameData::enemy[i].state = 1;
+				GameData::enemy[i].pattern = ptn;
+				GameData::enemy[i].image = img;
+				GameData::enemy[i].shield = sld * GameData::stage; // ステージが進むほど敵が固くなる
+				GetGraphSize(img, &GameData::enemy[i].wid, &GameData::enemy[i].hei); // 画像の幅と高さを代入
 				return i;
 			}
 		}
@@ -371,65 +372,65 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// 敵機を動かす
 	void moveEnemy(void)
 	{
-		for (int i = 0; i < ENEMY_MAX; i++) {
-			if (enemy[i].state == 0) continue; // 空いている配列なら処理しない
-			if (enemy[i].pattern == ENE_ZAKO3) // ザコ機3
+		for (int i = 0; i < GameConfig::ENEMY_MAX; i++) {
+			if (GameData::enemy[i].state == 0) continue; // 空いている配列なら処理しない
+			if (GameData::enemy[i].pattern == ENE_ZAKO3) // ザコ機3
 			{
-				if (enemy[i].vy > 1) // 減速
+				if (GameData::enemy[i].vy > 1) // 減速
 				{
-					enemy[i].vy *= 0.9;
+					GameData::enemy[i].vy *= 0.9;
 				}
-				else if (enemy[i].vy > 0) // 弾発射、飛び去る
+				else if (GameData::enemy[i].vy > 0) // 弾発射、飛び去る
 				{
-					setEnemy(enemy[i].x, enemy[i].y, 0, 6, ENE_BULLET, imgEnemy[ENE_BULLET], 0); // 弾
-					enemy[i].vx = 8;
-					enemy[i].vy = -4;
+					setEnemy(GameData::enemy[i].x, GameData::enemy[i].y, 0, 6, ENE_BULLET, GameData::imgEnemy[ENE_BULLET], 0); // 弾
+					GameData::enemy[i].vx = 8;
+					GameData::enemy[i].vy = -4;
 				}
 			}
-			if (enemy[i].pattern == ENE_BOSS) // ボス機
+			if (GameData::enemy[i].pattern == ENE_BOSS) // ボス機
 			{
-				if (enemy[i].y > HEIGHT - 120) enemy[i].vy = -2;
-				if (enemy[i].y < 120) // 画面上端
+				if (GameData::enemy[i].y > GameConfig::HEIGHT - 120) GameData::enemy[i].vy = -2;
+				if (GameData::enemy[i].y < 120) // 画面上端
 				{
-					if (enemy[i].vy < 0) // 弾発射
+					if (GameData::enemy[i].vy < 0) // 弾発射
 					{
 						for (int bx = -2; bx <= 2; bx++) // 二重ループのfor
 							for (int by = 0; by <= 3; by++)
 							{
 								if (bx == 0 && by == 0) continue;
-								setEnemy(enemy[i].x, enemy[i].y, bx * 2, by * 3, ENE_BULLET, imgEnemy[ENE_BULLET], 0);
+								setEnemy(GameData::enemy[i].x, GameData::enemy[i].y, bx * 2, by * 3, ENE_BULLET, GameData::imgEnemy[ENE_BULLET], 0);
 							}
 					}
-					enemy[i].vy = 2;
+					GameData::enemy[i].vy = 2;
 				}
 			}
-			enemy[i].x += enemy[i].vx; //┬敵機の移動
-			enemy[i].y += enemy[i].vy; //┘
-			drawImage(enemy[i].image, enemy[i].x, enemy[i].y); // 敵機の描画
+			GameData::enemy[i].x += GameData::enemy[i].vx; //┬敵機の移動
+			GameData::enemy[i].y += GameData::enemy[i].vy; //┘
+			drawImage(GameData::enemy[i].image, GameData::enemy[i].x, GameData::enemy[i].y); // 敵機の描画
 			// 画面外に出たか？
-			if (enemy[i].x < -200 || WIDTH + 200 < enemy[i].x || enemy[i].y < -200 || HEIGHT + 200 < enemy[i].y) enemy[i].state = 0;
+			if (GameData::enemy[i].x < -200 || GameConfig::WIDTH + 200 < GameData::enemy[i].x || GameData::enemy[i].y < -200 || GameConfig::HEIGHT + 200 < GameData::enemy[i].y) GameData::enemy[i].state = 0;
 			// 当たり判定のアルゴリズム
-			if (enemy[i].shield > 0) // ヒットチェックを行う敵機（弾以外）
+			if (GameData::enemy[i].shield > 0) // ヒットチェックを行う敵機（弾以外）
 			{
-				for (int j = 0; j < BULLET_MAX; j++) { // 自機の弾とヒットチェック
-					if (bullet[j].state == 0) continue;
-					int dx = abs((int)(enemy[i].x - bullet[j].x)); //┬中心座標間のピクセル数
-					int dy = abs((int)(enemy[i].y - bullet[j].y)); //┘
-					if (dx < enemy[i].wid / 2 && dy < enemy[i].hei / 2) // 接触しているか
+				for (int j = 0; j < GameConfig::BULLET_MAX; j++) { // 自機の弾とヒットチェック
+					if (GameData::bullet[j].state == 0) continue;
+					int dx = abs((int)(GameData::enemy[i].x - GameData::bullet[j].x)); //┬中心座標間のピクセル数
+					int dy = abs((int)(GameData::enemy[i].y - GameData::bullet[j].y)); //┘
+					if (dx < GameData::enemy[i].wid / 2 && dy < GameData::enemy[i].hei / 2) // 接触しているか
 					{
-						bullet[j].state = 0; // 弾を消す
+						GameData::bullet[j].state = 0; // 弾を消す
 						damageEnemy(i, 1); // 敵にダメージ
 					}
 				}
 			}
-			if (noDamage == 0) // 無敵状態でない時、自機とヒットチェック
+			if (GameData::noDamage == 0) // 無敵状態でない時、自機とヒットチェック
 			{
-				int dx = abs(enemy[i].x - player.x); //┬中心座標間のピクセル数
-				int dy = abs(enemy[i].y - player.y); //┘
-				if (dx < enemy[i].wid / 2 + player.wid / 2 && dy < enemy[i].hei / 2 + player.hei / 2)
+				int dx = abs(GameData::enemy[i].x - GameData::player.x); //┬中心座標間のピクセル数
+				int dy = abs(GameData::enemy[i].y - GameData::player.y); //┘
+				if (dx < GameData::enemy[i].wid / 2 + GameData::player.wid / 2 && dy < GameData::enemy[i].hei / 2 + GameData::player.hei / 2)
 				{
-					if (player.shield > 0) player.shield--; // シールドを減らす
-					noDamage = FPS; // 無敵状態をセット
+					if (GameData::player.shield > 0) GameData::player.shield--; // シールドを減らす
+					GameData::noDamage = GameConfig::FPS; // 無敵状態をセット
 					damageEnemy(i, 1); // 敵にダメージ
 				}
 			}
@@ -439,9 +440,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// ステージマップ
 	void stageMap(void)
 	{
-		int mx = WIDTH - 30, my = 60; // マップの表示位置
-		int wi = 20, he = HEIGHT - 120; // マップの幅、高さ
-		int pos = (HEIGHT - 140) * distance / STAGE_DISTANCE; // 自機の飛行している位置
+		int mx = GameConfig::WIDTH - 30, my = 60; // マップの表示位置
+		int wi = 20, he = GameConfig::HEIGHT - 120; // マップの幅、高さ
+		int pos = (GameConfig::HEIGHT - 140) * GameData::distance / GameConfig::STAGE_DISTANCE; // 自機の飛行している位置
 		SetDrawBlendMode(DX_BLENDMODE_SUB, 128); // 減算による描画の重ね合わせ
 		DrawBox(mx, my, mx + wi, my + he, 0xffffff, TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0); // ブレンドモードを解除
@@ -453,20 +454,20 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	void damageEnemy(int n, int dmg)
 	{
 		SetDrawBlendMode(DX_BLENDMODE_ADD, 192); // 加算による描画の重ね合わせ
-		DrawCircle(enemy[n].x, enemy[n].y, (enemy[n].wid + enemy[n].hei) / 4, 0xff0000, TRUE);
+		DrawCircle(GameData::enemy[n].x, GameData::enemy[n].y, (GameData::enemy[n].wid + GameData::enemy[n].hei) / 4, 0xff0000, TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0); // ブレンドモードを解除
-		score += 100; // スコアの加算
-		if (score > hisco) hisco = score; // ハイスコアの更新
-		enemy[n].shield -= dmg; // シールドを減らす
-		if (enemy[n].shield <= 0)
+		GameData::score += 100; // スコアの加算
+		if (GameData::score > GameData::hisco) GameData::hisco = GameData::score; // ハイスコアの更新
+		GameData::enemy[n].shield -= dmg; // シールドを減らす
+		if (GameData::enemy[n].shield <= 0)
 		{
-			enemy[n].state = 0; // シールド0以下で消す
-			setEffect(enemy[n].x, enemy[n].y, EFF_EXPLODE); // 爆発演出
-			if (enemy[n].pattern == ENE_BOSS) // ボスを倒した
+			GameData::enemy[n].state = 0; // シールド0以下で消す
+			setEffect(GameData::enemy[n].x, GameData::enemy[n].y, EFF_EXPLODE); // 爆発演出
+			if (GameData::enemy[n].pattern == ENE_BOSS) // ボスを倒した
 			{
-				StopSoundMem(bgm); // ＢＧＭ停止
-				scene = CLEAR;
-				timer = 0;
+				StopSoundMem(GameData::bgm); // ＢＧＭ停止
+				GameData::scene = CLEAR;
+				GameData::timer = 0;
 			}
 		}
 	}
@@ -482,58 +483,58 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// 自機に関するパラメーターを表示
 	void drawParameter(void)
 	{
-		int x = 10, y = HEIGHT - 30; // 表示位置
-		DrawBox(x, y, x + PLAYER_SHIELD_MAX * 30, y + 20, 0x000000, TRUE);
-		for (int i = 0; i < player.shield; i++) // シールドのメーター
+		int x = 10, y = GameConfig::HEIGHT - 30; // 表示位置
+		DrawBox(x, y, x + GameConfig::PLAYER_SHIELD_MAX * 30, y + 20, 0x000000, TRUE);
+		for (int i = 0; i < GameData::player.shield; i++) // シールドのメーター
 		{
-			int r = 128 * (PLAYER_SHIELD_MAX - i) / PLAYER_SHIELD_MAX; // RGB値を計算
-			int g = 255 * i / PLAYER_SHIELD_MAX;
-			int b = 160 + 96 * i / PLAYER_SHIELD_MAX;
+			int r = 128 * (GameConfig::PLAYER_SHIELD_MAX - i) / GameConfig::PLAYER_SHIELD_MAX; // RGB値を計算
+			int g = 255 * i / GameConfig::PLAYER_SHIELD_MAX;
+			int b = 160 + 96 * i / GameConfig::PLAYER_SHIELD_MAX;
 			DrawBox(x + 2 + i * 30, y + 2, x + 28 + i * 30, y + 18, GetColor(r, g, b), TRUE);
 		}
-		drawText(x, y - 25, "SHIELD Lv %02d", player.shield, 0xffffff, 20); // シールド値
-		drawText(x, y - 50, "WEAPON Lv %02d", weaponLv, 0xffffff, 20); // 武器レベル
-		drawText(x, y - 75, "SPEED %02d", player.vx, 0xffffff, 20); // 移動速度
+		drawText(x, y - 25, "SHIELD Lv %02d", GameData::player.shield, 0xffffff, 20); // シールド値
+		drawText(x, y - 50, "WEAPON Lv %02d", GameData::weaponLv, 0xffffff, 20); // 武器レベル
+		drawText(x, y - 75, "SPEED %02d", GameData::player.vx, 0xffffff, 20); // 移動速度
 	}
 
 	// エフェクトのセット
 	void setEffect(int x, int y, int ptn)
 	{
 		static int eff_num;
-		effect[eff_num].x = x;
-		effect[eff_num].y = y;
-		effect[eff_num].state = 1;
-		effect[eff_num].pattern = ptn;
-		effect[eff_num].timer = 0;
-		eff_num = (eff_num + 1) % EFFECT_MAX;
-		if (ptn == EFF_EXPLODE) PlaySoundMem(seExpl, DX_PLAYTYPE_BACK); // 効果音
+		GameData::effect[eff_num].x = x;
+		GameData::effect[eff_num].y = y;
+		GameData::effect[eff_num].state = 1;
+		GameData::effect[eff_num].pattern = ptn;
+		GameData::effect[eff_num].timer = 0;
+		eff_num = (eff_num + 1) % GameConfig::EFFECT_MAX;
+		if (ptn == EFF_EXPLODE) PlaySoundMem(GameData::seExpl, DX_PLAYTYPE_BACK); // 効果音
 	}
 
 	// エフェクトの描画
 	void drawEffect(void)
 	{
 		int ix;
-		for (int i = 0; i < EFFECT_MAX; i++)
+		for (int i = 0; i < GameConfig::EFFECT_MAX; i++)
 		{
-			if (effect[i].state == 0) continue;
-			switch (effect[i].pattern) // エフェクトごとに処理を分ける
+			if (GameData::effect[i].state == 0) continue;
+			switch (GameData::effect[i].pattern) // エフェクトごとに処理を分ける
 			{
 			case EFF_EXPLODE: // 爆発演出
-				ix = effect[i].timer * 128; // 画像の切り出し位置
-				DrawRectGraph(effect[i].x - 64, effect[i].y - 64, ix, 0, 128, 128, imgExplosion, TRUE, FALSE);
-				effect[i].timer++;
-				if (effect[i].timer == 7) effect[i].state = 0;
+				ix = GameData::effect[i].timer * 128; // 画像の切り出し位置
+				DrawRectGraph(GameData::effect[i].x - 64, GameData::effect[i].y - 64, ix, 0, 128, 128, GameData::imgExplosion, TRUE, FALSE);
+				GameData::effect[i].timer++;
+				if (GameData::effect[i].timer == 7) GameData::effect[i].state = 0;
 				break;
 
 			case EFF_RECOVER: // 回復演出
-				if (effect[i].timer < 30) // 加算による描画の重ね合わせ
-					SetDrawBlendMode(DX_BLENDMODE_ADD, effect[i].timer * 8);
+				if (GameData::effect[i].timer < 30) // 加算による描画の重ね合わせ
+					SetDrawBlendMode(DX_BLENDMODE_ADD, GameData::effect[i].timer * 8);
 				else
-					SetDrawBlendMode(DX_BLENDMODE_ADD, (60 - effect[i].timer) * 8);
-				for (int i = 3; i < 8; i++) DrawCircle(player.x, player.y, (player.wid + player.hei) / i, 0x2040c0, TRUE);
+					SetDrawBlendMode(DX_BLENDMODE_ADD, (60 - GameData::effect[i].timer) * 8);
+				for (int i = 3; i < 8; i++) DrawCircle(GameData::player.x, GameData::player.y, (GameData::player.wid + GameData::player.hei) / i, 0x2040c0, TRUE);
 				SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0); // ブレンドモードを解除
-				effect[i].timer++;
-				if (effect[i].timer == 60) effect[i].state = 0;
+				GameData::effect[i].timer++;
+				if (GameData::effect[i].timer == 60) GameData::effect[i].state = 0;
 				break;
 			}
 		}
@@ -542,51 +543,51 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// アイテムをセット
 	void setItem(void)
 	{
-		item.x = (WIDTH / 4) * (1 + rand() % 3);
-		item.y = -16;
-		item.vx = 15;
-		item.vy = 1;
-		item.state = 1;
-		item.timer = 0;
+		GameData::item.x = (GameConfig::WIDTH / 4) * (1 + rand() % 3);
+		GameData::item.y = -16;
+		GameData::item.vx = 15;
+		GameData::item.vy = 1;
+		GameData::item.state = 1;
+		GameData::item.timer = 0;
 	}
 
 	// アイテムの処理
 	void moveItem(void)
 	{
-		if (item.state == 0) return;
-		item.x += item.vx;
-		item.y += item.vy;
-		if (item.timer % 60 < 30)
-			item.vx -= 1;
+		if (GameData::item.state == 0) return;
+		GameData::item.x += GameData::item.vx;
+		GameData::item.y += GameData::item.vy;
+		if (GameData::item.timer % 60 < 30)
+			GameData::item.vx -= 1;
 		else
-			item.vx += 1;
-		if (item.y > HEIGHT + 16) item.state = 0;
-		item.pattern = (item.timer / 120) % ITEM_TYPE; // 現在、どのアイテムになっているか
-		item.timer++;
-		DrawRectGraph(item.x - 20, item.y - 16, item.pattern * 40, 0, 40, 32, imgItem, TRUE, FALSE);
-		if (scene == OVER) return; // ゲームオーバー画面では回収できない
-		int dis = (item.x - player.x) * (item.x - player.x) + (item.y - player.y) * (item.y - player.y);
+			GameData::item.vx += 1;
+		if (GameData::item.y > GameConfig::HEIGHT + 16) GameData::item.state = 0;
+		GameData::item.pattern = (GameData::item.timer / 120) % GameConfig::ITEM_TYPE; // 現在、どのアイテムになっているか
+		GameData::item.timer++;
+		DrawRectGraph(GameData::item.x - 20, GameData::item.y - 16, GameData::item.pattern * 40, 0, 40, 32, GameData::imgItem, TRUE, FALSE);
+		if (GameData::scene == OVER) return; // ゲームオーバー画面では回収できない
+		int dis = (GameData::item.x - GameData::player.x) * (GameData::item.x - GameData::player.x) + (GameData::item.y - GameData::player.y) * (GameData::item.y - GameData::player.y);
 		if (dis < 60 * 60) // アイテムと自機とのヒットチェック（円による当たり判定）
 		{
-			item.state = 0;
-			if (item.pattern == 0) // スピードアップ
+			GameData::item.state = 0;
+			if (GameData::item.pattern == 0) // スピードアップ
 			{
-				if (player.vx < PLAYER_SPEED_MAX)
+				if (GameData::player.vx < GameConfig::PLAYER_SPEED_MAX)
 				{
-					player.vx += 3;
-					player.vy += 3;
+					GameData::player.vx += 3;
+					GameData::player.vy += 3;
 				}
 			}
-			if (item.pattern == 1) // シールド回復
+			if (GameData::item.pattern == 1) // シールド回復
 			{
-				if (player.shield < PLAYER_SHIELD_MAX) player.shield++;
-				setEffect(player.x, player.y, EFF_RECOVER); // 回復エフェクトを表示
+				if (GameData::player.shield < GameConfig::PLAYER_SHIELD_MAX) GameData::player.shield++;
+				setEffect(GameData::player.x, GameData::player.y, EFF_RECOVER); // 回復エフェクトを表示
 			}
-			if (item.pattern == 2) // 武器レベルアップ
+			if (GameData::item.pattern == 2) // 武器レベルアップ
 			{
-				if (weaponLv < WEAPON_LV_MAX) weaponLv++;
+				if (GameData::weaponLv < GameConfig::WEAPON_LV_MAX) GameData::weaponLv++;
 			}
-			PlaySoundMem(seItem, DX_PLAYTYPE_BACK); // 効果音
+			PlaySoundMem(GameData::seItem, DX_PLAYTYPE_BACK); // 効果音
 		}
 	}
 
