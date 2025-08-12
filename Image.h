@@ -1,12 +1,14 @@
 #pragma once
 #include <array>
+#include <string>
 #include "GameConfig.h"
 
 class Image
 {
 public:
-	// コンストラクタ(画像読み込み)
-	Image();
+	Image() = default;
+	;
+	void load();
 
 	// 背景画像
 	int imgGalaxy;
