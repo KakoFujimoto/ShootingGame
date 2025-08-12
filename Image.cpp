@@ -1,13 +1,6 @@
 #include "Image.h"
 #include <DxLib.h>
 
-// インスタンス取得
-Image &Image::instance()
-{
-    static Image instace;
-    return instace;
-}
-
 // コンストラクタ(画像読み込み)
 Image::Image()
 {

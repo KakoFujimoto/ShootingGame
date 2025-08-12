@@ -5,12 +5,8 @@
 class Image
 {
 public:
-	// インスタンス取得
-	static Image &instance();
-
-	// コピー禁止
-	Image(const Image &) = delete;
-	Image &operator=(const Image &) = delete;
+	// コンストラクタ(画像読み込み)
+	Image();
 
 	// 背景画像
 	int imgGalaxy;
@@ -26,8 +22,4 @@ public:
 	int imgExplosion;
 	// アイテムの画像
 	int imgItem;
-
-private:
-	// コンストラクタ(画像読み込み)
-	Image();
 };
