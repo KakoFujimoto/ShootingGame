@@ -1,7 +1,6 @@
 #include "Image.h"
 #include <DxLib.h>
 
-// コンストラクタ(画像読み込み)
 void Image::load()
 {
     imgGalaxy = LoadGraph("image/bg0.png");

@@ -7,7 +7,6 @@ class Image
 {
 public:
 	Image() = default;
-	;
 	void load();
 
 	// ”wŒi‰æ‘œ
