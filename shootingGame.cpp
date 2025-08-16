@@ -86,128 +86,134 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	if (DxLib_Init() == -1)return -1; // ライブラリ初期化 エラーが起きたら終了
 
-	SetBackgroundColor(0, 0, 0); // 背景色の指定
-	SetDrawScreen(DX_SCREEN_BACK); // 描画面を裏画面にする
+	GameManager game;
+	
+	//SetBackgroundColor(0, 0, 0); // 背景色の指定
+	//SetDrawScreen(DX_SCREEN_BACK); // 描画面を裏画面にする
 
-	initGame(); // 初期化用の関数を呼び出す
-	initVariable(); // 【仮】ゲームを完成させる際に呼び出し位置を変える
-	GameData::distance = GameConfig::STAGE_DISTANCE; // 【記述位置は仮】ステージの長さを代入
+	//initGame(); // 初期化用の関数を呼び出す
+	//initVariable(); // 【仮】ゲームを完成させる際に呼び出し位置を変える
+	//GameData::distance = GameConfig::STAGE_DISTANCE; // 【記述位置は仮】ステージの長さを代入
+
+	game.init();
 
 	while (1) // メインループ
 	{
-		ClearDrawScreen(); // 画面をクリアする
+		game.gameLoop();
 
-		// ゲームの骨組みとなる処理を、ここに記述する
-		int spd = 1; // スクロールの速さ
-		if (GameData::scene == PLAY && GameData::distance == 0) spd = 0; // ボス戦はスクロール停止
-		scrollBG(spd); // 背景のスクロール
-		moveEnemy(); // 敵機の制御
-		moveBullet(); // 弾の制御
-		moveItem(); // アイテムの制御
-		drawEffect(); // エフェクト
-		stageMap(); // ステージマップ
-		drawParameter(); // 自機のシールドなどのパラメーターを表示
+		//ClearDrawScreen(); // 画面をクリアする
 
-		GameData::timer++; // タイマーをカウント
-		switch (GameData::scene) // シーンごとに処理を分岐
-		{
-		case TITLE: // タイトル画面
-			drawTextC(GameConfig::WIDTH * 0.5, GameConfig::HEIGHT * 0.3, "Shooting Game", 0xffffff, 80);
-			drawTextC(GameConfig::WIDTH * 0.5, GameConfig::HEIGHT * 0.7, "Press SPACE to start.", 0xffffff, 30);
-			if (CheckHitKey(KEY_INPUT_SPACE))
-			{
-				initVariable();
-				GameData::scene = PLAY;
-			}
-			break;
+		//// ゲームの骨組みとなる処理を、ここに記述する
+		//int spd = 1; // スクロールの速さ
+		//if (GameData::scene == PLAY && GameData::distance == 0) spd = 0; // ボス戦はスクロール停止
+		//scrollBG(spd); // 背景のスクロール
+		//moveEnemy(); // 敵機の制御
+		//moveBullet(); // 弾の制御
+		//moveItem(); // アイテムの制御
+		//drawEffect(); // エフェクト
+		//stageMap(); // ステージマップ
+		//drawParameter(); // 自機のシールドなどのパラメーターを表示
 
-		case PLAY: // ゲームプレイ画面
-			movePlayer(); // 自機の操作
-			if (GameData::distance == GameConfig::STAGE_DISTANCE)
-			{
-				srand(GameData::stage); // ステージのパターンを決める
-				PlaySoundMem(GameData::bgm, DX_PLAYTYPE_LOOP); // ＢＧＭループ出力
-			}
-			if (GameData::distance > 0) GameData::distance--;
-			if (300 < GameData::distance && GameData::distance % 20 == 0) // ザコ1と2の出現
-			{
-				int x = 100 + rand() % (GameConfig::WIDTH - 200);
-				int y = -50;
-				int e = 1 + rand() % 2;
-				if (e == ENE_ZAKO1) setEnemy(x, y, 0, 3, ENE_ZAKO1, GameData::imgEnemy[ENE_ZAKO1], 1);
-				if (e == ENE_ZAKO2) {
-					int vx = 0;
-					if (GameData::player.x < x - 50) vx = -3;
-					if (GameData::player.x > x + 50) vx = 3;
-					setEnemy(x, -100, vx, 5, ENE_ZAKO2, GameData::imgEnemy[ENE_ZAKO2], 3);
-				}
-			}
-			if (300 < GameData::distance && GameData::distance < 900 && GameData::distance % 30 == 0) // ザコ3の出現
-			{
-				int x = 100 + rand() % (GameConfig::WIDTH - 200);
-				int y = -50;
-				int vy = 40 + rand() % 20;
-				setEnemy(x, -100, 0, vy, ENE_ZAKO3, GameData::imgEnemy[ENE_ZAKO3], 5);
-			}
-				if (GameData::distance == 1) GameData::bossIdx = setEnemy(GameConfig::WIDTH / 2, -120, 0, 1, ENE_BOSS, GameData::imgEnemy[ENE_BOSS], 200); // ボス出現
-				if (GameData::distance % 800 == 1) setItem(); // アイテムの出現
-				if (GameData::player.shield == 0)
-				{
-					StopSoundMem(GameData::bgm); // ＢＧＭ停止
-					GameData::scene = OVER;
-					GameData::timer = 0;
-					break;
-				}
-				break;
+		//GameData::timer++; // タイマーをカウント
+		//switch (GameData::scene) // シーンごとに処理を分岐
+		//{
+		//case TITLE: // タイトル画面
+		//	drawTextC(GameConfig::WIDTH * 0.5, GameConfig::HEIGHT * 0.3, "Shooting Game", 0xffffff, 80);
+		//	drawTextC(GameConfig::WIDTH * 0.5, GameConfig::HEIGHT * 0.7, "Press SPACE to start.", 0xffffff, 30);
+		//	if (CheckHitKey(KEY_INPUT_SPACE))
+		//	{
+		//		initVariable();
+		//		GameData::scene = PLAY;
+		//	}
+		//	break;
 
-		case OVER: // ゲームオーバー
-			if (GameData::timer < GameConfig::FPS * 3) // 自機が爆発する演出
-			{
-				if (GameData::timer % 7 == 0) setEffect(GameData::player.x + rand() % 81 - 40, GameData::player.y + rand() % 81 - 40, EFF_EXPLODE);
-			}
-			else if (GameData::timer == GameConfig::FPS * 3)
-			{
-				PlaySoundMem(GameData::jinOver, DX_PLAYTYPE_BACK); // ジングル出力
-			}
-			else
-			{
-				drawTextC(GameConfig::WIDTH * 0.5, GameConfig::HEIGHT * 0.3, "GAME OVER", 0xff0000, 80);
-			}
-			if (GameData::timer > GameConfig::FPS * 10) GameData::scene = TITLE; // タイトルへ遷移
-			break;
+		//case PLAY: // ゲームプレイ画面
+		//	movePlayer(); // 自機の操作
+		//	if (GameData::distance == GameConfig::STAGE_DISTANCE)
+		//	{
+		//		srand(GameData::stage); // ステージのパターンを決める
+		//		PlaySoundMem(GameData::bgm, DX_PLAYTYPE_LOOP); // ＢＧＭループ出力
+		//	}
+		//	if (GameData::distance > 0) GameData::distance--;
+		//	if (300 < GameData::distance && GameData::distance % 20 == 0) // ザコ1と2の出現
+		//	{
+		//		int x = 100 + rand() % (GameConfig::WIDTH - 200);
+		//		int y = -50;
+		//		int e = 1 + rand() % 2;
+		//		if (e == ENE_ZAKO1) setEnemy(x, y, 0, 3, ENE_ZAKO1, GameData::imgEnemy[ENE_ZAKO1], 1);
+		//		if (e == ENE_ZAKO2) {
+		//			int vx = 0;
+		//			if (GameData::player.x < x - 50) vx = -3;
+		//			if (GameData::player.x > x + 50) vx = 3;
+		//			setEnemy(x, -100, vx, 5, ENE_ZAKO2, GameData::imgEnemy[ENE_ZAKO2], 3);
+		//		}
+		//	}
+		//	if (300 < GameData::distance && GameData::distance < 900 && GameData::distance % 30 == 0) // ザコ3の出現
+		//	{
+		//		int x = 100 + rand() % (GameConfig::WIDTH - 200);
+		//		int y = -50;
+		//		int vy = 40 + rand() % 20;
+		//		setEnemy(x, -100, 0, vy, ENE_ZAKO3, GameData::imgEnemy[ENE_ZAKO3], 5);
+		//	}
+		//		if (GameData::distance == 1) GameData::bossIdx = setEnemy(GameConfig::WIDTH / 2, -120, 0, 1, ENE_BOSS, GameData::imgEnemy[ENE_BOSS], 200); // ボス出現
+		//		if (GameData::distance % 800 == 1) setItem(); // アイテムの出現
+		//		if (GameData::player.shield == 0)
+		//		{
+		//			StopSoundMem(GameData::bgm); // ＢＧＭ停止
+		//			GameData::scene = OVER;
+		//			GameData::timer = 0;
+		//			break;
+		//		}
+		//		break;
 
-		case CLEAR: // ステージクリア
-			movePlayer(); // 自機の処理
-			if (GameData::timer < GameConfig::FPS * 3) // ボスが爆発する演出
-			{
-				if (GameData::timer % 7 == 0) setEffect(GameData::enemy[GameData::bossIdx].x + rand() % 201 - 100, GameData::enemy[GameData::bossIdx].y + rand() % 201 - 100, EFF_EXPLODE);
-			}
-			else if (GameData::timer == GameConfig::FPS * 3)
-			{
-				PlaySoundMem(GameData::jinClear, DX_PLAYTYPE_BACK); // ジングル出力
-			}
-			else
-			{
-				drawTextC(GameConfig::WIDTH * 0.5, GameConfig::HEIGHT * 0.3, "STAGE CLEAR!", 0x00ffff, 80);
-			}
-			if (GameData::timer > GameConfig::FPS * 10) // ゲームプレイへ遷移
-			{
-				GameData::stage++;
-				GameData::distance = GameConfig::STAGE_DISTANCE;
-				GameData::scene = PLAY;
-			}
-			break;
-			}
+		//case OVER: // ゲームオーバー
+		//	if (GameData::timer < GameConfig::FPS * 3) // 自機が爆発する演出
+		//	{
+		//		if (GameData::timer % 7 == 0) setEffect(GameData::player.x + rand() % 81 - 40, GameData::player.y + rand() % 81 - 40, EFF_EXPLODE);
+		//	}
+		//	else if (GameData::timer == GameConfig::FPS * 3)
+		//	{
+		//		PlaySoundMem(GameData::jinOver, DX_PLAYTYPE_BACK); // ジングル出力
+		//	}
+		//	else
+		//	{
+		//		drawTextC(GameConfig::WIDTH * 0.5, GameConfig::HEIGHT * 0.3, "GAME OVER", 0xff0000, 80);
+		//	}
+		//	if (GameData::timer > GameConfig::FPS * 10) GameData::scene = TITLE; // タイトルへ遷移
+		//	break;
 
-			// スコア、ハイスコア、ステージ数の表示
-			drawText(10, 10, "SCORE %07d", GameData::score, 0xffffff, 30);
-			drawText(GameConfig::WIDTH - 220, 10, "HI-SC %07d", GameData::hisco, 0xffffff, 30);
-			drawText(GameConfig::WIDTH - 145, GameConfig::HEIGHT - 40, "STAGE %02d", GameData::stage, 0xffffff, 30);
+		//case CLEAR: // ステージクリア
+		//	movePlayer(); // 自機の処理
+		//	if (GameData::timer < GameConfig::FPS * 3) // ボスが爆発する演出
+		//	{
+		//		if (GameData::timer % 7 == 0) setEffect(GameData::enemy[GameData::bossIdx].x + rand() % 201 - 100, GameData::enemy[GameData::bossIdx].y + rand() % 201 - 100, EFF_EXPLODE);
+		//	}
+		//	else if (GameData::timer == GameConfig::FPS * 3)
+		//	{
+		//		PlaySoundMem(GameData::jinClear, DX_PLAYTYPE_BACK); // ジングル出力
+		//	}
+		//	else
+		//	{
+		//		drawTextC(GameConfig::WIDTH * 0.5, GameConfig::HEIGHT * 0.3, "STAGE CLEAR!", 0x00ffff, 80);
+		//	}
+		//	if (GameData::timer > GameConfig::FPS * 10) // ゲームプレイへ遷移
+		//	{
+		//		GameData::stage++;
+		//		GameData::distance = GameConfig::STAGE_DISTANCE;
+		//		GameData::scene = PLAY;
+		//	}
+		//	break;
+		//	}
 
-			ScreenFlip(); // 裏画面の内容を表画面に反映させる
-			WaitTimer(1000 / GameConfig::FPS); // 一定時間待つ
-			if (ProcessMessage() == -1) break; // Windowsから情報を受け取りエラーが起きたら終了
-			if (CheckHitKey(KEY_INPUT_ESCAPE) == 1) break; // ESCキーが押されたら終了
+		//	// スコア、ハイスコア、ステージ数の表示
+		//	drawText(10, 10, "SCORE %07d", GameData::score, 0xffffff, 30);
+		//	drawText(GameConfig::WIDTH - 220, 10, "HI-SC %07d", GameData::hisco, 0xffffff, 30);
+		//	drawText(GameConfig::WIDTH - 145, GameConfig::HEIGHT - 40, "STAGE %02d", GameData::stage, 0xffffff, 30);
+
+		//	ScreenFlip(); // 裏画面の内容を表画面に反映させる
+		//	WaitTimer(1000 / GameConfig::FPS); // 一定時間待つ
+		//	if (ProcessMessage() == -1) break; // Windowsから情報を受け取りエラーが起きたら終了
+		//	if (CheckHitKey(KEY_INPUT_ESCAPE) == 1) break; // ESCキーが押されたら終了
 		}
 
 		DxLib_End(); // ＤＸライブラリ使用の終了処理
@@ -265,9 +271,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	void initVariable(void)
 	{
 		GameData::player.x = GameConfig::WIDTH / 2;
-		GameData::player.y = GameConfig::HEIGHT / 2;
 		GameData::player.vx = 5;
 		GameData::player.vy = 5;
+		GameData::player.y = GameConfig::HEIGHT / 2;
 		GameData::player.shield = GameConfig::PLAYER_SHIELD_MAX;
 		GetGraphSize(GameData::imgFighter, &GameData::player.wid, &GameData::player.hei); // 自機の画像の幅と高さを代入
 		for (int i = 0; i < GameConfig::ENEMY_MAX; i++) GameData::enemy[i].state = 0; // 全ての敵機を存在しない状態に

@@ -3,24 +3,79 @@
 #include <string>
 #include "GameConfig.h"
 
+//class Image
+//{
+//public:
+//	Image() = default;
+//	void load();
+//
+//	// 背景画像
+//	int imgGalaxy;
+//	int imgFloor;
+//	int imgWallL;
+//	int imgWallR;
+//	// 自機と自機の弾の画像
+//	int imgFighter;
+//	int imgBullet;
+//	// 敵機の画像
+//	std::array<int, GameConfig::IMG_ENEMY_MAX> imgEnemy;
+//	// 爆発演出の画像
+//	int imgExplosion;
+//	// アイテムの画像
+//	int imgItem;
+//};
+//
+
 class Image
 {
 public:
-	Image() = default;
-	void load();
+	Image(int id)
+		: imageId(id)
+	{
+	}
 
-	// 背景画像
-	int imgGalaxy;
-	int imgFloor;
-	int imgWallL;
-	int imgWallR;
-	// 自機と自機の弾の画像
-	int imgFighter;
-	int imgBullet;
-	// 敵機の画像
-	std::array<int, GameConfig::IMG_ENEMY_MAX> imgEnemy;
-	// 爆発演出の画像
-	int imgExplosion;
-	// アイテムの画像
-	int imgItem;
+	int getId() const
+	{
+		return imageId;
+	}
+
+private:
+	int imageId;
 };
+
+class ImageContainer
+{
+public:
+	void load() {}
+
+	const Image& getGalaxy() const
+	{
+		return imgGalaxy;
+	}
+
+private:
+	Image imgGalaxy;
+	Image imgFloor;
+	Image imgWallL;
+	Image imgWallR;
+	Image imgFighter;
+	Image imgBullet;
+	// 敵機の画像
+	std::array<Image, GameConfig::IMG_ENEMY_MAX> imgEnemy;
+	Image imgExplosion;
+	Image imgItem;
+};
+
+void someFunc()
+{
+	ImageContainer container;
+
+	drawImage(container.getGalaxy(), 0, 0);
+}
+
+void drawImage(const Image& image, int x, int y)
+{
+	int w, h;
+	GetGraphSize(image.getId(), &w, &h);
+	DrawGraph(x - w / 2, y - h / 2, image.getId(), TRUE);
+}

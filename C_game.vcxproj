@@ -143,10 +143,28 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="Image.cpp" />
+    <ClCompile Include="Initializer.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="shootingGame.cpp" />
+    <ClCompile Include="Sound.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bullet.h" />
+    <ClInclude Include="EffectType.h" />
+    <ClInclude Include="EnemyType.h" />
+    <ClInclude Include="GameConfig.h" />
+    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="GameState.h" />
+    <ClInclude Include="Image.h" />
+    <ClInclude Include="Initializer.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="IPosition.h" />
+    <ClInclude Include="SceneType.h" />
     <ClInclude Include="shootingGame.h" />
+    <ClInclude Include="Sound.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
