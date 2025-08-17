@@ -145,7 +145,7 @@
   <ItemGroup>
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="GameManager.cpp" />
-    <ClCompile Include="Image.cpp" />
+    <ClCompile Include="ImageContainer.cpp" />
     <ClCompile Include="Initializer.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="shootingGame.cpp" />
@@ -159,6 +159,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="Image.h" />
+    <ClInclude Include="ImageContainer.h" />
     <ClInclude Include="Initializer.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="IPosition.h" />
