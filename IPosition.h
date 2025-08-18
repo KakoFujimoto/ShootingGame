@@ -7,9 +7,11 @@ public:
 	virtual ~IPosition() = default;
 
 	// xÀ•W
-	virtual int getX() const = 0;
 	virtual void setX(int) = 0;
+	virtual int getX() const = 0;
+
 	// yÀ•W
-	virtual int getY() const = 0;
 	virtual void setY(int) = 0;
+	virtual int getY() const = 0;
+
 };

@@ -1,25 +1,30 @@
 #pragma once
 #include "IPosition.h"
 #include "IVelocity.h"
+#include "IState.h"
 
 
-class Player : public IPosition, IVelocity
+class Player : public IPosition, IVelocity, IState
 {
 	int x;
 	int y;
 	int vx;
 	int vy;
+	int state;
 
 public:
-	int getX() const override { return x; }
 	void setX(int v)  override { x = v; }
+	int getX() const override { return x; }
 
-	int getY() const override { return y; }
 	void setY(int v)  override { y = v; }
+	int getY() const override { return y; }
 
-	int getVX() const override { return vx; }
 	void setVX(int v) override { vx = v; }
+	int getVX() const override { return vx; }
 
-	int getVY() const override { return vy; }
 	void setVY(int v) override { vy = v; }
+	int getVY() const override { return vy; }
+
+	void setState(int v) override { state = v; }
+	int getState() const override { return state; }
 };
