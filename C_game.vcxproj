@@ -161,6 +161,7 @@
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageContainer.h" />
     <ClInclude Include="Initializer.h" />
+    <ClInclude Include="IVelocity.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="IPosition.h" />
     <ClInclude Include="SceneType.h" />
