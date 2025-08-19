@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "GameConfig.h"
+#include "GameData.h"
 #include "DxLib.h" //DXライブラリのインクルード
 
 void Player::movePlayer()

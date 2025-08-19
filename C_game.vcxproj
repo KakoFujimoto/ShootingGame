@@ -157,6 +157,7 @@
     <ClInclude Include="EffectType.h" />
     <ClInclude Include="EnemyType.h" />
     <ClInclude Include="GameConfig.h" />
+    <ClInclude Include="GameData.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameState.h" />
