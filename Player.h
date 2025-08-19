@@ -4,9 +4,10 @@
 #include "IState.h"
 #include "IPattern.h"
 #include "IImage.h"
+#include "ISize.h"
 
 
-class Player : public IPosition, IVelocity, IState, IPattern, IImage
+class Player : public IPosition, IVelocity, IState, IPattern, IImage, ISize
 {
 	int x;
 	int y;
@@ -15,6 +16,8 @@ class Player : public IPosition, IVelocity, IState, IPattern, IImage
 	int state;
 	int pattern;
 	int image;
+	int width;
+	int height;
 
 public:
 	void setX(int v)  override { x = v; }
@@ -37,4 +40,10 @@ public:
 
 	void setImage(int v) override { image = v; }
 	int getImage() const override { return image; }
+
+	void setWidth(int v) override { width = v; }
+	int getWidth() const override { return width; }
+
+	void setHeight(int v) override { height = v; }
+	int getHeight() const override { return height; }
 };
