@@ -6,9 +6,9 @@
 #include "IImage.h"
 #include "ISize.h"
 #include "IShield.h"
+#include "ITimer.h"
 
-
-class Player : public IPosition, IVelocity, IState, IPattern, IImage, ISize, IShield
+class Player : public IPosition, IVelocity, IState, IPattern, IImage, ISize, IShield, ITimer
 {
 	int x;
 	int y;
@@ -20,6 +20,7 @@ class Player : public IPosition, IVelocity, IState, IPattern, IImage, ISize, ISh
 	int width;
 	int height;
 	int shield;
+	int timer;
 
 public:
 	void setX(int v)  override { x = v; }
@@ -51,4 +52,7 @@ public:
 
 	void setShield(int v) override { shield = v; }
 	int getShield() const override { return shield; }
+
+	void setTimer(int v) override { timer = v; }
+	int getTimer() const override { return timer; }
 };
