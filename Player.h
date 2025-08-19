@@ -55,4 +55,6 @@ public:
 
 	void setTimer(int v) override { timer = v; }
 	int getTimer() const override { return timer; }
+
+	void movePlayer();
 };

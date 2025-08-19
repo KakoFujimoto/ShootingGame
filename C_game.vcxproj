@@ -147,6 +147,7 @@
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="ImageContainer.cpp" />
     <ClCompile Include="Initializer.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="shootingGame.cpp" />
     <ClCompile Include="Sound.cpp" />
