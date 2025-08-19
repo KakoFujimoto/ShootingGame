@@ -2,15 +2,17 @@
 #include "IPosition.h"
 #include "IVelocity.h"
 #include "IState.h"
+#include "IPattern.h"
 
 
-class Player : public IPosition, IVelocity, IState
+class Player : public IPosition, IVelocity, IState, IPattern
 {
 	int x;
 	int y;
 	int vx;
 	int vy;
 	int state;
+	int pattern;
 
 public:
 	void setX(int v)  override { x = v; }
@@ -27,4 +29,7 @@ public:
 
 	void setState(int v) override { state = v; }
 	int getState() const override { return state; }
+
+	void setPattern(int v) override { pattern = v; }
+	int getPattern() const override { return pattern; }
 };
