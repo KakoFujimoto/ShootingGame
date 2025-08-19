@@ -8,6 +8,7 @@ class ImageContainer
 public:
 	ImageContainer() {}
 
+	// ImageLoader‚ÉˆÚŠÇ
 	void load() {}
 
 	const Image& getGalaxy() const

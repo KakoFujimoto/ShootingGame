@@ -4,14 +4,15 @@
 class Sound
 {
 public:
-	// ゲーム開始時のサウンドロード処理
-	void load();
 
-	// Bullet発射サウンドのロード処理
-	void loadShotSound(const std::string& filePath);
+	//// ゲーム開始時のサウンドロード処理
+	//void load();
 
-	// Bullet発射サウンドの再生
-	void playShot() const;
+	//// Bullet発射サウンドのロード処理
+	//void loadShotSound(const std::string& filePath);
+
+	//// Bullet発射サウンドの再生
+	//void playShot() const;
 
 	// ゲーム中で使用される音
 	int bgm;
