@@ -144,6 +144,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="BulletManager.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="ImageContainer.cpp" />
     <ClCompile Include="Initializer.cpp" />
