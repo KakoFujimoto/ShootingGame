@@ -5,9 +5,10 @@
 #include "IPattern.h"
 #include "IImage.h"
 #include "ISize.h"
+#include "IShield.h"
 
 
-class Player : public IPosition, IVelocity, IState, IPattern, IImage, ISize
+class Player : public IPosition, IVelocity, IState, IPattern, IImage, ISize, IShield
 {
 	int x;
 	int y;
@@ -18,6 +19,7 @@ class Player : public IPosition, IVelocity, IState, IPattern, IImage, ISize
 	int image;
 	int width;
 	int height;
+	int shield;
 
 public:
 	void setX(int v)  override { x = v; }
@@ -46,4 +48,7 @@ public:
 
 	void setHeight(int v) override { height = v; }
 	int getHeight() const override { return height; }
+
+	void setShield(int v) override { shield = v; }
+	int getShield() const override { return shield; }
 };
