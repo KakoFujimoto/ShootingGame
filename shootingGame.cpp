@@ -523,26 +523,29 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		for (int i = 0; i < GameConfig::EFFECT_MAX; i++)
 		{
 			if (GameData::effect[i].state == 0) continue;
-			switch (GameData::effect[i].pattern) // エフェクトごとに処理を分ける
-			{
-			case EFF_EXPLODE: // 爆発演出
-				ix = GameData::effect[i].timer * 128; // 画像の切り出し位置
-				DrawRectGraph(GameData::effect[i].x - 64, GameData::effect[i].y - 64, ix, 0, 128, 128, GameData::imgExplosion, TRUE, FALSE);
-				GameData::effect[i].timer++;
-				if (GameData::effect[i].timer == 7) GameData::effect[i].state = 0;
-				break;
 
-			case EFF_RECOVER: // 回復演出
-				if (GameData::effect[i].timer < 30) // 加算による描画の重ね合わせ
-					SetDrawBlendMode(DX_BLENDMODE_ADD, GameData::effect[i].timer * 8);
-				else
-					SetDrawBlendMode(DX_BLENDMODE_ADD, (60 - GameData::effect[i].timer) * 8);
-				for (int i = 3; i < 8; i++) DrawCircle(GameData::player.x, GameData::player.y, (GameData::player.wid + GameData::player.hei) / i, 0x2040c0, TRUE);
-				SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0); // ブレンドモードを解除
-				GameData::effect[i].timer++;
-				if (GameData::effect[i].timer == 60) GameData::effect[i].state = 0;
-				break;
-			}
+			GameData::effect[i].draw(drawer):
+
+			//switch (GameData::effect[i].pattern) // エフェクトごとに処理を分ける
+			//{
+			//case EFF_EXPLODE: // 爆発演出
+			//	ix = GameData::effect[i].timer * 128; // 画像の切り出し位置
+			//	DrawRectGraph(GameData::effect[i].x - 64, GameData::effect[i].y - 64, ix, 0, 128, 128, GameData::imgExplosion, TRUE, FALSE);
+			//	GameData::effect[i].timer++;
+			//	if (GameData::effect[i].timer == 7) GameData::effect[i].state = 0;
+			//	break;
+
+			//case EFF_RECOVER: // 回復演出
+			//	if (GameData::effect[i].timer < 30) // 加算による描画の重ね合わせ
+			//		SetDrawBlendMode(DX_BLENDMODE_ADD, GameData::effect[i].timer * 8);
+			//	else
+			//		SetDrawBlendMode(DX_BLENDMODE_ADD, (60 - GameData::effect[i].timer) * 8);
+			//	for (int i = 3; i < 8; i++) DrawCircle(GameData::player.x, GameData::player.y, (GameData::player.wid + GameData::player.hei) / i, 0x2040c0, TRUE);
+			//	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0); // ブレンドモードを解除
+			//	GameData::effect[i].timer++;
+			//	if (GameData::effect[i].timer == 60) GameData::effect[i].state = 0;
+			//	break;
+			//}
 		}
 	}
 
