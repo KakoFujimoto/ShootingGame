@@ -9,13 +9,18 @@ public:
 	ImageContainer() {}
 
 	// ImageLoader‚ÉˆÚŠÇ
-	void load() {}
+	/*void load() {}*/
+
+	/*getter‚Í•K—v‚É‚È‚Á‚½Žž“_‚Å’Ç‰Á‚·‚é*/
 
 	const Image& getGalaxy() const
 	{
 		return imgGalaxy;
 	}
-
+	const Image& getBullet() const
+	{
+		return imgBullet;
+	}
 private:
 	// ”wŒi‰æ‘œ
 	Image imgGalaxy;

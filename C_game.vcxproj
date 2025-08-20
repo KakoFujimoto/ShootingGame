@@ -155,6 +155,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="BulletManager.h" />
     <ClInclude Include="EffectType.h" />
     <ClInclude Include="EnemyType.h" />
     <ClInclude Include="GameConfig.h" />

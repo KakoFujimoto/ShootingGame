@@ -2,11 +2,13 @@
 #include "GameConfig.h"
 #include "GameData.h"
 #include "DxLib.h" //DXライブラリのインクルード
+#include "BulletManager.h" // 弾のヘッダーファイルをインクルード
 
 void Player::movePlayer()
 {
 	static char oldSpcKey; // 1つ前のスペースキーの状態を保持する変数
 	static int countSpcKey; // スペースキーを押し続けている間、カウントアップする変数
+	BulletManager bullet; // 弾のインスタンスを作成
 
 	if (CheckHitKey(KEY_INPUT_UP)) { // 上キー
 		y -= vy;
@@ -39,11 +41,11 @@ void Player::movePlayer()
 	if (CheckHitKey(KEY_INPUT_SPACE)) { // スペースキー
 		if (oldSpcKey == 0)
 		{
-			setBullet(); // 押した瞬間、発射
+			bullet.setBullet(); // 押した瞬間、発射
 		}
 		else if (countSpcKey % 20 == 0)
 		{
-			setBullet(); // 一定間隔で発射
+			bullet.setBullet(); // 一定間隔で発射
 		}
 		countSpcKey++;
 	}

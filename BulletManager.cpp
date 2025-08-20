@@ -1,8 +1,12 @@
 #include "Bullet.h"
 #include "GameData.h"
 #include "Player.h"
+#include "DxLib.h"
+#include "ImageContainer.h"
 
-Player player = Player();
+Player player;
+Bullet bullet[GameConfig::BULLET_MAX];
+ImageContainer imageContainer;
 
 class BulletManager
 {
@@ -10,14 +14,14 @@ class BulletManager
 	{
 		for (int n = 0; n < GameData::weaponLv; n++) {
 			int x = player.getX() - (GameData::weaponLv - 1) * 5 + n * 10;
-			int y = GameData::player.y - 20;
+			int y = player.getY() - 20;
 			for (int i = 0; i < GameConfig::BULLET_MAX; i++) {
-				if (GameData::bullet[i].state == 0) {
-					GameData::bullet[i].x = x;
-					GameData::bullet[i].y = y;
-					GameData::bullet[i].vx = 0;
-					GameData::bullet[i].vy = -40;
-					GameData::bullet[i].state = 1;
+				if (bullet[i].getState() == 0) {
+					bullet[i].setX(x);
+					bullet[i].setY(y);
+					bullet[i].setVX(0);
+					bullet[i].setVY(-40);
+					bullet[i].setState(1);
 					break;
 				}
 			}
@@ -29,10 +33,14 @@ class BulletManager
 	void moveBullet(void)
 	{
 		for (int i = 0; i < GameConfig::BULLET_MAX; i++) {
-			if (GameData::bullet[i].state == 0) continue; // 空いている配列なら処理しない
-			GameData::bullet[i].x += GameData::bullet[i].vx; // ┬ 座標を変化させる
-			GameData::bullet[i].y += GameData::bullet[i].vy; // ┘
-			drawImage(GameData::imgBullet, GameData::bullet[i].x, GameData::bullet[i].y); // 弾の描画
-			if (GameData::bullet[i].y < -100) GameData::bullet[i].state = 0; // 画面外に出たら、存在しない状態にする
-
+			if (bullet[i].getState() == 0) continue; // 空いている配列なら処理しない
+			bullet[i].setX(bullet[i].getX() + bullet[i].getVX()); // ┬ 座標を変化させる
+			bullet[i].setY(bullet[i].getY() + bullet[i].getVY()); // ┘
+			drawImage(imageContainer.getBullet(), bullet[i].getX(), bullet[i].getY()); // 弾の描画※drawImageは未実装
+			if (bullet[i].getY() < -100)
+			{
+				bullet[i].setState(0); // 画面外に出たら、存在しない状態にする
+			}
+		}
+	}
 };
