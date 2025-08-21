@@ -4,24 +4,9 @@
 class Sound
 {
 public:
+	std::string filePath;
+	int handle = -1;
 
-	//// ゲーム開始時のサウンドロード処理
-	//void load();
-
-	//// Bullet発射サウンドのロード処理
-	//void loadShotSound(const std::string& filePath);
-
-	//// Bullet発射サウンドの再生
-	//void playShot() const;
-
-	// ゲーム中で使用される音
-	int bgm;
-	int jinOver;
-	int jinClear;
-	int seExpl;
-	int seItem;
-	int seShot;
-
-private:
-	int seShotHandle = -1;
+	Sound() = default;
+	Sound(const std::string& path) : filePath(path){}
 };
