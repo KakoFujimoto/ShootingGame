@@ -1,4 +1,7 @@
 #pragma once
+#include <vector>
+#include "Bullet.h"
+
 class BulletManager {
 public:
 	// ’e‚ÌˆÚ“®
