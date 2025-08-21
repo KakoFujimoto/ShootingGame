@@ -8,6 +8,8 @@
 #include "IShield.h"
 #include "ITimer.h"
 
+class BulletManager;
+
 class Player : public IPosition, IVelocity, IState, IPattern, IImage, ISize, IShield, ITimer
 {
 	int x;
@@ -56,5 +58,5 @@ public:
 	void setTimer(int v) override { timer = v; }
 	int getTimer() const override { return timer; }
 
-	void movePlayer();
+	void movePlayer(BulletManager& bulletManager);
 };

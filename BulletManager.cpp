@@ -10,7 +10,7 @@ ImageContainer imageContainer;
 
 class BulletManager
 {
-	void setBullet(void)
+	void setBullet()
 	{
 		for (int n = 0; n < GameData::weaponLv; n++) {
 			int x = player.getX() - (GameData::weaponLv - 1) * 5 + n * 10;
