@@ -2,13 +2,16 @@
 #include <vector>
 #include "Bullet.h"
 
+class ImageContainer;
+
 class BulletManager {
 public:
 	// 弾の移動
-	void moveBullet();
+	void setBullet(const Player& player);
+
 
 	// 弾のセット（発射）
-	void setBullet();
+	void moveBullet(ImageContainer& imageContainer);
 
 private:
 	std::vector<Bullet> bullets;

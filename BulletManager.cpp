@@ -4,13 +4,13 @@
 #include "DxLib.h"
 #include "ImageContainer.h"
 
-Player player;
-Bullet bullet[GameConfig::BULLET_MAX];
-ImageContainer imageContainer;
 
 class BulletManager
 {
-	void setBullet()
+	Bullet bullet[GameConfig::BULLET_MAX];
+
+public:
+	void setBullet(const Player& player)
 	{
 		for (int n = 0; n < GameData::weaponLv; n++) {
 			int x = player.getX() - (GameData::weaponLv - 1) * 5 + n * 10;
@@ -30,7 +30,7 @@ class BulletManager
 	}
 
 	// ’e‚ÌˆÚ“®
-	void moveBullet(void)
+	void moveBullet(ImageContainer& imageContainer)
 	{
 		for (int i = 0; i < GameConfig::BULLET_MAX; i++) {
 			if (bullet[i].getState() == 0) continue; // ‹ó‚¢‚Ä‚¢‚é”z—ñ‚È‚çˆ—‚µ‚È‚¢
