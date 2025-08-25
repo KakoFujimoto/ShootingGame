@@ -27,7 +27,7 @@
 	// ’e‚ÌˆÚ“®
 	void BulletManager::moveBullet(ImageContainer& imageContainer)
 	{
-		for (int i = 0; i < GameConfig::BULLET_MAX; i++) {
+		for (auto& b : bullets) {
 			if (b.getState() == 0) continue; // ‹ó‚¢‚Ä‚¢‚é”z—ñ‚È‚çˆ—‚µ‚È‚¢
 			b.setX(b.getX() + b.getVX()); // „¦ À•W‚ð•Ï‰»‚³‚¹‚é
 			b.setY(b.getY() + b.getVY()); // „£

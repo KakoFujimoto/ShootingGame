@@ -4,7 +4,7 @@
 #include "DxLib.h"
 
 	// 敵機を動かす
-	void moveEnemy(void)
+	void EnemyManager::moveEnemy(void)
 	{
 		for (int i = 0; i < GameConfig::ENEMY_MAX; i++) {
 			if (GameData::enemy[i].state == 0) continue; // 空いている配列なら処理しない
@@ -72,7 +72,7 @@
 	}
 
 	// 敵機をセットする
-	int setEnemy(int x, int y, int vx, int vy, int ptn, int img, int sld)
+	int EnemyManager::setEnemy(int x, int y, int vx, int vy, int ptn, int img, int sld)
 	{
 		for (int i = 0; i < GameConfig::ENEMY_MAX; i++) {
 			if (GameData::enemy[i].state == 0) {

@@ -9,4 +9,11 @@ public:
 
 	Sound() = default;
 	Sound(const std::string& path) : filePath(path){}
+
+	void load();
+
+	void loadShotSound(const std::string& filepath);
+
+	void playShot() const;
+
 };
