@@ -41,11 +41,11 @@ void Player::movePlayer(BulletManager& bulletManager)
 	if (CheckHitKey(KEY_INPUT_SPACE)) { // スペースキー
 		if (oldSpcKey == 0)
 		{
-			bulletManager.setBullet(); // 押した瞬間、発射
+			bulletManager.setBullet(*this); // 押した瞬間、発射
 		}
 		else if (countSpcKey % 20 == 0)
 		{
-			bulletManager.setBullet(); // 一定間隔で発射
+			bulletManager.setBullet(*this); // 一定間隔で発射
 		}
 		countSpcKey++;
 	}
