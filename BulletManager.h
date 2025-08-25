@@ -6,6 +6,10 @@ class ImageContainer;
 
 class BulletManager {
 public:
+	BulletManager() {
+		bullets.resize(GameConfig::BULLET_MAX);
+	}
+
 	// ’e‚ÌˆÚ“®
 	void setBullet(const Player& player);
 
