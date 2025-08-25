@@ -8,8 +8,6 @@ class ImageContainer
 public:
 	ImageContainer() {}
 
-	// ImageLoader‚ÉˆÚŠÇ
-	/*void load() {}*/
 
 	/*getter‚Í•K—v‚É‚È‚Á‚½Žž“_‚Å’Ç‰Á‚·‚é*/
 
@@ -20,6 +18,14 @@ public:
 	const Image& getBullet() const
 	{
 		return imgBullet;
+	}
+	const Image& getExplosion() const
+	{
+		return imgExplosion;
+	}
+	const Image& getItem() const
+	{
+		return imgItem;
 	}
 
 	void load();

@@ -1,7 +1,8 @@
 #include "EffectManager.h"
 #include "EffectType.h"
+#include "ImageContainer.h"
 
-void EffectManager::setEffect(int x, int y, int ptn)
+void EffectManager::setEffect(int x, int y, int ptn, ImageContainer& imageContainer)
 {
 	for (auto& e : effects) {
 		if (e.getState() == 0) {
@@ -10,7 +11,9 @@ void EffectManager::setEffect(int x, int y, int ptn)
 			e.setVX(0);
 			e.setVY(0);
 			e.setPattern(ptn);
-			e.setImage((ptn == EffectType::Explode) ? GameData::imgExplosion : GameData::imgItem);
+			e.setImage((static_cast<EffectType>(ptn) == EffectType::Explode)
+				? imageContainer.getExplosion().getId()
+				: imageContainer.getItem().getId());
 			GetGraphSize(e.getImage(), &e.getWidth(), &e.getHeight());
 			e.setState(1);
 			e.setTimer(0);
@@ -26,13 +29,13 @@ void EffectManager::drawEffect(void)
 		if (e.getState() == 0) continue;
 		switch (e.getPattern()) // エフェクトごとに処理を分ける
 		{
-		case EffectType::Explode: // 爆発演出
+		case static_cast<int>(EffectType::Explode): // 爆発演出
 			ix = e.getTimer() * 128; // 画像の切り出し位置
 			DrawRectGraph(e.getX() - 64, e.getY() - 64, ix, 0, 128, 128, e.getImage(), TRUE, FALSE);
 			e.setTimer(e.getTimer() + 1);
 			if (e.getTimer() == 7) e.setState(0);
 			break;
-		case EffectType::Recover: // 回復演出
+		case static_cast<int>(EffectType::Recover): // 回復演出
 			if (e.getTimer() < 30) // 加算による描画の重ね合わせ
 				SetDrawBlendMode(DX_BLENDMODE_ADD, e.getTimer() * 8);
 			else
