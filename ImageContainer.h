@@ -21,6 +21,9 @@ public:
 	{
 		return imgBullet;
 	}
+
+	void load();
+
 private:
 	// ”wŒi‰æ‘œ
 	Image imgGalaxy;
