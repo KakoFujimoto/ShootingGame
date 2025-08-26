@@ -4,20 +4,20 @@
 #include "IPosition.h"
 #include "IVelocity.h"
 #include "IState.h"
-#include "IPattern.h"
 #include "IImage.h"
 #include "ISize.h"
 #include "IShield.h"
 #include "ITimer.h"
+#include "EffectType.h"
 
-class Effect : public IPosition, IVelocity, IState, IPattern, IImage, ISize, IShield, ITimer
+class Effect : public IPosition, IVelocity, IState, IImage, ISize, IShield, ITimer
 {
 	int x;
 	int y;
 	int vx;
 	int vy;
 	int state;
-	int pattern;
+	EffectType pattern;
 	int image;
 	int width;
 	int height;
@@ -40,8 +40,8 @@ public:
 	void setState(int v) override { state = v; }
 	int getState() const override { return state; }
 
-	void setPattern(int v) override { pattern = v; }
-	int getPattern() const override { return pattern; }
+	void setPattern(EffectType v) { pattern = v; }
+	EffectType getPattern() const { return pattern; }
 
 	void setImage(int v) override { image = v; }
 	int getImage() const override { return image; }

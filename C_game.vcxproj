@@ -177,7 +177,6 @@
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageContainer.h" />
     <ClInclude Include="Initializer.h" />
-    <ClInclude Include="IPattern.h" />
     <ClInclude Include="IScene.h" />
     <ClInclude Include="IShield.h" />
     <ClInclude Include="ISize.h" />

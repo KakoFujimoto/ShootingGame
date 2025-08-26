@@ -2,7 +2,6 @@
 #include "IPosition.h"
 #include "IVelocity.h"
 #include "IState.h"
-#include "IPattern.h"
 #include "IImage.h"
 #include "ISize.h"
 #include "IShield.h"
@@ -11,7 +10,7 @@
 
 class BulletManager;
 
-class Player : public IPosition, IVelocity, IState, IPattern, IImage, ISize, IShield, ITimer
+class Player : public IPosition, IVelocity, IState, IImage, ISize, IShield, ITimer
 {
 	int x;
 	int y;
@@ -40,9 +39,6 @@ public:
 
 	void setState(int v) override { state = v; }
 	int getState() const override { return state; }
-
-	void setPattern(int v) override { pattern = v; }
-	int getPattern() const override { return pattern; }
 
 	void setImage(const Image* v) override { image = v; }
 	const Image* getImage() const override { return image; }
