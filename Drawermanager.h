@@ -10,6 +10,9 @@ public:
 		bool shadow = false; // Default no shadow
 		bool center = false; // Default not centered
 	};
+	struct ImageStyle {
+		bool center = true;   // ’†SŠî€‚Å•`‰æ‚·‚é‚©
+	};
 
 	static TextStyle DefaultTextStyle();
 

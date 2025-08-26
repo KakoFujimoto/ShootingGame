@@ -161,7 +161,7 @@
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="BulletManager.h" />
     <ClInclude Include="Drawer.h" />
-    <ClInclude Include="Drawermanager.h" />
+    <ClInclude Include="DrawerManager.h" />
     <ClInclude Include="EffectManager.h" />
     <ClInclude Include="EffectType.h" />
     <ClInclude Include="Effetct.h" />

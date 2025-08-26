@@ -27,3 +27,18 @@ void Drawer::drawText(int x, int y, const std::string& text, const DrawerManager
 //style.color = GetColor(255, 0, 0);
 //style.shadow = true;
 //drawer.drawText(400, 300, "Hello, World!", style);
+
+void Drawer::drawImage(int x, int y, int img, const DrawerManager::ImageStyle& style) {
+    int w, h;
+    GetGraphSize(img, &w, &h);
+
+    int drawX = x;
+    int drawY = y;
+
+    if (style.center) {
+        drawX -= w / 2;
+        drawY -= h / 2;
+    }
+
+    DrawGraph(drawX, drawY, img, TRUE);
+}

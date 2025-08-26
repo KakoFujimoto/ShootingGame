@@ -158,7 +158,7 @@
     <ClInclude Include="Drawer.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Drawermanager.h">
+    <ClInclude Include="DrawerManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
