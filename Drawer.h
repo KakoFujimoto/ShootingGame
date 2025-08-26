@@ -1,0 +1,9 @@
+#pragma once
+#include <string>
+#include "DrawerManager.h"
+
+class Drawer
+{
+public:
+    void drawText(int x, int y, const std::string& text, const DrawerManager::TextStyle& style = DrawerManager::DefaultTextStyle());
+};

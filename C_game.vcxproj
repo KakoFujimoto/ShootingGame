@@ -144,6 +144,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BulletManager.cpp" />
+    <ClCompile Include="Drawer.cpp" />
+    <ClCompile Include="DrawerManager.cpp" />
     <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="GameManager.cpp" />
@@ -158,6 +160,8 @@
   <ItemGroup>
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="BulletManager.h" />
+    <ClInclude Include="Drawer.h" />
+    <ClInclude Include="Drawermanager.h" />
     <ClInclude Include="EffectManager.h" />
     <ClInclude Include="EffectType.h" />
     <ClInclude Include="Effetct.h" />
