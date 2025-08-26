@@ -3,6 +3,7 @@
 
 void Drawer::drawText(int x, int y, const std::string& text, const DrawerManager::TextStyle& style)
 {
+
 	SetFontSize(style.size);
 
 	int drawX = x;

@@ -1,11 +1,12 @@
 #pragma once
 
+class Image;
+
 class IImage
 {
 public:
 	virtual ~IImage() = default;
 
-	virtual void setImage(int v) = 0;
-	virtual int getImage() const = 0;
-
+	virtual void setImage(const Image* v) = 0;
+	virtual const Image* getImage() const = 0;
 };

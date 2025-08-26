@@ -7,6 +7,7 @@
 #include "ISize.h"
 #include "IShield.h"
 #include "ITimer.h"
+#include "Image.h"
 
 class BulletManager;
 
@@ -18,7 +19,7 @@ class Player : public IPosition, IVelocity, IState, IPattern, IImage, ISize, ISh
 	int vy;
 	int state;
 	int pattern;
-	int image;
+	const Image* image;
 	int width;
 	int height;
 	int shield;
@@ -43,8 +44,8 @@ public:
 	void setPattern(int v) override { pattern = v; }
 	int getPattern() const override { return pattern; }
 
-	void setImage(int v) override { image = v; }
-	int getImage() const override { return image; }
+	void setImage(const Image* v) override { image = v; }
+	const Image* getImage() const override { return image; }
 
 	void setWidth(int v) override { width = v; }
 	int getWidth() const override { return width; }

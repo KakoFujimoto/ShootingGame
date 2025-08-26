@@ -1,6 +1,7 @@
 #include "EffectManager.h"
 #include "EffectType.h"
 #include "ImageContainer.h"
+#include "DxLib.h"
 
 void EffectManager::setEffect(int x, int y, int ptn, ImageContainer& imageContainer)
 {
@@ -12,8 +13,8 @@ void EffectManager::setEffect(int x, int y, int ptn, ImageContainer& imageContai
 			e.setVY(0);
 			e.setPattern(ptn);
 			e.setImage((static_cast<EffectType>(ptn) == EffectType::Explode)
-				? imageContainer.getExplosion().getId()
-				: imageContainer.getItem().getId());
+				? imageContainer.getExplosion()
+				: imageContainer.getItem());
 			GetGraphSize(e.getImage(), &e.getWidth(), &e.getHeight());
 			e.setState(1);
 			e.setTimer(0);
