@@ -2,7 +2,6 @@
 #include <array>
 #include "GameConfig.h"
 #include "IPosition.h"
-#include "IVelocity.h"
 #include "IState.h"
 #include "IImage.h"
 #include "ISize.h"
@@ -10,7 +9,7 @@
 #include "ITimer.h"
 #include "EnemyType.h"
 
-class Enemy : public IPosition, IVelocity, IState, IImage, ISize, IShield, ITimer
+class Enemy : public IPosition, IState, IImage, ISize, IShield, ITimer
 {
 	int x;
 	int y;
@@ -18,7 +17,7 @@ class Enemy : public IPosition, IVelocity, IState, IImage, ISize, IShield, ITime
 	int vy;
 	int state;
 	EnemyType pattern;
-	int image;
+	const Image* image;
 	int width;
 	int height;
 	int shield;
@@ -31,11 +30,11 @@ public:
 	void setY(int v)  override { y = v; }
 	int getY() const override { return y; }
 
-	void setVX(int v) override { vx = v; }
-	int getVX() const override { return vx; }
+	void setVX(int v)  { vx = v; }
+	int getVX() const  { return vx; }
 
-	void setVY(int v) override { vy = v; }
-	int getVY() const override { return vy; }
+	void setVY(int v)  { vy = v; }
+	int getVY() const  { return vy; }
 
 	void setState(int v) override { state = v; }
 	int getState() const override { return state; }
@@ -43,8 +42,8 @@ public:
 	void setPattern(EnemyType v) { pattern = v; }
 	EnemyType getPattern() const { return pattern; }
 
-	void setImage(int v) override { image = v; }
-	int getImage() const override { return image; }
+	void setImage(const Image* v) override { image = v; }
+	const Image* getImage() const override { return image; }
 
 	void setWidth(int v) override { width = v; }
 	int getWidth() const override { return width; }

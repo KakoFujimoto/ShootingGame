@@ -1,6 +1,5 @@
 #pragma once
 #include "IPosition.h"
-#include "IVelocity.h"
 #include "IState.h"
 #include "IImage.h"
 #include "ISize.h"
@@ -10,7 +9,7 @@
 
 class BulletManager;
 
-class Player : public IPosition, IVelocity, IState, IImage, ISize, IShield, ITimer
+class Player : public IPosition, IState, IImage, ISize, IShield, ITimer
 {
 	int x;
 	int y;
@@ -31,11 +30,11 @@ public:
 	void setY(int v)  override { y = v; }
 	int getY() const override { return y; }
 
-	void setVX(int v) override { vx = v; }
-	int getVX() const override { return vx; }
+	void setVX(int v) { vx = v; }
+	int getVX() const { return vx; }
 
-	void setVY(int v) override { vy = v; }
-	int getVY() const override { return vy; }
+	void setVY(int v)  { vy = v; }
+	int getVY() const  { return vy; }
 
 	void setState(int v) override { state = v; }
 	int getState() const override { return state; }

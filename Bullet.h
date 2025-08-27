@@ -2,21 +2,20 @@
 #include <array>
 #include "GameConfig.h"
 #include "IPosition.h"
-#include "IVelocity.h"
 #include "IState.h"
 #include "IImage.h"
 #include "ISize.h"
 #include "IShield.h"
 #include "ITimer.h"
 
-class Bullet : public IPosition, IVelocity, IState, IImage, ISize, IShield, ITimer
+class Bullet : public IPosition, IState, IImage, ISize, IShield, ITimer
 {
 	int x;
 	int y;
 	int vx;
 	int vy;
 	int state;
-	int image;
+	const Image* image;
 	int width;
 	int height;
 	int shield;
@@ -29,17 +28,17 @@ public:
 	void setY(int v)  override { y = v; }
 	int getY() const override { return y; }
 
-	void setVX(int v) override { vx = v; }
-	int getVX() const override { return vx; }
+	void setVX(int v) { vx = v; }
+	int getVX() const { return vx; }
 
-	void setVY(int v) override { vy = v; }
-	int getVY() const override { return vy; }
+	void setVY(int v) { vy = v; }
+	int getVY() const { return vy; }
 
 	void setState(int v) override { state = v; }
 	int getState() const override { return state; }
 
-	void setImage(int v) override { image = v; }
-	int getImage() const override { return image; }
+	void setImage(const Image* v) override { image = v; }
+	const Image* getImage() const override { return image; }
 
 	void setWidth(int v) override { width = v; }
 	int getWidth() const override { return width; }
@@ -52,5 +51,4 @@ public:
 
 	void setTimer(int v) override { timer = v; }
 	int getTimer() const override { return timer; }
-
 };
