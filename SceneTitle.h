@@ -19,7 +19,6 @@ public:
 			initVariable();
 			return new ScenePlay();
 		}
-
-		return std::null_ptr_t;
+		return nullptr;
 	}
 };
