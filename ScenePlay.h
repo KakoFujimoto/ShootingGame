@@ -4,6 +4,9 @@
 #include "GameManager.h"
 #include "GameConfig.h"
 #include "BulletManager.h"
+#include "GameData.h"
+#include "EnemyType.h"
+#include "SceneType.h"
 
 class BulletManager;
 
@@ -15,6 +18,8 @@ public:
 	{	
 		auto& player = game.getPlayer();
 		auto& bullet = game.getBullet();
+
+		int playerShield = player.getShield();
 
 		player.movePlayer(bullet);
 
@@ -29,13 +34,14 @@ public:
 		{
 			int x = 100 + rand() % (GameConfig::WIDTH - 200);
 			int y = -50;
-			int e = 1 + rand() % 2;
-			if (e == ENE_ZAKO1) setEnemy(x, y, 0, 3, ENE_ZAKO1, GameData::imgEnemy[ENE_ZAKO1], 1);
-			if (e == ENE_ZAKO2) {
+			EnemyType e = static_cast<EnemyType>(1 + rand() % 2);
+
+			if (e == EnemyType::Zako1) setEnemy(x, y, 0, 3, EnemyType::Zako1, GameData::imgEnemy[Zako1], 1);
+			if (e == EnemyType::Zako2) {
 				int vx = 0;
 				if (GameData::player.x < x - 50) vx = -3;
 				if (GameData::player.x > x + 50) vx = 3;
-				setEnemy(x, -100, vx, 5, ENE_ZAKO2, GameData::imgEnemy[ENE_ZAKO2], 3);
+				setEnemy(x, -100, vx, 5, EnemyType::Zako2, GameData::imgEnemy[Zako2], 3);
 			}
 		}
 		if (300 < GameData::distance && GameData::distance < 900 && GameData::distance % 30 == 0) // ザコ3の出現
@@ -43,14 +49,14 @@ public:
 			int x = 100 + rand() % (GameConfig::WIDTH - 200);
 			int y = -50;
 			int vy = 40 + rand() % 20;
-			setEnemy(x, -100, 0, vy, ENE_ZAKO3, GameData::imgEnemy[ENE_ZAKO3], 5);
+			setEnemy(x, -100, 0, vy, EnemyType::Zako3, GameData::imgEnemy[Zako3], 5);
 		}
-		if (GameData::distance == 1) GameData::bossIdx = setEnemy(GameConfig::WIDTH / 2, -120, 0, 1, ENE_BOSS, GameData::imgEnemy[ENE_BOSS], 200); // ボス出現
+		if (GameData::distance == 1) GameData::bossIdx = setEnemy(GameConfig::WIDTH / 2, -120, 0, 1, EnemyType::Boss, GameData::imgEnemy[Boss], 200); // ボス出現
 		if (GameData::distance % 800 == 1) setItem(); // アイテムの出現
-		if (GameData::player.shield == 0)
+		if (playerShield == 0)
 		{
 			StopSoundMem(GameData::bgm); // ＢＧＭ停止
-			GameData::scene = OVER;
+			GameData::scene = OVER; // SceneManagerでOVERに設定する？
 			GameData::timer = 0;
 			break;
 		}
