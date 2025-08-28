@@ -1,3 +1,5 @@
+#include "GameManager.h"
+
 class GameManger
 {
 public:
@@ -6,6 +8,11 @@ public:
 	Player& getPlayer()
 	{
 		return player;
+	}
+
+	BulletManager& getBullet()
+	{
+		return bullets;
 	}
 
 private:

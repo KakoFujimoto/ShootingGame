@@ -4,8 +4,7 @@
 #include "GameManager.h"
 #include "GameConfig.h"
 
-class SceneTitle
-	: IScene
+class SceneTitle: public IScene
 {
 public:
 	virtual std::shared_ptr<IScene> run(GameManager& game)

@@ -3,14 +3,22 @@
 #include "IScene.h"
 #include "GameManager.h"
 #include "GameConfig.h"
+#include "BulletManager.h"
+
+class BulletManager;
 
 class ScenePlay
 	: IScene
 {
 public:
 	virtual std::shared_ptr<IScene> run(GameManager& game)
-	{
-		movePlayer(); // 自機の操作
+	{	
+		auto& player = game.getPlayer();
+		auto& bullet = game.getBullet();
+
+		player.movePlayer(bullet);
+
+
 		if (GameData::distance == GameConfig::STAGE_DISTANCE)
 		{
 			srand(GameData::stage); // ステージのパターンを決める
