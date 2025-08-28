@@ -6,10 +6,10 @@
 #include "IImage.h"
 #include "ISize.h"
 #include "IShield.h"
-#include "ITimer.h"
 #include "EnemyType.h"
+#include "IVelocity.h"
 
-class Enemy : public IPosition, IState, IImage, ISize, IShield, ITimer
+class Enemy : public IPosition, IState, IImage, ISize, IShield, IVelocity
 {
 	int x;
 	int y;
@@ -21,7 +21,6 @@ class Enemy : public IPosition, IState, IImage, ISize, IShield, ITimer
 	int width;
 	int height;
 	int shield;
-	int timer;
 
 public:
 	void setX(int v)  override { x = v; }
@@ -30,11 +29,11 @@ public:
 	void setY(int v)  override { y = v; }
 	int getY() const override { return y; }
 
-	void setVX(int v)  { vx = v; }
-	int getVX() const  { return vx; }
+	void setVX(int v) override { vx = v; }
+	int getVX() const override { return vx; }
 
-	void setVY(int v)  { vy = v; }
-	int getVY() const  { return vy; }
+	void setVY(int v) override { vy = v; }
+	int getVY() const override { return vy; }
 
 	void setState(int v) override { state = v; }
 	int getState() const override { return state; }
@@ -53,8 +52,4 @@ public:
 
 	void setShield(int v) override { shield = v; }
 	int getShield() const override { return shield; }
-
-	void setTimer(int v) override { timer = v; }
-	int getTimer() const override { return timer; }
-
 };

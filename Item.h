@@ -1,23 +1,27 @@
 #pragma once
 #include "IPosition.h"
 #include "IImage.h"
-#include "ISize.h"
 #include "IShield.h"
 #include "Image.h"
 #include "IVelocity.h"
+#include "ItemType.h"
+#include "ITimer.h"
+#include "IState.h"
 
-class BulletManager;
 
-class Player : public IPosition, IImage, ISize, IShield, IVelocity
+class Item : public IPosition, IImage, IShield, IVelocity, ITimer, IState
 {
 	int x;
 	int y;
 	int vx;
 	int vy;
+	int state;
+	ItemType pattern;
 	const Image* image;
 	int width;
 	int height;
 	int shield;
+	int timer;
 
 public:
 	void setX(int v)  override { x = v; }
@@ -32,17 +36,18 @@ public:
 	void setVY(int v) override { vy = v; }
 	int getVY() const override { return vy; }
 
+	void setState(int v) override { state = v; }
+	int getState() const override { return state; }
+
+	void setPattern(ItemType v) { pattern = v; }
+	ItemType getPattern() const { return pattern; }
+
 	void setImage(const Image* v) override { image = v; }
 	const Image* getImage() const override { return image; }
-
-	void setWidth(int v) override { width = v; }
-	int getWidth() const override { return width; }
-
-	void setHeight(int v) override { height = v; }
-	int getHeight() const override { return height; }
 
 	void setShield(int v) override { shield = v; }
 	int getShield() const override { return shield; }
 
-	void movePlayer(BulletManager& bulletManager);
+	void setTimer(int v) override { timer = v; }
+	int getTimer() const override { return timer; }
 };

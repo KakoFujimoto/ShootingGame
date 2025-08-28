@@ -181,7 +181,10 @@
     <ClInclude Include="IShield.h" />
     <ClInclude Include="ISize.h" />
     <ClInclude Include="IState.h" />
+    <ClInclude Include="Item.h" />
+    <ClInclude Include="ItemType.h" />
     <ClInclude Include="ITimer.h" />
+    <ClInclude Include="IVelocity.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="IPosition.h" />
     <ClInclude Include="SceneTitle.h" />
