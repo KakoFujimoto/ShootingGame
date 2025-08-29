@@ -4,6 +4,7 @@
 #include "BulletManager.h"
 #include "SceneManager.h"
 #include "EnemyManager.h"
+#include "EffectManager.h"
 
 class GameManager
 {
@@ -11,10 +12,9 @@ public:
     void gameLoop();
 
     Player& getPlayer() { return player; }
-    BulletManager& getBullet()
-    {
-        return bullets;
-    }
+    BulletManager& getBullet(){ return bullets; }
+    EffectManager& getEffect() { return effects; }
+
 
 private:
     SceneManager sceneManager;
@@ -22,4 +22,5 @@ private:
     Player player;
     EnemyManager enemies;
     BulletManager bullets;
+	EffectManager effects;
 };

@@ -3,7 +3,7 @@
 
 class EffectManager {
 public:
-	void setEffect(int x, int y, int ptn, ImageContainer& imageContainer);
+	void setEffect(int x, int y, EffectType ptn, ImageContainer& imageContainer);
 
 	void drawEffect(void);
 

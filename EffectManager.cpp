@@ -3,7 +3,7 @@
 #include "ImageContainer.h"
 #include "DxLib.h"
 
-void EffectManager::setEffect(int x, int y, int ptn, ImageContainer& imageContainer)
+void EffectManager::setEffect(int x, int y, EffectType ptn, ImageContainer& imageContainer)
 {
 	for (auto& e : effects) {
 		if (e.getState() == 0) {

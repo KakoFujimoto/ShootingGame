@@ -6,6 +6,7 @@
 #include "GameData.h"
 #include "SceneType.h"
 #include "ScenePlay.h"
+#include "EffectType.h"
 
 class SceneClear
 	: IScene
@@ -15,6 +16,8 @@ public:
 	{		
 		auto& player = game.getPlayer();
 		auto& bullet = game.getBullet();
+		auto& effect = game.getEffect();
+
 
 
 			player.movePlayer(bullet); // é©ã@ÇÃèàóù
@@ -22,7 +25,7 @@ public:
 			{
 				if (GameData::timer % 7 == 0)
 				{
-					setEffect(GameData::enemy[GameData::bossIdx].x + rand() % 201 - 100, GameData::enemy[GameData::bossIdx].y + rand() % 201 - 100, EFF_EXPLODE);
+					effect.setEffect(GameData::enemy[GameData::bossIdx].x + rand() % 201 - 100, GameData::enemy[GameData::bossIdx].y + rand() % 201 - 100, EffectType::Explode);
 				}
 			}
 			else if (GameData::timer == GameConfig::FPS * 3)
