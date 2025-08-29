@@ -11,7 +11,7 @@
 class BulletManager;
 
 class ScenePlay
-	: IScene
+	: public IScene
 {
 public:
 	virtual std::shared_ptr<IScene> run(GameManager& game)
