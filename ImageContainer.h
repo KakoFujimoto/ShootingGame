@@ -2,6 +2,7 @@
 #include <string>
 #include "Image.h"
 #include "GameConfig.h"
+#include "EnemyType.h"
 
 class ImageContainer
 {
@@ -26,6 +27,16 @@ public:
 	const Image& getItem() const
 	{
 		return imgItem;
+	}
+	// Enemy‚Ì”z—ñ‘S‘Ì‚ð•Ô‚·
+	const std::array<Image, GameConfig::IMG_ENEMY_MAX>& getEnemy() const
+	{
+		return imgEnemy;
+	}
+	// “Á’è‚ÌŽí—Þ‚ÌEnemy‚ð•Ô‚·
+	const Image& getEnemy(EnemyType type) const
+	{
+		return imgEnemy.at(static_cast<int>(type));
 	}
 
 	void load();

@@ -2,6 +2,7 @@
 #include "GameData.h"
 #include "EnemyManager.h"
 #include "DxLib.h"
+#include "Image.h"
 
 	// 敵機を動かす
 	void EnemyManager::moveEnemy(void)
@@ -72,7 +73,7 @@
 	}
 
 	// 敵機をセットする
-	int EnemyManager::setEnemy(int x, int y, int vx, int vy, int ptn, int img, int sld)
+	int EnemyManager::setEnemy(int x, int y, int vx, int vy, EnemyType ptn, Image img, int sld)
 	{
 		for (int i = 0; i < GameConfig::ENEMY_MAX; i++) {
 			if (GameData::enemy[i].state == 0) {
