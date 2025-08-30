@@ -1,31 +1,6 @@
 #include "GameManager.h"
 
-class GameManger
-{
-public:
-	void gameLoop();
-
-	Player& getPlayer()
-	{
-		return player;
-	}
-
-	BulletManager& getBullet()
-	{
-		return bullets;
-	}
-
-private:
-	SceneManger sceneManager;
-	Graphic  graphic;
-
-	Player player;
-	EnemyManager enemies;
-	BulletManager bullets;
-};
-
-
-void GameManger::gameLoop()
+void GameManager::gameLoop()
 {
 	ClearDrawScreen(); // 画面をクリアする
 
@@ -47,9 +22,9 @@ void GameManger::gameLoop()
 	sceneManager.run(*this);
 
 	// スコア、ハイスコア、ステージ数の表示
-	drawText(10, 10, "SCORE %07d", GameData::score, 0xffffff, 30);
-	drawText(GameConfig::WIDTH - 220, 10, "HI-SC %07d", GameData::hisco, 0xffffff, 30);
-	drawText(GameConfig::WIDTH - 145, GameConfig::HEIGHT - 40, "STAGE %02d", GameData::stage, 0xffffff, 30);
+	drawer.drawText(10, 10, "SCORE %07d", GameData::score, 0xffffff, 30);
+	drawer.drawText(GameConfig::WIDTH - 220, 10, "HI-SC %07d", GameData::hisco, 0xffffff, 30);
+	drawer.drawText(GameConfig::WIDTH - 145, GameConfig::HEIGHT - 40, "STAGE %02d", GameData::stage, 0xffffff, 30);
 
 	ScreenFlip(); // 裏画面の内容を表画面に反映させる
 	WaitTimer(1000 / GameConfig::FPS); // 一定時間待つ

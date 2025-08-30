@@ -152,9 +152,6 @@
     <ClInclude Include="Drawer.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="DrawerManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="IVelocity.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>

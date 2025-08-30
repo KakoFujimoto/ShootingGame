@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include "DxLib.h"
 #include "IScene.h"
 #include "GameManager.h"
 #include "GameConfig.h"
@@ -17,7 +18,11 @@ public:
 		auto& player = game.getPlayer();
 		auto& bullet = game.getBullet();
 		auto& effect = game.getEffect();
-
+		auto& enemy = game.getEnemy();
+		auto& image = game.getImage();
+		auto& soundContainer = game.getSoundContainer();
+		auto& soundPlayer = game.getSoundPlayer();
+		auto& drawer = game.getDrawer();
 
 
 			player.movePlayer(bullet); // 自機の処理
@@ -25,16 +30,18 @@ public:
 			{
 				if (GameData::timer % 7 == 0)
 				{
-					effect.setEffect(GameData::enemy[GameData::bossIdx].x + rand() % 201 - 100, GameData::enemy[GameData::bossIdx].y + rand() % 201 - 100, EffectType::Explode);
+					effect.setEffect(enemy[GameData::bossIdx].x + rand() % 201 - 100,
+						enemy[GameData::bossIdx].y + rand() % 201 - 100,
+						EffectType::Explode,image);
 				}
 			}
 			else if (GameData::timer == GameConfig::FPS * 3)
 			{
-				PlaySoundMem(GameData::jinClear, DX_PLAYTYPE_BACK); // ジングル出力
+				soundPlayer.play(soundContainer.jinClear); // ジングル出力
 			}
 			else
 			{
-				drawTextC(GameConfig::WIDTH * 0.5, GameConfig::HEIGHT * 0.3, "STAGE CLEAR!", 0x00ffff, 80);
+				drawer.drawTextC(GameConfig::WIDTH * 0.5, GameConfig::HEIGHT * 0.3, "STAGE CLEAR!", 0x00ffff, 80);
 			}
 			if (GameData::timer > GameConfig::FPS * 10) // ゲームプレイへ遷移
 			{
