@@ -44,8 +44,14 @@ public:
 			if (e == EnemyType::Zako1) enemy.setEnemy(x, y, 0, 3, EnemyType::Zako1, image.getEnemy(EnemyType::Zako1), 1);
 			if (e == EnemyType::Zako2) {
 				int vx = 0;
-				if (player.x < x - 50) vx = -3;
-				if (player.x > x + 50) vx = 3;
+				if (player.getX() < x - 50)
+				{
+					vx = -3;
+				}
+				if (player.getX() > x + 50)
+				{
+					vx = 3;
+				}
 				enemy.setEnemy(x, -100, vx, 5, EnemyType::Zako2, image.getEnemy(EnemyType::Zako2), 3);
 			}
 		}

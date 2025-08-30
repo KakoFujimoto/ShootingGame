@@ -151,6 +151,7 @@
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="ImageContainer.cpp" />
     <ClCompile Include="Initializer.cpp" />
+    <ClCompile Include="ItemManager.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SceneManager.h" />
@@ -181,6 +182,7 @@
     <ClInclude Include="ISize.h" />
     <ClInclude Include="IState.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="ItemManager.h" />
     <ClInclude Include="ItemType.h" />
     <ClInclude Include="ITimer.h" />
     <ClInclude Include="IVelocity.h" />
