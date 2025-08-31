@@ -13,9 +13,9 @@ void EffectManager::setEffect(int x, int y, EffectType ptn, ImageContainer& imag
 			e.setVX(0);
 			e.setVY(0);
 			e.setPattern(ptn);
-			e.setImage((static_cast<EffectType>(ptn) == EffectType::Explode)
-				? imageContainer.getExplosion()
-				: imageContainer.getItem());
+			e.setImage((ptn == EffectType::Explode)
+				? &imageContainer.getExplosion()
+				: &imageContainer.getItem());
 
 
 			//GetGraphSize(e.getImage()->getId(), &e.getWidth(), &e.getHeight());
