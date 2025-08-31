@@ -74,4 +74,4 @@ public:
 		}
 		break;
 	}
-};#pragma once
+};

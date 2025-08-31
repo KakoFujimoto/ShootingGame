@@ -95,11 +95,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//initVariable(); // 【仮】ゲームを完成させる際に呼び出し位置を変える
 	//GameData::distance = GameConfig::STAGE_DISTANCE; // 【記述位置は仮】ステージの長さを代入
 
-	game.init();
+	//game.init();
 
 	while (1) // メインループ
 	{
-		game.gameLoop();
+		//game.gameLoop();
 
 		//ClearDrawScreen(); // 画面をクリアする
 
