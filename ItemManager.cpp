@@ -10,7 +10,6 @@
 #include "EffectType.h"
 
 ImageContainer img;
-GameManager game;
 
 void ItemManager::setItem(void)
 {
@@ -23,7 +22,7 @@ void ItemManager::setItem(void)
 }
 
 // ƒAƒCƒeƒ€‚Ìˆ—
-void ItemManager::moveItem(void)
+void ItemManager::moveItem(GameManager& game)
 {
 	if (item.getState() == 0)
 	{

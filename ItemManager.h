@@ -7,5 +7,5 @@ public:
 	// アイテムをセット
 	void setItem(void);
 	// アイテムの処理
-	void moveItem(void);
+	void moveItem(GameManager& game);
 };

@@ -86,7 +86,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	if (DxLib_Init() == -1)return -1; // ライブラリ初期化 エラーが起きたら終了
 
-	GameManager game;
+	//GameManager game;
 	
 	//SetBackgroundColor(0, 0, 0); // 背景色の指定
 	//SetDrawScreen(DX_SCREEN_BACK); // 描画面を裏画面にする

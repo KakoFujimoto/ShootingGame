@@ -2,6 +2,7 @@
 #include "EffectType.h"
 #include "ImageContainer.h"
 #include "DxLib.h"
+#include "GameManager.h"
 
 void EffectManager::setEffect(int x, int y, EffectType ptn, ImageContainer& imageContainer)
 {
@@ -15,7 +16,15 @@ void EffectManager::setEffect(int x, int y, EffectType ptn, ImageContainer& imag
 			e.setImage((static_cast<EffectType>(ptn) == EffectType::Explode)
 				? imageContainer.getExplosion()
 				: imageContainer.getItem());
-			GetGraphSize(e.getImage(), &e.getWidth(), &e.getHeight());
+
+
+			//GetGraphSize(e.getImage()->getId(), &e.getWidth(), &e.getHeight());
+			//E0413 "const Image" から "const Image *" への適切な変換関数が存在しません
+			int w, h;
+			GetGraphSize(e.getImage()->getId(), &w, &h);
+			e.setWidth(w);
+			e.setHeight(h);
+
 			e.setState(1);
 			e.setTimer(0);
 			break;
@@ -23,28 +32,41 @@ void EffectManager::setEffect(int x, int y, EffectType ptn, ImageContainer& imag
 	}
 }
 
-void EffectManager::drawEffect(void)
+void EffectManager::drawEffect(GameManager& game)
 {
 	int ix;
 	for (auto& e : effects) {
 		if (e.getState() == 0) continue;
 		switch (e.getPattern()) // エフェクトごとに処理を分ける
 		{
-		case static_cast<int>(EffectType::Explode): // 爆発演出
+		case EffectType::Explode: // 爆発演出
 			ix = e.getTimer() * 128; // 画像の切り出し位置
-			DrawRectGraph(e.getX() - 64, e.getY() - 64, ix, 0, 128, 128, e.getImage(), TRUE, FALSE);
+
+			DrawRectGraph(e.getX() - 64, e.getY() - 64,
+				ix, 0, 128, 128,
+				e.getImage()->getId(), TRUE, FALSE);
+
 			e.setTimer(e.getTimer() + 1);
 			if (e.getTimer() == 7) e.setState(0);
 			break;
-		case static_cast<int>(EffectType::Recover): // 回復演出
+		case EffectType::Recover: // 回復演出
 			if (e.getTimer() < 30) // 加算による描画の重ね合わせ
 				SetDrawBlendMode(DX_BLENDMODE_ADD, e.getTimer() * 8);
 			else
 				SetDrawBlendMode(DX_BLENDMODE_ADD, (60 - e.getTimer()) * 8);
-			for (int i = 3; i < 8; i++) DrawCircle(e.getX(), e.getY(), (GameData::player.getWidth() + GameData::player.getHeight()) / i, 0x2040c0, TRUE);
+			for (int i = 3; i < 8; i++)
+			{
+				DrawCircle(e.getX(), e.getY(),
+					(game.getPlayer().getWidth() + game.getPlayer().getHeight()) / i,
+					0x2040c0, TRUE);
+			}
 			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0); // ブレンドモードを解除
 			e.setTimer(e.getTimer() + 1);
-			if (e.getTimer() == 60) e.setState(0);
+
+			if (e.getTimer() == 60)
+			{
+				e.setState(0);
+			}
 			break;
 		}
 	}

@@ -34,5 +34,5 @@ void drawParameter(void);
 void setEffect(int x, int y, int ptn);
 void drawEffect(void);
 void setItem(void);
-void moveItem(void);
+//void moveItem(void);
 void drawTextC(int x, int y, const char* txt, int col, int siz);
