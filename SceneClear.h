@@ -16,7 +16,7 @@ public:
 	virtual std::shared_ptr<IScene> run(GameManager& game)
 	{		
 		auto& player = game.getPlayer();
-		auto& bullet = game.getBullet();
+		auto& bulletManager = game.getBulletManager();
 		auto& effect = game.getEffect();
 		auto& enemy = game.getEnemy();
 		auto& image = game.getImage();
@@ -25,7 +25,7 @@ public:
 		auto& drawer = game.getDrawer();
 
 
-			player.movePlayer(bullet); // 自機の処理
+			player.movePlayer(bulletManager, game); // 自機の処理
 			if (GameData::timer < GameConfig::FPS * 3) // ボスが爆発する演出
 			{
 				if (GameData::timer % 7 == 0)

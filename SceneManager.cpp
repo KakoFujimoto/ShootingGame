@@ -1,6 +1,6 @@
 #include "SceneManager.h"
 
-void SceneManager::run()
+void SceneManager::run(GameManager& game)
 {
 	scene->run();
 }
