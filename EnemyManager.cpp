@@ -4,12 +4,15 @@
 #include "DxLib.h"
 #include "Image.h"
 #include "EnemyType.h"
+#include "GameManager.h"
 
 	// “G‹@‚ð“®‚©‚·
 	void EnemyManager::moveEnemy(GameManager& game)
 	{
 		for (int i = 0; i < GameConfig::ENEMY_MAX; i++) {
 			auto& enemy = enemies[i];
+			auto& ene_bullet = game.getImage().getEnemy(EnemyType::Bullet);
+			auto& drawer = game.getDrawer();
 
 			if (enemy.getState() == 0)
 			{
@@ -23,11 +26,9 @@
 				}
 				else if (enemy.getVY()y > 0) // ’e”­ŽËA”ò‚Ñ‹Ž‚é
 				{
-					setEnemy(enemy.getX(), enemy.getY(), 0, 6, ENE_BULLET, GameData::imgEnemy[ENE_BULLET], 0); // ’e
+					setEnemy(enemy.getX(), enemy.getY(), 0, 6, EnemyType::Bullet, ene_bullet, 0); // ’e
 
-					//GameData::enemy[i].vx = 8;
 					enemy.setVX(8);
-					//GameData::enemy[i].vy = -4;
 					enemy.setVY(-4);
 				}
 			}
@@ -35,7 +36,6 @@
 			{
 				if (enemy.getY() > GameConfig::HEIGHT - 120)
 				{
-					//GameData::enemy[i].vy = -2;
 					enemy.setVY(-2);
 				}
 				if (enemy.getY() < 120) // ‰æ–Êã’[
@@ -46,7 +46,7 @@
 							for (int by = 0; by <= 3; by++)
 							{
 								if (bx == 0 && by == 0) continue;
-								setEnemy(enemy.getX(), enemy.getY(), bx * 2, by * 3, ENE_BULLET, GameData::imgEnemy[ENE_BULLET], 0);
+								setEnemy(enemy.getX(), enemy.getY(), bx * 2, by * 3, EnemyType::Bullet, ene_bullet, 0);
 							}
 					}
 					enemy.setVY(2);
@@ -56,7 +56,8 @@
 			enemy.setY(enemy.getY() + enemy.getVY()); //„£
 
 
-			drawImage(GameData::enemy[i].image, enemy.getX(), enemy.getY()); // “G‹@‚Ì•`‰æ
+			drawer.drawImage(game.getImage().getEnemy(enemy.getPattern()).getId(), enemy.getX(), enemy.getY()); // “G‹@‚Ì•`‰æ
+
 			// ‰æ–ÊŠO‚Éo‚½‚©H
 			if (enemy.getX() < -200 || GameConfig::WIDTH + 200 < enemy.getX()
 				|| enemy.getY() < -200 || GameConfig::HEIGHT + 200 < enemy.getY())
@@ -104,16 +105,25 @@
 	int EnemyManager::setEnemy(int x, int y, int vx, int vy, EnemyType ptn, Image img, int sld)
 	{
 		for (int i = 0; i < GameConfig::ENEMY_MAX; i++) {
-			if (GameData::enemy[i].state == 0) {
-				GameData::enemy[i].x = x;
-				GameData::enemy[i].y = y;
-				GameData::enemy[i].vx = vx;
-				GameData::enemy[i].vy = vy;
-				GameData::enemy[i].state = 1;
-				GameData::enemy[i].pattern = ptn;
-				GameData::enemy[i].image = img;
-				GameData::enemy[i].shield = sld * GameData::stage; // ƒXƒe[ƒW‚ªi‚Þ‚Ù‚Ç“G‚ªŒÅ‚­‚È‚é
-				GetGraphSize(img, &GameData::enemy[i].wid, &GameData::enemy[i].hei); // ‰æ‘œ‚Ì•‚Æ‚‚³‚ð‘ã“ü
+			auto& enemy = enemies[i];
+
+			if (enemy.getState() == 0) {
+				enemy.setX(x);
+				enemy.setY(y);
+				enemy.setVX(vx);
+				enemy.setVY(vy);
+				enemy.setState(1);
+				enemy.setPattern(ptn);
+
+				enemy.setImage(&img);
+
+				enemy.setShield(sld * GameData::stage); // ƒXƒe[ƒW‚ªi‚Þ‚Ù‚Ç“G‚ªŒÅ‚­‚È‚é
+
+				int w, h;	
+				GetGraphSize(img.getId(), &w, &h); // ‰æ‘œ‚Ì•‚Æ‚‚³‚ð‘ã“ü
+				enemy.setWidth(w);
+				enemy.setHeight(h);
+
 				return i;
 			}
 		}
