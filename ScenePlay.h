@@ -22,6 +22,8 @@ public:
 		auto& soundPlayer = game.getSoundPlayer();
 		auto& enemy = game.getEnemy();
 		auto& image = game.getImage();
+		auto& item = game.getItem();
+
 
 		int playerShield = player.getShield();
 
@@ -62,16 +64,24 @@ public:
 			int vy = 40 + rand() % 20;
 			enemy.setEnemy(x, -100, 0, vy, EnemyType::Zako3, image.getEnemy(EnemyType::Zako3), 5);
 		}
-		if (GameData::distance == 1) GameData::bossIdx = enemy.setEnemy(GameConfig::WIDTH / 2, -120, 0, 1, EnemyType::Boss, image.getEnemy(EnemyType::Boss), 200); // ボス出現
-		if (GameData::distance % 800 == 1) setItem(); // アイテムの出現
+		if (GameData::distance == 1)
+		{
+			GameData::bossIdx = enemy.setEnemy(GameConfig::WIDTH / 2, -120, 0, 1, EnemyType::Boss, image.getEnemy(EnemyType::Boss), 200); // ボス出現
+		}
+
+		if (GameData::distance % 800 == 1)
+		{
+			item.setItem(); // アイテムの出現
+		}
+
 		if (playerShield == 0)
 		{
 			soundPlayer.stop(soundContainer.bgm); // ＢＧＭ停止
 
-			GameData::scene = OVER; // SceneManagerでOVERに設定する？
+			GameData::scene = static_cast<int>(SceneType::Over);
 			GameData::timer = 0;
-			break;
+			return;
 		}
-		break;
+		return;
 	}
 };

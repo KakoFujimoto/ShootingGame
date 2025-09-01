@@ -9,6 +9,7 @@
 #include "Drawer.h"
 #include "SoundContainer.h"
 #include "SoundPlayer.h"
+#include "ItemManager.h"
 
 
 class GameManager
@@ -24,7 +25,7 @@ public:
     SoundContainer& getSoundContainer() { return soundContainer; }
     SoundPlayer& getSoundPlayer() { return soundPlayer; }
     Drawer& getDrawer() { return drawer; }
-
+	ItemManager& getItem() { return itemManager; }
 
 private:
     SceneManager sceneManager;
@@ -36,4 +37,5 @@ private:
     ImageContainer images;
     SoundContainer soundContainer;
     SoundPlayer soundPlayer;
+	ItemManager itemManager;
 };
