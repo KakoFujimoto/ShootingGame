@@ -1,5 +1,4 @@
 #pragma once
-#pragma once
 #include "Player.h"
 #include "BulletManager.h"
 #include "SceneManager.h"
@@ -10,6 +9,7 @@
 #include "SoundContainer.h"
 #include "SoundPlayer.h"
 #include "ItemManager.h"
+#include "GameData.h"
 
 
 class GameManager
@@ -27,6 +27,8 @@ public:
     SoundPlayer& getSoundPlayer() { return soundPlayer; }
     Drawer& getDrawer() { return drawer; }
 	ItemManager& getItem() { return itemManager; }
+    GameData& getGameData() { return gameData; }
+
 
 private:
     SceneManager sceneManager;
@@ -40,4 +42,5 @@ private:
     SoundContainer soundContainer;
     SoundPlayer soundPlayer;
 	ItemManager itemManager;
+	GameData gameData;
 };

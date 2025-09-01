@@ -9,8 +9,6 @@
 #include "GameManager.h"
 #include "EffectType.h"
 
-ImageContainer img;
-
 void ItemManager::setItem(void)
 {
 	item.setX((GameConfig::WIDTH / 4) * (1 + rand() % 3));
@@ -23,7 +21,9 @@ void ItemManager::setItem(void)
 
 // ƒAƒCƒeƒ€‚Ìˆ—
 void ItemManager::moveItem(GameManager& game)
-{
+{	
+	auto& img = game.getImage();
+
 	if (item.getState() == 0)
 	{
 		return;

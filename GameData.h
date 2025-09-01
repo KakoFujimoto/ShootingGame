@@ -1,17 +1,16 @@
 #pragma once
+#include "SceneType.h"
 
 class GameData
 {
 public:
-	// --- ゲーム状態 ---
-	static int distance; // ステージ終端までの距離
-	static int bossIdx; // ボスを代入した配列のインデックス
-	static int stage; // ステージ
-	static int score; // スコア
-	static int hisco; // ハイスコア
-	static int noDamage; // 無敵状態
-	static int weaponLv; // 自機の武器のレベル（同時に発射される弾数）
-	static int scene; // シーンを管理
-	static int timer; // 時間の進行を管理
-
+	int distance = 0; // ステージ終端までの距離
+	int bossIdx = 0; // ボスを代入した配列のインデックス
+	int stage = 1; // ステージ
+	int score = 0; // スコア
+	int hisco = 10000; // ハイスコア
+	int noDamage = 0; // 無敵状態
+	int weaponLv = 1; // 自機の武器のレベル（同時に発射される弾数）
+	SceneType scene = SceneType::Title; // シーンを管理
+	int timer = 0; // 時間の進行を管理
 };

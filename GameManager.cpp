@@ -1,4 +1,5 @@
 #include "GameManager.h"
+#include "SceneType.h"
 
 void GameManager::gameLoop()
 {
@@ -6,7 +7,10 @@ void GameManager::gameLoop()
 
 	// ゲームの骨組みとなる処理を、ここに記述する
 	int spd = 1; // スクロールの速さ
-	if (GameData::scene == PLAY && GameData::distance == 0) spd = 0; // ボス戦はスクロール停止
+	if (gameData.scene == SceneType::Play && gameData.distance == 0)
+	{
+		spd = 0; // ボス戦はスクロール停止
+	}
 	scrollBG(graphic, spd); // 背景のスクロール
 
 	enemies.move(*this, graphic); // 敵機の制御

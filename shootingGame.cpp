@@ -47,35 +47,35 @@ enum SceneType {
 
 // グローバル変数
 // ここでゲームに用いる変数や配列を定義する
-namespace GameData {
-	// --- 画像 ---
-	int imgGalaxy, imgFloor, imgWallL, imgWallR; // 背景画像
-	int imgFighter, imgBullet; // 自機と自機の弾の画像
-	int imgEnemy[GameConfig::IMG_ENEMY_MAX]; // 敵機の画像
-	int imgExplosion; // 爆発演出の画像
-	int imgItem; // アイテムの画像
-
-	// --- 音 ---
-	int bgm, jinOver, jinClear, seExpl, seItem, seShot; // 音の読み込み用
-
-	// --- ゲーム状態 ---
-	int distance = 0; // ステージ終端までの距離
-	int bossIdx = 0; // ボスを代入した配列のインデックス
-	int stage = 1; // ステージ
-	int score = 0; // スコア
-	int hisco = 10000; // ハイスコア
-	int noDamage = 0; // 無敵状態
-	int weaponLv = 1; // 自機の武器のレベル（同時に発射される弾数）
-	int scene = TITLE; // シーンを管理
-	int timer = 0; // 時間の進行を管理
-
-	// --- オブジェクト ---
-	OBJECT player; // 自機用の構造体変数
-	OBJECT bullet[GameConfig::BULLET_MAX]; // 弾用の構造体の配列
-	OBJECT enemy[GameConfig::ENEMY_MAX]; // 敵機用の構造体の配列
-	OBJECT effect[GameConfig::EFFECT_MAX]; // エフェクト用の構造体の配列
-	OBJECT item; // アイテム用の構造体変数
-}
+//namespace GameData {
+//	// --- 画像 ---
+//	int imgGalaxy, imgFloor, imgWallL, imgWallR; // 背景画像
+//	int imgFighter, imgBullet; // 自機と自機の弾の画像
+//	int imgEnemy[GameConfig::IMG_ENEMY_MAX]; // 敵機の画像
+//	int imgExplosion; // 爆発演出の画像
+//	int imgItem; // アイテムの画像
+//
+//	// --- 音 ---
+//	int bgm, jinOver, jinClear, seExpl, seItem, seShot; // 音の読み込み用
+//
+//	// --- ゲーム状態 ---
+//	int distance = 0; // ステージ終端までの距離
+//	int bossIdx = 0; // ボスを代入した配列のインデックス
+//	int stage = 1; // ステージ
+//	int score = 0; // スコア
+//	int hisco = 10000; // ハイスコア
+//	int noDamage = 0; // 無敵状態
+//	int weaponLv = 1; // 自機の武器のレベル（同時に発射される弾数）
+//	int scene = TITLE; // シーンを管理
+//	int timer = 0; // 時間の進行を管理
+//
+//	// --- オブジェクト ---
+//	OBJECT player; // 自機用の構造体変数
+//	OBJECT bullet[GameConfig::BULLET_MAX]; // 弾用の構造体の配列
+//	OBJECT enemy[GameConfig::ENEMY_MAX]; // 敵機用の構造体の配列
+//	OBJECT effect[GameConfig::EFFECT_MAX]; // エフェクト用の構造体の配列
+//	OBJECT item; // アイテム用の構造体変数
+//}
 
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
