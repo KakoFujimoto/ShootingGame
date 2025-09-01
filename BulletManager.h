@@ -13,7 +13,7 @@ public:
 	}
 
 	// 弾の移動
-	void setBullet(const Player& player);
+	void setBullet(const Player& player, GameManager& game);
 
 
 	// 弾のセット（発射）

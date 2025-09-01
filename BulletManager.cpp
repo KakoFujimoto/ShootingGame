@@ -3,10 +3,14 @@
 #include "Player.h"
 #include "DxLib.h"
 #include "ImageContainer.h"
+#include "GameManager.h"
 
 
-	void BulletManager::setBullet(const Player& player)
-	{
+	void BulletManager::setBullet(const Player& player, GameManager& game)
+	{	
+		auto& soundPlayer = game.getSoundPlayer();
+		auto& soundContainer = game.getSoundContainer();
+
 		for (int n = 0; n < GameData::weaponLv; n++) {
 			int x = player.getX() - (GameData::weaponLv - 1) * 5 + n * 10;
 			int y = player.getY() - 20;
@@ -21,7 +25,7 @@
 				}
 			}
 		}
-		PlaySoundMem(GameData::seShot, DX_PLAYTYPE_BACK); // Œø‰Ê‰¹
+		soundPlayer.play(soundContainer.seShot);
 	}
 
 	// ’e‚ÌˆÚ“®
