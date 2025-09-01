@@ -149,13 +149,11 @@
     <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="ImageContainer.cpp" />
-    <ClCompile Include="Initializer.cpp" />
     <ClCompile Include="ItemManager.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SceneManager.h" />
     <ClCompile Include="shootingGame.cpp" />
-    <ClCompile Include="Sound.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h" />
@@ -175,7 +173,6 @@
     <ClInclude Include="IImage.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageContainer.h" />
-    <ClInclude Include="Initializer.h" />
     <ClInclude Include="IScene.h" />
     <ClInclude Include="IShield.h" />
     <ClInclude Include="ISize.h" />
