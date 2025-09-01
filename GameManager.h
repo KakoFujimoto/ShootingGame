@@ -18,7 +18,8 @@ public:
     void gameLoop();
 
     Player& getPlayer() { return player; }
-    BulletManager& getBullet(){ return bullets; }
+    BulletManager& getBulletManager(){ return bullets; }
+    Bullet& getBullet() { return bullet; }
     EffectManager& getEffect() { return effects; }
     EnemyManager& getEnemy() { return enemies; }
     ImageContainer& getImage() { return images; }
@@ -33,6 +34,7 @@ private:
     Player player;
     EnemyManager enemies;
     BulletManager bullets;
+	Bullet bullet;
 	EffectManager effects;
     ImageContainer images;
     SoundContainer soundContainer;
