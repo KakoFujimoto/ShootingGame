@@ -5,6 +5,7 @@
 #include "IShield.h"
 #include "Image.h"
 #include "IVelocity.h"
+#include "GameManager.h"
 
 class BulletManager;
 
@@ -44,5 +45,5 @@ public:
 	void setShield(int v) override { shield = v; }
 	int getShield() const override { return shield; }
 
-	void movePlayer(BulletManager& bulletManager);
+	void movePlayer(BulletManager& bulletManager, GameManager& game);
 };

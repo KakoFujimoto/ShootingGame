@@ -28,6 +28,10 @@ public:
 	{
 		return imgItem;
 	}
+	const Image& getFighter() const
+	{
+		return imgFighter;
+	}
 	// Enemy‚Ì”z—ñ‘S‘Ì‚ð•Ô‚·
 	const std::array<Image, GameConfig::IMG_ENEMY_MAX>& getEnemy() const
 	{

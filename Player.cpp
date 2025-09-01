@@ -1,10 +1,9 @@
 #include "Player.h"
 #include "GameConfig.h"
 #include "GameData.h"
-#include "DxLib.h" //DXライブラリのインクルード
-#include "BulletManager.h" // 弾のヘッダーファイルをインクルード
+#include "DxLib.h"
 
-void Player::movePlayer(BulletManager& bulletManager)
+void Player::movePlayer(BulletManager& bulletManager, GameManager& game)
 {
 	static char oldSpcKey; // 1つ前のスペースキーの状態を保持する変数
 	static int countSpcKey; // スペースキーを押し続けている間、カウントアップする変数
@@ -58,7 +57,10 @@ void Player::movePlayer(BulletManager& bulletManager)
 	}
 
 	if (GameData::noDamage % 4 < 2)
-	{
-		drawImage(GameData::imgFighter, x, y); // 自機の描画
+	{	
+		auto& drawer = game.getDrawer();
+		auto& image = game.getImage();
+
+		drawer.drawImage(image.getFighter().getId(), x, y); // 自機の描画
 	}
 }
