@@ -25,13 +25,13 @@
 	}
 
 	// ’e‚ÌˆÚ“®
-	void BulletManager::moveBullet(ImageContainer& imageContainer)
+	void BulletManager::moveBullet(ImageContainer& imageContainer, GameManager& game)
 	{
 		for (auto& b : bullets) {
 			if (b.getState() == 0) continue; // ‹ó‚¢‚Ä‚¢‚é”z—ñ‚È‚çˆ—‚µ‚È‚¢
 			b.setX(b.getX() + b.getVX()); // „¦ À•W‚ğ•Ï‰»‚³‚¹‚é
 			b.setY(b.getY() + b.getVY()); // „£
-			drawImage(imageContainer.getBullet(), b.getX(), b.getY()); // ’e‚Ì•`‰æ¦drawImage‚Í–¢À‘•
+			game.getDrawer().drawImage(imageContainer.getBullet().getId(), b.getX(), b.getY()); // ’e‚Ì•`‰æ¦drawImage‚Í–¢À‘•
 			if (b.getY() < -100)
 			{
 				b.setState(0); // ‰æ–ÊŠO‚Éo‚½‚çA‘¶İ‚µ‚È‚¢ó‘Ô‚É‚·‚é

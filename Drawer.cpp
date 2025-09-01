@@ -1,25 +1,53 @@
 #include "Drawer.h"
 #include <DxLib.h>
 
-void Drawer::drawText(int x, int y, const std::string& text, const DrawerManager::TextStyle& style)
+// 影を付けた文字列と値を表示する関数
+void drawText(int x, int y, const char* txt, int val, int col, int siz)
 {
-
-	SetFontSize(style.size);
-
-	int drawX = x;
-	int drawY = y;
-
-    if (style.center) {
-        int strWidth = GetDrawStringWidth(text.c_str(), text.size());
-        drawX -= strWidth / 2;
-        drawY -= style.size / 2;
-    }
-
-    if (style.shadow) {
-        DrawString(drawX + 1, drawY + 1, text.c_str(), GetColor(0, 0, 0));
-    }
-    DrawString(drawX, drawY, text.c_str(), style.color);
+	SetFontSize(siz); // フォントの大きさを指定
+	DrawFormatString(x + 1, y + 1, 0x000000, txt, val); // 黒で文字列を表示
+	DrawFormatString(x, y, col, txt, val); // 引数の色で文字列を表示
 }
+
+// 文字列をセンタリングして表示する関数
+void drawTextC(int x, int y, const char* txt, int col, int siz)
+{
+	SetFontSize(siz);
+	int strWidth = GetDrawStringWidth(txt, strlen(txt));
+	x -= strWidth / 2;
+	y -= siz / 2;
+	DrawString(x + 1, y + 1, txt, 0x000000);
+	DrawString(x, y, txt, col);
+}
+
+// 中心座標を指定して画像を表示する関数
+void drawImage(int img, int x, int y)
+{
+	int w, h;
+	GetGraphSize(img, &w, &h);
+	DrawGraph(x - w / 2, y - h / 2, img, TRUE);
+}
+
+
+//void Drawer::drawText(int x, int y, const std::string& text, const DrawerManager::TextStyle& style)
+//{
+//
+//	SetFontSize(style.size);
+//
+//	int drawX = x;
+//	int drawY = y;
+//
+//    if (style.center) {
+//        int strWidth = GetDrawStringWidth(text.c_str(), text.size());
+//        drawX -= strWidth / 2;
+//        drawY -= style.size / 2;
+//    }
+//
+//    if (style.shadow) {
+//        DrawString(drawX + 1, drawY + 1, text.c_str(), GetColor(0, 0, 0));
+//    }
+//    DrawString(drawX, drawY, text.c_str(), style.color);
+//}
 
 //使用イメージ
 //Drawer drawer;
@@ -29,17 +57,21 @@ void Drawer::drawText(int x, int y, const std::string& text, const DrawerManager
 //style.shadow = true;
 //drawer.drawText(400, 300, "Hello, World!", style);
 
-void Drawer::drawImage(int x, int y, int img, const DrawerManager::ImageStyle& style) {
-    int w, h;
-    GetGraphSize(img, &w, &h);
+//void Drawer::drawImage(int x, int y, int img, const DrawerManager::ImageStyle& style) {
+//    int w, h;
+//    GetGraphSize(img, &w, &h);
+//
+//    int drawX = x;
+//    int drawY = y;
+//
+//    if (style.center) {
+//        drawX -= w / 2;
+//        drawY -= h / 2;
+//    }
+//
+//    DrawGraph(drawX, drawY, img, TRUE);
+//}
 
-    int drawX = x;
-    int drawY = y;
-
-    if (style.center) {
-        drawX -= w / 2;
-        drawY -= h / 2;
-    }
-
-    DrawGraph(drawX, drawY, img, TRUE);
-}
+//DrawerManager::TextStyle DrawerManager::DefaultTextStyle() {
+//	return TextStyle();
+//}

@@ -145,7 +145,6 @@
   <ItemGroup>
     <ClCompile Include="BulletManager.cpp" />
     <ClCompile Include="Drawer.cpp" />
-    <ClCompile Include="DrawerManager.cpp" />
     <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="GameManager.cpp" />

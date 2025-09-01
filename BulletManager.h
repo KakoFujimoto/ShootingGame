@@ -1,6 +1,8 @@
 #pragma once
 #include <vector>
 #include "Bullet.h"
+#include "GameManager.h"
+
 
 class ImageContainer;
 
@@ -15,7 +17,7 @@ public:
 
 
 	// 弾のセット（発射）
-	void moveBullet(ImageContainer& imageContainer);
+	void moveBullet(ImageContainer& imageContainer, GameManager& game);
 
 private:
 	std::vector<Bullet> bullets;
