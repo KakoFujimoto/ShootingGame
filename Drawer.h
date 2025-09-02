@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include "GameManager.h"
 
 class Drawer
 {
@@ -11,6 +12,8 @@ public:
 	void drawTextC(int x, int y, const char* txt, int col, int siz);
 
 	// 中心座標を指定して画像を表示する関数
-	void drawImage(int img, int x, int y)
+	void drawImage(int img, int x, int y);
 
+	// 自機のシールドなどのパラメーターを表示
+	void drawParameter(GameManager& game);
 };

@@ -444,17 +444,17 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//}
 
 	// ステージマップ
-	void stageMap(void)
-	{
-		int mx = GameConfig::WIDTH - 30, my = 60; // マップの表示位置
-		int wi = 20, he = GameConfig::HEIGHT - 120; // マップの幅、高さ
-		int pos = (GameConfig::HEIGHT - 140) * GameData::distance / GameConfig::STAGE_DISTANCE; // 自機の飛行している位置
-		SetDrawBlendMode(DX_BLENDMODE_SUB, 128); // 減算による描画の重ね合わせ
-		DrawBox(mx, my, mx + wi, my + he, 0xffffff, TRUE);
-		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0); // ブレンドモードを解除
-		DrawBox(mx - 1, my - 1, mx + wi + 1, my + he + 1, 0xffffff, FALSE); // 枠線
-		DrawBox(mx, my + pos, mx + wi, my + pos + 20, 0x0080ff, TRUE); // 自機の位置
-	}
+	//void stageMap(void)
+	//{
+	//	int mx = GameConfig::WIDTH - 30, my = 60; // マップの表示位置
+	//	int wi = 20, he = GameConfig::HEIGHT - 120; // マップの幅、高さ
+	//	int pos = (GameConfig::HEIGHT - 140) * GameData::distance / GameConfig::STAGE_DISTANCE; // 自機の飛行している位置
+	//	SetDrawBlendMode(DX_BLENDMODE_SUB, 128); // 減算による描画の重ね合わせ
+	//	DrawBox(mx, my, mx + wi, my + he, 0xffffff, TRUE);
+	//	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0); // ブレンドモードを解除
+	//	DrawBox(mx - 1, my - 1, mx + wi + 1, my + he + 1, 0xffffff, FALSE); // 枠線
+	//	DrawBox(mx, my + pos, mx + wi, my + pos + 20, 0x0080ff, TRUE); // 自機の位置
+	//}
 
 	// 敵機のシールドを減らす（ダメージを与える）
 	void damageEnemy(int n, int dmg)
@@ -486,22 +486,22 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//	DrawFormatString(x, y, col, txt, val); // 引数の色で文字列を表示
 	//}
 
-	// 自機に関するパラメーターを表示
-	void drawParameter(void)
-	{
-		int x = 10, y = GameConfig::HEIGHT - 30; // 表示位置
-		DrawBox(x, y, x + GameConfig::PLAYER_SHIELD_MAX * 30, y + 20, 0x000000, TRUE);
-		for (int i = 0; i < GameData::player.shield; i++) // シールドのメーター
-		{
-			int r = 128 * (GameConfig::PLAYER_SHIELD_MAX - i) / GameConfig::PLAYER_SHIELD_MAX; // RGB値を計算
-			int g = 255 * i / GameConfig::PLAYER_SHIELD_MAX;
-			int b = 160 + 96 * i / GameConfig::PLAYER_SHIELD_MAX;
-			DrawBox(x + 2 + i * 30, y + 2, x + 28 + i * 30, y + 18, GetColor(r, g, b), TRUE);
-		}
-		drawText(x, y - 25, "SHIELD Lv %02d", GameData::player.shield, 0xffffff, 20); // シールド値
-		drawText(x, y - 50, "WEAPON Lv %02d", GameData::weaponLv, 0xffffff, 20); // 武器レベル
-		drawText(x, y - 75, "SPEED %02d", GameData::player.vx, 0xffffff, 20); // 移動速度
-	}
+	//// 自機に関するパラメーターを表示
+	//void drawParameter(void)
+	//{
+	//	int x = 10, y = GameConfig::HEIGHT - 30; // 表示位置
+	//	DrawBox(x, y, x + GameConfig::PLAYER_SHIELD_MAX * 30, y + 20, 0x000000, TRUE);
+	//	for (int i = 0; i < GameData::player.shield; i++) // シールドのメーター
+	//	{
+	//		int r = 128 * (GameConfig::PLAYER_SHIELD_MAX - i) / GameConfig::PLAYER_SHIELD_MAX; // RGB値を計算
+	//		int g = 255 * i / GameConfig::PLAYER_SHIELD_MAX;
+	//		int b = 160 + 96 * i / GameConfig::PLAYER_SHIELD_MAX;
+	//		DrawBox(x + 2 + i * 30, y + 2, x + 28 + i * 30, y + 18, GetColor(r, g, b), TRUE);
+	//	}
+	//	drawText(x, y - 25, "SHIELD Lv %02d", GameData::player.shield, 0xffffff, 20); // シールド値
+	//	drawText(x, y - 50, "WEAPON Lv %02d", GameData::weaponLv, 0xffffff, 20); // 武器レベル
+	//	drawText(x, y - 75, "SPEED %02d", GameData::player.vx, 0xffffff, 20); // 移動速度
+	//}
 
 	// エフェクトのセット
 	//void setEffect(int x, int y, int ptn)

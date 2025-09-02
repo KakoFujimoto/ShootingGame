@@ -30,7 +30,7 @@ void moveEnemy(void);
 void stageMap(void);
 void damageEnemy(int n, int dmg);
 void drawText(int x, int y, const char* txt, int val, int col, int siz);
-void drawParameter(void);
+//void drawParameter(void);
 void setEffect(int x, int y, int ptn);
 void drawEffect(void);
 void setItem(void);

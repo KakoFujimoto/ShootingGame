@@ -1,4 +1,6 @@
 #include "Drawer.h"
+#include "GameConfig.h"
+#include "GameData.h"
 #include <DxLib.h>
 
 // 影を付けた文字列と値を表示する関数
@@ -27,6 +29,25 @@ void drawImage(int img, int x, int y)
 	GetGraphSize(img, &w, &h);
 	DrawGraph(x - w / 2, y - h / 2, img, TRUE);
 }
+
+// 自機に関するパラメーターを表示
+void drawParameter(GameManager& game)
+{
+	int x = 10, y = GameConfig::HEIGHT - 30; // 表示位置
+	DrawBox(x, y, x + GameConfig::PLAYER_SHIELD_MAX * 30, y + 20, 0x000000, TRUE);
+
+	for (int i = 0; i < game.getPlayer().getShield(); i++) // シールドのメーター
+	{
+		int r = 128 * (GameConfig::PLAYER_SHIELD_MAX - i) / GameConfig::PLAYER_SHIELD_MAX; // RGB値を計算
+		int g = 255 * i / GameConfig::PLAYER_SHIELD_MAX;
+		int b = 160 + 96 * i / GameConfig::PLAYER_SHIELD_MAX;
+		DrawBox(x + 2 + i * 30, y + 2, x + 28 + i * 30, y + 18, GetColor(r, g, b), TRUE);
+	}
+	drawText(x, y - 25, "SHIELD Lv %02d", game.getPlayer().getShield(), 0xffffff, 20); // シールド値
+	drawText(x, y - 50, "WEAPON Lv %02d", game.getGameData().weaponLv, 0xffffff, 20); // 武器レベル
+	drawText(x, y - 75, "SPEED %02d", game.getPlayer().getVX(), 0xffffff, 20); // 移動速度
+}
+
 
 
 //void Drawer::drawText(int x, int y, const std::string& text, const DrawerManager::TextStyle& style)

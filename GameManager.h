@@ -16,6 +16,8 @@ class GameManager
 {
 public:
     void gameLoop();
+    void stageMap(void);
+
 
     Player& getPlayer() { return player; }
     BulletManager& getBulletManager(){ return bullets; }

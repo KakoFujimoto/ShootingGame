@@ -13,13 +13,25 @@ void GameManager::gameLoop()
 	}
 	scrollBG(graphic, spd); // 背景のスクロール
 
-	enemies.move(*this, graphic); // 敵機の制御
-	bullet.move(player graphic); // 弾の制御
-	item.move(graphic); // アイテムの制御
-	effetct.draw(graphic); // エフェクト
+	//moveEnemy(); 
+	//enemies.move(*this, graphic);
+	enemies.moveEnemy(*this); // 敵機の制御
 
-	stageMap(graphic); // ステージマップ
-	drawParameter(graphic); // 自機のシールドなどのパラメーターを表示
+	//moveBullet();
+	//bullet.move(player graphic);
+	bullets.moveBullet(images, *this); // 弾の制御
+
+	//moveItem();
+	//item.move(graphic);
+	itemManager.moveItem(*this); // アイテムの制御
+
+	//drawEffect(); // エフェクト
+	//effetct.draw(graphic);
+	effects.drawEffect(*this);
+
+
+	stageMap(); // ステージマップ
+	drawer.drawParameter(); // 自機のシールドなどのパラメーターを表示
 
 	GameData::timer++; // タイマーをカウント
 
@@ -35,4 +47,17 @@ void GameManager::gameLoop()
 	if (ProcessMessage() == -1) break; // Windowsから情報を受け取りエラーが起きたら終了
 	if (CheckHitKey(KEY_INPUT_ESCAPE) == 1) break; // ESCキーが押されたら終了
 
+}
+
+// ステージマップ
+void GameManager::stageMap(void)
+{
+	int mx = GameConfig::WIDTH - 30, my = 60; // マップの表示位置
+	int wi = 20, he = GameConfig::HEIGHT - 120; // マップの幅、高さ
+	int pos = (GameConfig::HEIGHT - 140) * GameData::distance / GameConfig::STAGE_DISTANCE; // 自機の飛行している位置
+	SetDrawBlendMode(DX_BLENDMODE_SUB, 128); // 減算による描画の重ね合わせ
+	DrawBox(mx, my, mx + wi, my + he, 0xffffff, TRUE);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0); // ブレンドモードを解除
+	DrawBox(mx - 1, my - 1, mx + wi + 1, my + he + 1, 0xffffff, FALSE); // 枠線
+	DrawBox(mx, my + pos, mx + wi, my + pos + 20, 0x0080ff, TRUE); // 自機の位置
 }
