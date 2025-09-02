@@ -17,6 +17,7 @@ class GameManager
 public:
     void gameLoop();
     void stageMap(void);
+	void scrollBG(int spd);
 
 
     Player& getPlayer() { return player; }

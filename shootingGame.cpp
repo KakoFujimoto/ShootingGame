@@ -254,18 +254,18 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	}
 
 	// 背景のスクロール
-	void scrollBG(int spd)
-	{
-		static int galaxyY, floorY, wallY; // スクロール位置を管理する変数（静的記憶領域に保持される）
-		galaxyY = (galaxyY + spd) % GameConfig::HEIGHT; // 星空（宇宙）
-		DrawGraph(0, galaxyY - GameConfig::HEIGHT, GameData::imgGalaxy, FALSE);
-		DrawGraph(0, galaxyY, GameData::imgGalaxy, FALSE);
-		floorY = (floorY + spd * 2) % 120;  // 床
-		for (int i = -1; i < 6; i++) DrawGraph(240, floorY + i * 120, GameData::imgFloor, TRUE);
-		wallY = (wallY + spd * 4) % 240;    // 左右の壁
-		DrawGraph(0, wallY - 240, GameData::imgWallL, TRUE);
-		DrawGraph(GameConfig::WIDTH - 300, wallY - 240, GameData::imgWallR, TRUE);
-	}
+	//void scrollBG(int spd)
+	//{
+	//	static int galaxyY, floorY, wallY; // スクロール位置を管理する変数（静的記憶領域に保持される）
+	//	galaxyY = (galaxyY + spd) % GameConfig::HEIGHT; // 星空（宇宙）
+	//	DrawGraph(0, galaxyY - GameConfig::HEIGHT, GameData::imgGalaxy, FALSE);
+	//	DrawGraph(0, galaxyY, GameData::imgGalaxy, FALSE);
+	//	floorY = (floorY + spd * 2) % 120;  // 床
+	//	for (int i = -1; i < 6; i++) DrawGraph(240, floorY + i * 120, GameData::imgFloor, TRUE);
+	//	wallY = (wallY + spd * 4) % 240;    // 左右の壁
+	//	DrawGraph(0, wallY - 240, GameData::imgWallL, TRUE);
+	//	DrawGraph(GameConfig::WIDTH - 300, wallY - 240, GameData::imgWallR, TRUE);
+	//}
 
 	// ゲーム開始時の初期値を代入する関数
 	void initVariable(void)

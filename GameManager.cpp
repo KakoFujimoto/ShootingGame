@@ -11,7 +11,9 @@ void GameManager::gameLoop()
 	{
 		spd = 0; // ボス戦はスクロール停止
 	}
-	scrollBG(graphic, spd); // 背景のスクロール
+
+	//scrollBG(graphic, spd); // 背景のスクロール
+	scrollBG(spd); 
 
 	//moveEnemy(); 
 	//enemies.move(*this, graphic);
@@ -32,21 +34,25 @@ void GameManager::gameLoop()
 
 	stageMap(); // ステージマップ
 	drawer.drawParameter(); // 自機のシールドなどのパラメーターを表示
-
-	GameData::timer++; // タイマーをカウント
+	gameData.timer++; // タイマーをカウント
 
 	sceneManager.run(*this);
 
 	// スコア、ハイスコア、ステージ数の表示
-	drawer.drawText(10, 10, "SCORE %07d", GameData::score, 0xffffff, 30);
-	drawer.drawText(GameConfig::WIDTH - 220, 10, "HI-SC %07d", GameData::hisco, 0xffffff, 30);
-	drawer.drawText(GameConfig::WIDTH - 145, GameConfig::HEIGHT - 40, "STAGE %02d", GameData::stage, 0xffffff, 30);
+	drawer.drawText(10, 10, "SCORE %07d", gameData.score, 0xffffff, 30);
+	drawer.drawText(GameConfig::WIDTH - 220, 10, "HI-SC %07d", gameData.hisco, 0xffffff, 30);
+	drawer.drawText(GameConfig::WIDTH - 145, GameConfig::HEIGHT - 40, "STAGE %02d", gameData.stage, 0xffffff, 30);
 
 	ScreenFlip(); // 裏画面の内容を表画面に反映させる
 	WaitTimer(1000 / GameConfig::FPS); // 一定時間待つ
-	if (ProcessMessage() == -1) break; // Windowsから情報を受け取りエラーが起きたら終了
-	if (CheckHitKey(KEY_INPUT_ESCAPE) == 1) break; // ESCキーが押されたら終了
-
+	if (ProcessMessage() == -1)
+	{
+		return; // Windowsから情報を受け取りエラーが起きたら終了
+	}
+	if (CheckHitKey(KEY_INPUT_ESCAPE) == 1)
+	{
+		return; // ESCキーが押されたら終了
+	}
 }
 
 // ステージマップ
@@ -54,10 +60,28 @@ void GameManager::stageMap(void)
 {
 	int mx = GameConfig::WIDTH - 30, my = 60; // マップの表示位置
 	int wi = 20, he = GameConfig::HEIGHT - 120; // マップの幅、高さ
-	int pos = (GameConfig::HEIGHT - 140) * GameData::distance / GameConfig::STAGE_DISTANCE; // 自機の飛行している位置
+	int pos = (GameConfig::HEIGHT - 140) * gameData.distance / GameConfig::STAGE_DISTANCE; // 自機の飛行している位置
+
 	SetDrawBlendMode(DX_BLENDMODE_SUB, 128); // 減算による描画の重ね合わせ
 	DrawBox(mx, my, mx + wi, my + he, 0xffffff, TRUE);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0); // ブレンドモードを解除
 	DrawBox(mx - 1, my - 1, mx + wi + 1, my + he + 1, 0xffffff, FALSE); // 枠線
 	DrawBox(mx, my + pos, mx + wi, my + pos + 20, 0x0080ff, TRUE); // 自機の位置
+}
+
+// 背景のスクロール
+void GameManager::scrollBG(int spd)
+{
+	static int galaxyY, floorY, wallY; // スクロール位置を管理する変数（静的記憶領域に保持される）
+	galaxyY = (galaxyY + spd) % GameConfig::HEIGHT; // 星空（宇宙）
+
+	DrawGraph(0, galaxyY - GameConfig::HEIGHT, images.getGalaxy().getId(), FALSE);
+	DrawGraph(0, galaxyY, images.getGalaxy().getId(), FALSE);
+
+	floorY = (floorY + spd * 2) % 120;  // 床
+	for (int i = -1; i < 6; i++) DrawGraph(240, floorY + i * 120, images.getFloor().getId(), TRUE);
+
+	wallY = (wallY + spd * 4) % 240;    // 左右の壁
+	DrawGraph(0, wallY - 240, images.getWallL().getId(), TRUE);
+	DrawGraph(GameConfig::WIDTH - 300, wallY - 240, images.getWallR().getId(), TRUE);
 }

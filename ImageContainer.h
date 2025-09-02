@@ -42,6 +42,18 @@ public:
 	{
 		return imgEnemy.at(static_cast<int>(type));
 	}
+	const Image& getFloor() const
+	{
+		return imgFloor;
+	}
+	const Image& getWallL() const
+	{
+		return imgWallL;
+	}
+	const Image& getWallR() const
+	{
+		return imgWallR;
+	}
 
 	void load();
 
