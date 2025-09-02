@@ -5,7 +5,7 @@
 #include "GameConfig.h"
 
 class SceneOver
-	: IScene
+	: public IScene
 {
 public:
 	virtual std::shared_ptr<IScene> run(GameManager& game);

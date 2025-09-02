@@ -268,21 +268,21 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//}
 
 	// ゲーム開始時の初期値を代入する関数
-	void initVariable(void)
-	{
-		GameData::player.x = GameConfig::WIDTH / 2;
-		GameData::player.vx = 5;
-		GameData::player.vy = 5;
-		GameData::player.y = GameConfig::HEIGHT / 2;
-		GameData::player.shield = GameConfig::PLAYER_SHIELD_MAX;
-		GetGraphSize(GameData::imgFighter, &GameData::player.wid, &GameData::player.hei); // 自機の画像の幅と高さを代入
-		for (int i = 0; i < GameConfig::ENEMY_MAX; i++) GameData::enemy[i].state = 0; // 全ての敵機を存在しない状態に
-		GameData::score = 0;
-		GameData::stage = 1;
-		GameData::noDamage = 0;
-		GameData::weaponLv = 1;
-		GameData::distance = GameConfig::STAGE_DISTANCE;
-	}
+	//void initVariable(void)
+	//{
+	//	GameData::player.x = GameConfig::WIDTH / 2;
+	//	GameData::player.vx = 5;
+	//	GameData::player.vy = 5;
+	//	GameData::player.y = GameConfig::HEIGHT / 2;
+	//	GameData::player.shield = GameConfig::PLAYER_SHIELD_MAX;
+	//	GetGraphSize(GameData::imgFighter, &GameData::player.wid, &GameData::player.hei); // 自機の画像の幅と高さを代入
+	//	for (int i = 0; i < GameConfig::ENEMY_MAX; i++) GameData::enemy[i].state = 0; // 全ての敵機を存在しない状態に
+	//	GameData::score = 0;
+	//	GameData::stage = 1;
+	//	GameData::noDamage = 0;
+	//	GameData::weaponLv = 1;
+	//	GameData::distance = GameConfig::STAGE_DISTANCE;
+	//}
 
 	//// 中心座標を指定して画像を表示する関数
 	//void drawImage(int img, int x, int y)

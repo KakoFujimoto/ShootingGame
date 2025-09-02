@@ -18,6 +18,7 @@ public:
     void gameLoop();
     void stageMap(void);
 	void scrollBG(int spd);
+    void initVariable(void);
 
 
     Player& getPlayer() { return player; }
