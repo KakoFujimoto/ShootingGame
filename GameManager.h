@@ -19,6 +19,8 @@ public:
     void stageMap(void);
 	void scrollBG(int spd);
     void initVariable(void);
+    void drawParameter(GameManager& game);
+    void initGame(void);
 
 
     Player& getPlayer() { return player; }
@@ -33,6 +35,8 @@ public:
 	ItemManager& getItem() { return itemManager; }
     GameData& getGameData() { return gameData; }
 
+	void setIsClear(bool v) { isClear = v; }
+	bool getIsClear() const { return isClear; }
 
 private:
     SceneManager sceneManager;
@@ -47,4 +51,5 @@ private:
     SoundPlayer soundPlayer;
 	ItemManager itemManager;
 	GameData gameData;
+	bool isClear = 0;
 };

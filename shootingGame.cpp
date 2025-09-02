@@ -1,47 +1,48 @@
 #include "DxLib.h" //DXライブラリのインクルード
 #include "shootingGame.h" // ヘッダーファイルをインクルード
+#include "GameManager.h"
 #include <cstdlib>
 #include <array>
 #include <string>
 
-// 定数の定義
-namespace GameConfig {
-	constexpr int WIDTH = 1200; // ウィンドウの幅
-	constexpr int HEIGHT = 720; // ウィンドウの高さ
-	constexpr int FPS = 60; // フレームレート
-	constexpr int IMG_ENEMY_MAX = 5; // 敵の画像の枚数（種類）
-	constexpr int BULLET_MAX = 100; // 自機が発射する弾の最大数
-	constexpr int ENEMY_MAX = 100; // 敵機の数の最大値
-	constexpr int STAGE_DISTANCE = FPS * 60; // ステージの長さ
-	constexpr int PLAYER_SHIELD_MAX = 8; // 自機のシールドの最大値
-	constexpr int EFFECT_MAX = 100; // エフェクトの最大数
-	constexpr int ITEM_TYPE = 3; // アイテムの種類
-	constexpr int WEAPON_LV_MAX = 10; // 武器レベルの最大値
-	constexpr int PLAYER_SPEED_MAX = 20; // 自機の速さの最大値
-}
-
-// 敵機の種類
-enum EnemyType {
-	ENE_BULLET,
-	ENE_ZAKO1,
-	ENE_ZAKO2,
-	ENE_ZAKO3,
-	ENE_BOSS
-};
-
-// エフェクトの種類
-enum EffectType {
-	EFF_EXPLODE,
-	EFF_RECOVER
-};
-
-// シーンの種類
-enum SceneType {
-	TITLE,
-	PLAY,
-	OVER,
-	CLEAR
-};
+//// 定数の定義
+//namespace GameConfig {
+//	constexpr int WIDTH = 1200; // ウィンドウの幅
+//	constexpr int HEIGHT = 720; // ウィンドウの高さ
+//	constexpr int FPS = 60; // フレームレート
+//	constexpr int IMG_ENEMY_MAX = 5; // 敵の画像の枚数（種類）
+//	constexpr int BULLET_MAX = 100; // 自機が発射する弾の最大数
+//	constexpr int ENEMY_MAX = 100; // 敵機の数の最大値
+//	constexpr int STAGE_DISTANCE = FPS * 60; // ステージの長さ
+//	constexpr int PLAYER_SHIELD_MAX = 8; // 自機のシールドの最大値
+//	constexpr int EFFECT_MAX = 100; // エフェクトの最大数
+//	constexpr int ITEM_TYPE = 3; // アイテムの種類
+//	constexpr int WEAPON_LV_MAX = 10; // 武器レベルの最大値
+//	constexpr int PLAYER_SPEED_MAX = 20; // 自機の速さの最大値
+//}
+//
+//// 敵機の種類
+//enum EnemyType {
+//	ENE_BULLET,
+//	ENE_ZAKO1,
+//	ENE_ZAKO2,
+//	ENE_ZAKO3,
+//	ENE_BOSS
+//};
+//
+//// エフェクトの種類
+//enum EffectType {
+//	EFF_EXPLODE,
+//	EFF_RECOVER
+//};
+//
+//// シーンの種類
+//enum SceneType {
+//	TITLE,
+//	PLAY,
+//	OVER,
+//	CLEAR
+//};
 
 
 
@@ -85,21 +86,22 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	ChangeWindowMode(TRUE); // ウィンドウモードで起動
 
 	if (DxLib_Init() == -1)return -1; // ライブラリ初期化 エラーが起きたら終了
+	GameManager game;
 
-	//GameManager game;
 	
-	//SetBackgroundColor(0, 0, 0); // 背景色の指定
-	//SetDrawScreen(DX_SCREEN_BACK); // 描画面を裏画面にする
+	SetBackgroundColor(0, 0, 0); // 背景色の指定
+	SetDrawScreen(DX_SCREEN_BACK); // 描画面を裏画面にする
 
-	//initGame(); // 初期化用の関数を呼び出す
-	//initVariable(); // 【仮】ゲームを完成させる際に呼び出し位置を変える
+	game.initGame(); // 初期化用の関数を呼び出す
+
+	initVariable(); // 【仮】ゲームを完成させる際に呼び出し位置を変える
 	//GameData::distance = GameConfig::STAGE_DISTANCE; // 【記述位置は仮】ステージの長さを代入
 
 	//game.init();
 
 	while (1) // メインループ
 	{
-		//game.gameLoop();
+		game.gameLoop();
 
 		//ClearDrawScreen(); // 画面をクリアする
 
@@ -221,37 +223,37 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	}
 
 	// ここから下に自作した関数を記述する
-	// 初期化用の関数
-	void initGame(void)
-	{
-		// 背景用の画像の読み込み
-		GameData::imgGalaxy = LoadGraph("image/bg0.png");
-		GameData::imgFloor = LoadGraph("image/bg1.png");
-		GameData::imgWallL = LoadGraph("image/bg2.png");
-		GameData::imgWallR = LoadGraph("image/bg3.png");
-		// 自機と自機の弾の画像の読み込み
-		GameData::imgFighter = LoadGraph("image/fighter.png");
-		GameData::imgBullet = LoadGraph("image/bullet.png");
-		// 敵機の画像の読み込み
-		for (int i = 0; i < GameConfig::IMG_ENEMY_MAX; i++) {
-			std::string file = "image/enemy" + std::to_string(i) + ".png";
-			GameData::imgEnemy[i] = LoadGraph(file.c_str());
-		}
-		// その他の画像の読み込み
-		GameData::imgExplosion = LoadGraph("image/explosion.png"); // 爆発演出
-		GameData::imgItem = LoadGraph("image/item.png"); // アイテム
+	//// 初期化用の関数
+	//void initGame(void)
+	//{
+	//	// 背景用の画像の読み込み
+	//	GameData::imgGalaxy = LoadGraph("image/bg0.png");
+	//	GameData::imgFloor = LoadGraph("image/bg1.png");
+	//	GameData::imgWallL = LoadGraph("image/bg2.png");
+	//	GameData::imgWallR = LoadGraph("image/bg3.png");
+	//	// 自機と自機の弾の画像の読み込み
+	//	GameData::imgFighter = LoadGraph("image/fighter.png");
+	//	GameData::imgBullet = LoadGraph("image/bullet.png");
+	//	// 敵機の画像の読み込み
+	//	for (int i = 0; i < GameConfig::IMG_ENEMY_MAX; i++) {
+	//		std::string file = "image/enemy" + std::to_string(i) + ".png";
+	//		GameData::imgEnemy[i] = LoadGraph(file.c_str());
+	//	}
+	//	// その他の画像の読み込み
+	//	GameData::imgExplosion = LoadGraph("image/explosion.png"); // 爆発演出
+	//	GameData::imgItem = LoadGraph("image/item.png"); // アイテム
 
-		// サウンドの読み込みと音量設定
-		GameData::bgm = LoadSoundMem("sound/bgm.mp3");
-		GameData::jinOver = LoadSoundMem("sound/gameover.mp3");
-		GameData::jinClear = LoadSoundMem("sound/stageclear.mp3");
-		GameData::seExpl = LoadSoundMem("sound/explosion.mp3");
-		GameData::seItem = LoadSoundMem("sound/item.mp3");
-		GameData::seShot = LoadSoundMem("sound/shot.mp3");
-		ChangeVolumeSoundMem(128, GameData::bgm);
-		ChangeVolumeSoundMem(128, GameData::jinOver);
-		ChangeVolumeSoundMem(128, GameData::jinClear);
-	}
+	//	// サウンドの読み込みと音量設定
+	//	GameData::bgm = LoadSoundMem("sound/bgm.mp3");
+	//	GameData::jinOver = LoadSoundMem("sound/gameover.mp3");
+	//	GameData::jinClear = LoadSoundMem("sound/stageclear.mp3");
+	//	GameData::seExpl = LoadSoundMem("sound/explosion.mp3");
+	//	GameData::seItem = LoadSoundMem("sound/item.mp3");
+	//	GameData::seShot = LoadSoundMem("sound/shot.mp3");
+	//	(128, GameData::bgm);
+	//	ChangeVolumeSoundMem(128, GameData::jinOver);
+	//	ChangeVolumeSoundMem(128, GameData::jinClear);
+	//}
 
 	// 背景のスクロール
 	//void scrollBG(int spd)
@@ -293,67 +295,67 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//}
 
 	// 自機を動かす関数
-	void movePlayer(void)
-	{
-		static char oldSpcKey; // 1つ前のスペースキーの状態を保持する変数
-		static int countSpcKey; // スペースキーを押し続けている間、カウントアップする変数
-		if (CheckHitKey(KEY_INPUT_UP)) { // 上キー
-			GameData::player.y -= GameData::player.vy;
-			if (GameData::player.y < 30) GameData::player.y = 30;
-		}
-		if (CheckHitKey(KEY_INPUT_DOWN)) { // 下キー
-			GameData::player.y += GameData::player.vy;
-			if (GameData::player.y > GameConfig::HEIGHT - 30) GameData::player.y = GameConfig::HEIGHT - 30;
-		}
-		if (CheckHitKey(KEY_INPUT_LEFT)) { // 左キー
-			GameData::player.x -= GameData::player.vx;
-			if (GameData::player.x < 30) GameData::player.x = 30;
-		}
-		if (CheckHitKey(KEY_INPUT_RIGHT)) { // 右キー
-			GameData::player.x += GameData::player.vx;
-			if (GameData::player.x > GameConfig::WIDTH - 30) GameData::player.x = GameConfig::WIDTH - 30;
-		}
-		if (CheckHitKey(KEY_INPUT_SPACE)) { // スペースキー
-			if (oldSpcKey == 0) setBullet(); // 押した瞬間、発射
-			else if (countSpcKey % 20 == 0) setBullet(); // 一定間隔で発射
-			countSpcKey++;
-		}
-		oldSpcKey = CheckHitKey(KEY_INPUT_SPACE); // スペースキーの状態を保持
-		if (GameData::noDamage > 0) GameData::noDamage--; // 無敵時間のカウント
-		if (GameData::noDamage % 4 < 2) drawImage(GameData::imgFighter, GameData::player.x, GameData::player.y); // 自機の描画
-	}
+	//void movePlayer(void)
+	//{
+	//	static char oldSpcKey; // 1つ前のスペースキーの状態を保持する変数
+	//	static int countSpcKey; // スペースキーを押し続けている間、カウントアップする変数
+	//	if (CheckHitKey(KEY_INPUT_UP)) { // 上キー
+	//		GameData::player.y -= GameData::player.vy;
+	//		if (GameData::player.y < 30) GameData::player.y = 30;
+	//	}
+	//	if (CheckHitKey(KEY_INPUT_DOWN)) { // 下キー
+	//		GameData::player.y += GameData::player.vy;
+	//		if (GameData::player.y > GameConfig::HEIGHT - 30) GameData::player.y = GameConfig::HEIGHT - 30;
+	//	}
+	//	if (CheckHitKey(KEY_INPUT_LEFT)) { // 左キー
+	//		GameData::player.x -= GameData::player.vx;
+	//		if (GameData::player.x < 30) GameData::player.x = 30;
+	//	}
+	//	if (CheckHitKey(KEY_INPUT_RIGHT)) { // 右キー
+	//		GameData::player.x += GameData::player.vx;
+	//		if (GameData::player.x > GameConfig::WIDTH - 30) GameData::player.x = GameConfig::WIDTH - 30;
+	//	}
+	//	if (CheckHitKey(KEY_INPUT_SPACE)) { // スペースキー
+	//		if (oldSpcKey == 0) setBullet(); // 押した瞬間、発射
+	//		else if (countSpcKey % 20 == 0) setBullet(); // 一定間隔で発射
+	//		countSpcKey++;
+	//	}
+	//	oldSpcKey = CheckHitKey(KEY_INPUT_SPACE); // スペースキーの状態を保持
+	//	if (GameData::noDamage > 0) GameData::noDamage--; // 無敵時間のカウント
+	//	if (GameData::noDamage % 4 < 2) drawImage(GameData::imgFighter, GameData::player.x, GameData::player.y); // 自機の描画
+	//}
 
 	// 弾のセット（発射）
-	void setBullet(void)
-	{
-		for (int n = 0; n < GameData::weaponLv; n++) {
-			int x = GameData::player.x - (GameData::weaponLv - 1) * 5 + n * 10;
-			int y = GameData::player.y - 20;
-			for (int i = 0; i < GameConfig::BULLET_MAX; i++) {
-				if (GameData::bullet[i].state == 0) {
-					GameData::bullet[i].x = x;
-					GameData::bullet[i].y = y;
-					GameData::bullet[i].vx = 0;
-					GameData::bullet[i].vy = -40;
-					GameData::bullet[i].state = 1;
-					break;
-				}
-			}
-		}
-		PlaySoundMem(GameData::seShot, DX_PLAYTYPE_BACK); // 効果音
-	}
+	//void setBullet(void)
+	//{
+	//	for (int n = 0; n < GameData::weaponLv; n++) {
+	//		int x = GameData::player.x - (GameData::weaponLv - 1) * 5 + n * 10;
+	//		int y = GameData::player.y - 20;
+	//		for (int i = 0; i < GameConfig::BULLET_MAX; i++) {
+	//			if (GameData::bullet[i].state == 0) {
+	//				GameData::bullet[i].x = x;
+	//				GameData::bullet[i].y = y;
+	//				GameData::bullet[i].vx = 0;
+	//				GameData::bullet[i].vy = -40;
+	//				GameData::bullet[i].state = 1;
+	//				break;
+	//			}
+	//		}
+	//	}
+	//	PlaySoundMem(GameData::seShot, DX_PLAYTYPE_BACK); // 効果音
+	//}
 
-	// 弾の移動
-	void moveBullet(void)
-	{
-		for (int i = 0; i < GameConfig::BULLET_MAX; i++) {
-			if (GameData::bullet[i].state == 0) continue; // 空いている配列なら処理しない
-			GameData::bullet[i].x += GameData::bullet[i].vx; // ┬ 座標を変化させる
-			GameData::bullet[i].y += GameData::bullet[i].vy; // ┘
-			drawImage(GameData::imgBullet, GameData::bullet[i].x, GameData::bullet[i].y); // 弾の描画
-			if (GameData::bullet[i].y < -100) GameData::bullet[i].state = 0; // 画面外に出たら、存在しない状態にする
-		}
-	}
+	//// 弾の移動
+	//void moveBullet(void)
+	//{
+	//	for (int i = 0; i < GameConfig::BULLET_MAX; i++) {
+	//		if (GameData::bullet[i].state == 0) continue; // 空いている配列なら処理しない
+	//		GameData::bullet[i].x += GameData::bullet[i].vx; // ┬ 座標を変化させる
+	//		GameData::bullet[i].y += GameData::bullet[i].vy; // ┘
+	//		drawImage(GameData::imgBullet, GameData::bullet[i].x, GameData::bullet[i].y); // 弾の描画
+	//		if (GameData::bullet[i].y < -100) GameData::bullet[i].state = 0; // 画面外に出たら、存在しない状態にする
+	//	}
+	//}
 
 	// 敵機をセットする
 	//int setEnemy(int x, int y, int vx, int vy, int ptn, int img, int sld)
@@ -457,26 +459,26 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//}
 
 	// 敵機のシールドを減らす（ダメージを与える）
-	void damageEnemy(int n, int dmg)
-	{
-		SetDrawBlendMode(DX_BLENDMODE_ADD, 192); // 加算による描画の重ね合わせ
-		DrawCircle(GameData::enemy[n].x, GameData::enemy[n].y, (GameData::enemy[n].wid + GameData::enemy[n].hei) / 4, 0xff0000, TRUE);
-		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0); // ブレンドモードを解除
-		GameData::score += 100; // スコアの加算
-		if (GameData::score > GameData::hisco) GameData::hisco = GameData::score; // ハイスコアの更新
-		GameData::enemy[n].shield -= dmg; // シールドを減らす
-		if (GameData::enemy[n].shield <= 0)
-		{
-			GameData::enemy[n].state = 0; // シールド0以下で消す
-			setEffect(GameData::enemy[n].x, GameData::enemy[n].y, EFF_EXPLODE); // 爆発演出
-			if (GameData::enemy[n].pattern == ENE_BOSS) // ボスを倒した
-			{
-				StopSoundMem(GameData::bgm); // ＢＧＭ停止
-				GameData::scene = CLEAR;
-				GameData::timer = 0;
-			}
-		}
-	}
+	//void damageEnemy(int n, int dmg)
+	//{
+	//	SetDrawBlendMode(DX_BLENDMODE_ADD, 192); // 加算による描画の重ね合わせ
+	//	DrawCircle(GameData::enemy[n].x, GameData::enemy[n].y, (GameData::enemy[n].wid + GameData::enemy[n].hei) / 4, 0xff0000, TRUE);
+	//	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0); // ブレンドモードを解除
+	//	GameData::score += 100; // スコアの加算
+	//	if (GameData::score > GameData::hisco) GameData::hisco = GameData::score; // ハイスコアの更新
+	//	GameData::enemy[n].shield -= dmg; // シールドを減らす
+	//	if (GameData::enemy[n].shield <= 0)
+	//	{
+	//		GameData::enemy[n].state = 0; // シールド0以下で消す
+	//		setEffect(GameData::enemy[n].x, GameData::enemy[n].y, EFF_EXPLODE); // 爆発演出
+	//		if (GameData::enemy[n].pattern == ENE_BOSS) // ボスを倒した
+	//		{
+	//			StopSoundMem(GameData::bgm); // ＢＧＭ停止
+	//			GameData::scene = CLEAR;
+	//			GameData::timer = 0;
+	//		}
+	//	}
+	//}
 
 	// 影を付けた文字列と値を表示する関数
 	//void drawText(int x, int y, const char* txt, int val, int col, int siz)

@@ -19,6 +19,20 @@ public:
 		return imageId;
 	}
 
+	int getWidth() const
+	{
+		int w, h;
+		GetGraphSize(imageId, &w, &h);
+		return w;
+	}
+
+	int getHeight() const
+	{
+		int w, h;
+		GetGraphSize(imageId, &w, &h);
+		return w;
+	}
+
 private:
 	int imageId;
 };

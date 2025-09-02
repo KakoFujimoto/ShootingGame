@@ -23,4 +23,9 @@ public:
 		}
 		return nullptr;
 	}
+
+	virtual SceneType getType() const override
+	{
+		return SceneType::Title;
+	}
 };

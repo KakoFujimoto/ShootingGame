@@ -17,13 +17,8 @@ void EffectManager::setEffect(int x, int y, EffectType ptn, ImageContainer& imag
 				? &imageContainer.getExplosion()
 				: &imageContainer.getItem());
 
-
-			//GetGraphSize(e.getImage()->getId(), &e.getWidth(), &e.getHeight());
-			//E0413 "const Image" ‚©‚ç "const Image *" ‚Ö‚Ì“KØ‚È•ÏŠ·ŠÖ”‚ª‘¶Ý‚µ‚Ü‚¹‚ñ
-			int w, h;
-			GetGraphSize(e.getImage()->getId(), &w, &h);
-			e.setWidth(w);
-			e.setHeight(h);
+			e.setWidth(e.getImage()->getWidth());
+			e.setHeight(e.getImage()->getHeight());
 
 			e.setState(1);
 			e.setTimer(0);

@@ -20,7 +20,7 @@ void ItemManager::setItem(void)
 }
 
 // アイテムの処理
-void ItemManager::moveItem(GameManager& game)
+void ItemManager::moveItem(GameManager& game, SceneManager& scene)
 {	
 	auto& img = game.getImage();
 
@@ -33,14 +33,11 @@ void ItemManager::moveItem(GameManager& game)
 
 	if ((item.getTimer() % 60) < 30)
 	{
-		//item.vx -= 1;
-		item.setVX(-1);
+		item.setVX(item.getVX() - 1);
 	}
 	else
 	{
-		//item.vx += 1;
-		item.setVX(1);
-
+		item.setVX(item.getVX() + 1);
 	}
 
 	if (item.getY() > GameConfig::HEIGHT + 16)
@@ -50,7 +47,6 @@ void ItemManager::moveItem(GameManager& game)
 	int index = (item.getTimer() / 120) % GameConfig::ITEM_TYPE; // 現在、どのアイテムになっているか
 	item.setPattern(static_cast<ItemType>(index));
 
-	//item.timer++;
 	item.setTimer(item.getTimer() + 1);
 
 
@@ -62,7 +58,7 @@ void ItemManager::moveItem(GameManager& game)
 		TRUE, FALSE);
 
 
-	if (static_cast<int>(SceneType::Over))
+	if (scene.getCurrentType() == SceneType::Over)
 	{
 		return; // ゲームオーバー画面では回収できない
 	}
@@ -78,18 +74,15 @@ void ItemManager::moveItem(GameManager& game)
 		{
 			if (game.getPlayer().getVX() < GameConfig::PLAYER_SPEED_MAX)
 			{
-				//player.vx += 3;
-				game.getPlayer().setVX(3);
+				game.getPlayer().setVX(game.getPlayer().getVX() +3);
 
-				//player.vy += 3;
-				game.getPlayer().setVY(3);
+				game.getPlayer().setVY(game.getPlayer().getVY() + 3);
 			}
 		}
 		if (item.getPattern() == ItemType::ShieldRecovery) // シールド回復
 		{
 			if (game.getPlayer().getShield() < GameConfig::PLAYER_SHIELD_MAX)
 			{
-				//player.shield++;
 				game.getPlayer().setShield(game.getPlayer().getShield() + 1);
 
 			}
@@ -103,7 +96,6 @@ void ItemManager::moveItem(GameManager& game)
 				game.getGameData().weaponLv++;
 			}
 		}
-		//PlaySoundMem(seItem, DX_PLAYTYPE_BACK); // 効果音
 		game.getSoundPlayer().play(game.getSoundContainer().seItem);
 	}
 }

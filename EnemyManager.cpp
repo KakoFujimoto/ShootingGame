@@ -5,6 +5,8 @@
 #include "Image.h"
 #include "EnemyType.h"
 #include "GameManager.h"
+#include "EffectType.h"
+#include "SceneClear.h"
 
 	// 敵機を動かす
 	void EnemyManager::moveEnemy(GameManager& game)
@@ -24,7 +26,7 @@
 				{
 					enemy.setVY(enemy.getVY() * 0.9);
 				}
-				else if (enemy.getVY()y > 0) // 弾発射、飛び去る
+				else if (enemy.getVY() > 0) // 弾発射、飛び去る
 				{
 					setEnemy(enemy.getX(), enemy.getY(), 0, 6, EnemyType::Bullet, ene_bullet, 0); // 弾
 
@@ -82,7 +84,7 @@
 					}
 				}
 			}
-			if (GameData::noDamage == 0) // 無敵状態でない時、自機とヒットチェック
+			if (game.getGameData().noDamage == 0) // 無敵状態でない時、自機とヒットチェック
 			{	
 				auto& player = game.getPlayer();
 
@@ -94,7 +96,7 @@
 					{
 						player.setShield(player.getShield() - 1); // シールドを減らす
 					}
-					GameData::noDamage = GameConfig::FPS; // 無敵状態をセット
+					game.getGameData().noDamage = GameConfig::FPS; // 無敵状態をセット
 					damageEnemy(i, 1); // 敵にダメージ
 				}
 			}
@@ -102,7 +104,7 @@
 	}
 
 	// 敵機をセットする
-	int EnemyManager::setEnemy(int x, int y, int vx, int vy, EnemyType ptn, Image img, int sld)
+	int EnemyManager::setEnemy(int x, int y, int vx, int vy, EnemyType ptn, Image img, int sld, GameManager& game)
 	{
 		for (int i = 0; i < GameConfig::ENEMY_MAX; i++) {
 			auto& enemy = enemies[i];
@@ -116,16 +118,50 @@
 				enemy.setPattern(ptn);
 
 				enemy.setImage(&img);
-
-				enemy.setShield(sld * GameData::stage); // ステージが進むほど敵が固くなる
-
-				int w, h;	
-				GetGraphSize(img.getId(), &w, &h); // 画像の幅と高さを代入
-				enemy.setWidth(w);
-				enemy.setHeight(h);
-
+				enemy.setShield(sld * game.getGameData().stage); // ステージが進むほど敵が固くなる
+				enemy.setWidth(img.getWidth());
+				enemy.setHeight(img.getHeight());
 				return i;
 			}
 		}
 		return -1;
+	}
+
+	// 敵機のシールドを減らす（ダメージを与える）
+	void EnemyManager::damageEnemy(int n, int dmg, GameManager& game)
+	{	
+
+		SetDrawBlendMode(DX_BLENDMODE_ADD, 192); // 加算による描画の重ね合わせ
+		DrawCircle(enemies[n].getX(), enemies[n].getY(), (enemies[n].getWidth() + enemies[n].getHeight()) / 4, 0xff0000, TRUE);
+
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0); // ブレンドモードを解除
+
+		int& score = game.getGameData().score;
+		score += 100; // スコアの加算
+
+		int& hisco = game.getGameData().hisco;
+		if (score > hisco)
+		{
+			hisco = score; // ハイスコアの更新
+		}
+
+		enemies[n].setShield(enemies[n].getShield() - dmg); // シールドを減らす
+
+		if (enemies[n].getShield() <= 0)
+		{
+			enemies[n].setState(0); // シールド0以下で消す
+
+			game.getEffect().setEffect(enemies[n].getX(), enemies[n].getY(), EffectType::Explode, game.getImage()); // 爆発演出
+
+			if (enemies[n].getPattern() == EnemyType::Boss) // ボスを倒した
+			{
+				game.getSoundPlayer().stop(game.getSoundContainer().bgm); // ＢＧＭ停止
+
+				//GameData::scene = CLEAR;
+				//return std::make_shared<SceneClear>();
+				game.setIsClear(true);
+
+				game.getGameData().timer = 0;
+			}
+		}
 	}

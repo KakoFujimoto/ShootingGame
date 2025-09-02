@@ -18,6 +18,11 @@ public:
 		}
 	}
 
+	SceneType getCurrentType() const
+	{
+		return scene->getType();
+	}
+
 private:
 	std::shared_ptr<IScene> scene;
 };

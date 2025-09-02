@@ -8,6 +8,8 @@
 #include "EnemyType.h"
 #include "SceneType.h"
 #include "SceneOver.h"
+#include "SceneClear.h"
+
 
 class BulletManager;
 
@@ -81,7 +83,7 @@ public:
 				-120, 0, 1,
 				EnemyType::Boss,
 				image.getEnemy(EnemyType::Boss),
-				200
+				200, game
 			); // É{ÉXèoåª
 		}
 
@@ -99,7 +101,10 @@ public:
 			//GameData::scene = static_cast<int>(SceneType::Over);
 			return std::make_shared<SceneOver>();
 
-			return;
+		}
+		if (game.getIsClear())
+		{
+			return std::make_shared<SceneClear>();
 		}
 		return;
 	}

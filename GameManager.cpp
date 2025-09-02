@@ -7,7 +7,7 @@ void GameManager::gameLoop()
 
 	// ゲームの骨組みとなる処理を、ここに記述する
 	int spd = 1; // スクロールの速さ
-	if (gameData.scene == SceneType::Play && gameData.distance == 0)
+	if (sceneManager.getCurrentType() == SceneType::Play && gameData.distance == 0)
 	{
 		spd = 0; // ボス戦はスクロール停止
 	}
@@ -101,4 +101,54 @@ void GameManager::initVariable(void)
 	GameData::noDamage = 0;
 	GameData::weaponLv = 1;
 	GameData::distance = GameConfig::STAGE_DISTANCE;
+}
+
+// 自機に関するパラメーターを表示
+void GameManager::drawParameter(GameManager& game)
+{
+	int x = 10, y = GameConfig::HEIGHT - 30; // 表示位置
+	DrawBox(x, y, x + GameConfig::PLAYER_SHIELD_MAX * 30, y + 20, 0x000000, TRUE);
+
+	for (int i = 0; i < game.getPlayer().getShield(); i++) // シールドのメーター
+	{
+		int r = 128 * (GameConfig::PLAYER_SHIELD_MAX - i) / GameConfig::PLAYER_SHIELD_MAX; // RGB値を計算
+		int g = 255 * i / GameConfig::PLAYER_SHIELD_MAX;
+		int b = 160 + 96 * i / GameConfig::PLAYER_SHIELD_MAX;
+		DrawBox(x + 2 + i * 30, y + 2, x + 28 + i * 30, y + 18, GetColor(r, g, b), TRUE);
+	}
+	game.getDrawer().drawText(x, y - 25, "SHIELD Lv %02d", game.getPlayer().getShield(), 0xffffff, 20); // シールド値
+	drawText(x, y - 50, "WEAPON Lv %02d", game.getGameData().weaponLv, 0xffffff, 20); // 武器レベル
+	drawText(x, y - 75, "SPEED %02d", game.getPlayer().getVX(), 0xffffff, 20); // 移動速度
+}
+
+// 初期化用の関数
+void GameManager::initGame(void)
+{
+	// 背景用の画像の読み込み
+	GameData::imgGalaxy = LoadGraph("image/bg0.png");
+	GameData::imgFloor = LoadGraph("image/bg1.png");
+	GameData::imgWallL = LoadGraph("image/bg2.png");
+	GameData::imgWallR = LoadGraph("image/bg3.png");
+	// 自機と自機の弾の画像の読み込み
+	GameData::imgFighter = LoadGraph("image/fighter.png");
+	GameData::imgBullet = LoadGraph("image/bullet.png");
+	// 敵機の画像の読み込み
+	for (int i = 0; i < GameConfig::IMG_ENEMY_MAX; i++) {
+		std::string file = "image/enemy" + std::to_string(i) + ".png";
+		GameData::imgEnemy[i] = LoadGraph(file.c_str());
+	}
+	// その他の画像の読み込み
+	GameData::imgExplosion = LoadGraph("image/explosion.png"); // 爆発演出
+	GameData::imgItem = LoadGraph("image/item.png"); // アイテム
+
+	// サウンドの読み込みと音量設定
+	GameData::bgm = LoadSoundMem("sound/bgm.mp3");
+	GameData::jinOver = LoadSoundMem("sound/gameover.mp3");
+	GameData::jinClear = LoadSoundMem("sound/stageclear.mp3");
+	GameData::seExpl = LoadSoundMem("sound/explosion.mp3");
+	GameData::seItem = LoadSoundMem("sound/item.mp3");
+	GameData::seShot = LoadSoundMem("sound/shot.mp3");
+	(128, GameData::bgm);
+	ChangeVolumeSoundMem(128, GameData::jinOver);
+	ChangeVolumeSoundMem(128, GameData::jinClear);
 }

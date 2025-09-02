@@ -10,7 +10,7 @@
 #include "EffectType.h"
 
 class SceneClear
-	: IScene
+	: public IScene
 {
 public:
 	virtual std::shared_ptr<IScene> run(GameManager& game)
@@ -26,6 +26,8 @@ public:
 
 
 			player.movePlayer(bulletManager, game); // 自機の処理
+
+			//if (GameData::timer < GameConfig::FPS * 3) // ボスが爆発する演出
 			if (GameData::timer < GameConfig::FPS * 3) // ボスが爆発する演出
 			{
 				if (GameData::timer % 7 == 0)

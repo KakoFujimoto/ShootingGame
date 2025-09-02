@@ -11,8 +11,9 @@
 		auto& soundPlayer = game.getSoundPlayer();
 		auto& soundContainer = game.getSoundContainer();
 
-		for (int n = 0; n < GameData::weaponLv; n++) {
-			int x = player.getX() - (GameData::weaponLv - 1) * 5 + n * 10;
+		for (int n = 0; n < game.getGameData().weaponLv; n++) {
+
+			int x = player.getX() - (game.getGameData().weaponLv - 1) * 5 + n * 10;
 			int y = player.getY() - 20;
 			for (auto& b : bullets) {
 				if (b.getState() == 0) {
