@@ -98,7 +98,10 @@ void ItemManager::moveItem(GameManager& game)
 		}
 		if (item.getPattern() == ItemType::WeaponLvUp) // 武器レベルアップ
 		{
-			if (GameData::weaponLv < GameConfig::WEAPON_LV_MAX) GameData::weaponLv++;
+			if (game.getGameData().weaponLv < GameConfig::WEAPON_LV_MAX)
+			{
+				game.getGameData().weaponLv++;
+			}
 		}
 		//PlaySoundMem(seItem, DX_PLAYTYPE_BACK); // 効果音
 		game.getSoundPlayer().play(game.getSoundContainer().seItem);
