@@ -40,23 +40,24 @@ void Player::movePlayer(BulletManager& bulletManager, GameManager& game)
 	if (CheckHitKey(KEY_INPUT_SPACE)) { // スペースキー
 		if (oldSpcKey == 0)
 		{
-			bulletManager.setBullet(*this); // 押した瞬間、発射
+			bulletManager.setBullet(*this, game); // 押した瞬間、発射
 		}
 		else if (countSpcKey % 20 == 0)
 		{
-			bulletManager.setBullet(*this); // 一定間隔で発射
+			bulletManager.setBullet(*this, game); // 一定間隔で発射
 		}
 		countSpcKey++;
 	}
 	oldSpcKey = CheckHitKey(KEY_INPUT_SPACE); // スペースキーの状態を保持
 
+	int& noDamage = game.getGameData().noDamage;
 
-	if (GameData::noDamage > 0)
+	if (noDamage > 0)
 	{
-		GameData::noDamage--; // 無敵時間のカウント
+		noDamage--; // 無敵時間のカウント
 	}
 
-	if (GameData::noDamage % 4 < 2)
+	if (noDamage % 4 < 2)
 	{	
 		auto& drawer = game.getDrawer();
 		auto& image = game.getImage();
