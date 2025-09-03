@@ -10,5 +10,5 @@ public:
 	Sound() = default;
 	Sound(const std::string& path) : filePath(path){}
 
-	void load();
+	//void load();
 };

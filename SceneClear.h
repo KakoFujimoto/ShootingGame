@@ -26,18 +26,28 @@ public:
 
 
 			player.movePlayer(bulletManager, game); // 自機の処理
+			int& timer = game.getGameData().timer;
+			int& bossIdx = game.getGameData().bossIdx;
+			int& stage = game.getGameData().stage;
+			int& distance = game.getGameData().distance;
 
-			//if (GameData::timer < GameConfig::FPS * 3) // ボスが爆発する演出
-			if (GameData::timer < GameConfig::FPS * 3) // ボスが爆発する演出
+
+
+			if (timer < GameConfig::FPS * 3) // ボスが爆発する演出
 			{
-				if (GameData::timer % 7 == 0)
+				if (timer % 7 == 0)
 				{
-					effect.setEffect(enemy[GameData::bossIdx].x + rand() % 201 - 100,
-						enemy[GameData::bossIdx].y + rand() % 201 - 100,
-						EffectType::Explode,image);
+					effect.setEffect
+					(
+						enemy.getEnemy(bossIdx).getX() + rand() % 201 - 100,
+						enemy.getEnemy(bossIdx).getY() + rand() % 201 - 100,
+
+						EffectType::Explode,
+						image
+					);
 				}
 			}
-			else if (GameData::timer == GameConfig::FPS * 3)
+			else if (timer == GameConfig::FPS * 3)
 			{
 				soundPlayer.play(soundContainer.jinClear); // ジングル出力
 			}
@@ -45,10 +55,10 @@ public:
 			{
 				drawer.drawTextC(GameConfig::WIDTH * 0.5, GameConfig::HEIGHT * 0.3, "STAGE CLEAR!", 0x00ffff, 80);
 			}
-			if (GameData::timer > GameConfig::FPS * 10) // ゲームプレイへ遷移
+			if (timer > GameConfig::FPS * 10) // ゲームプレイへ遷移
 			{
-				GameData::stage++;
-				GameData::distance = GameConfig::STAGE_DISTANCE;
+				stage++;
+				distance = GameConfig::STAGE_DISTANCE;
 				return std::make_shared<ScenePlay>();
 			
 			}

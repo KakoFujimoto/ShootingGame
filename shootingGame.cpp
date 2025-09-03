@@ -95,13 +95,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	game.initGame(); // 初期化用の関数を呼び出す
 
 	initVariable(); // 【仮】ゲームを完成させる際に呼び出し位置を変える
-	//GameData::distance = GameConfig::STAGE_DISTANCE; // 【記述位置は仮】ステージの長さを代入
+	game.getGameData().distance = GameConfig::STAGE_DISTANCE; // 【記述位置は仮】ステージの長さを代入
 
-	//game.init();
 
 	while (1) // メインループ
 	{
 		game.gameLoop();
+
+		DxLib_End(); // ＤＸライブラリ使用の終了処理
+		return 0; // ソフトの終了
+
 
 		//ClearDrawScreen(); // 画面をクリアする
 
@@ -216,10 +219,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		//	WaitTimer(1000 / GameConfig::FPS); // 一定時間待つ
 		//	if (ProcessMessage() == -1) break; // Windowsから情報を受け取りエラーが起きたら終了
 		//	if (CheckHitKey(KEY_INPUT_ESCAPE) == 1) break; // ESCキーが押されたら終了
-		}
+		//}
 
-		DxLib_End(); // ＤＸライブラリ使用の終了処理
-		return 0; // ソフトの終了
 	}
 
 	// ここから下に自作した関数を記述する

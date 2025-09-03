@@ -165,3 +165,8 @@
 			}
 		}
 	}
+
+	const Enemy& EnemyManager::getEnemy(int idx) const
+	{
+		return enemies[idx];
+	}

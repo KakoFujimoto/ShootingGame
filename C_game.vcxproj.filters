@@ -77,9 +77,6 @@
     <ClInclude Include="Bullet.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="IPosition.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>

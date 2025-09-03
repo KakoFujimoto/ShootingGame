@@ -168,7 +168,6 @@
     <ClInclude Include="EnemyType.h" />
     <ClInclude Include="GameConfig.h" />
     <ClInclude Include="GameManager.h" />
-    <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameData.h" />
     <ClInclude Include="IImage.h" />
     <ClInclude Include="Image.h" />

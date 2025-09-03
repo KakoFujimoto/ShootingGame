@@ -6,7 +6,7 @@ public:
 	// アイテムをセット
 	void setItem(void);
 	// アイテムの処理
-	void moveItem(GameManager& game);
+	void moveItem(GameManager& game, SceneManager& scene);
 
 private:
 	Item item;
