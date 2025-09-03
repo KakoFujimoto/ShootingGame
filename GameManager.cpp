@@ -12,28 +12,15 @@ void GameManager::gameLoop()
 		spd = 0; // ボス戦はスクロール停止
 	}
 
-	//scrollBG(graphic, spd); // 背景のスクロール
 	scrollBG(spd); 
-
-	//moveEnemy(); 
-	//enemies.move(*this, graphic);
 	enemies.moveEnemy(*this); // 敵機の制御
-
-	//moveBullet();
-	//bullet.move(player graphic);
 	bullets.moveBullet(images, *this); // 弾の制御
-
-	//moveItem();
-	//item.move(graphic);
 	itemManager.moveItem(*this); // アイテムの制御
-
-	//drawEffect(); // エフェクト
-	//effetct.draw(graphic);
 	effects.drawEffect(*this);
 
 
 	stageMap(); // ステージマップ
-	drawer.drawParameter(); // 自機のシールドなどのパラメーターを表示
+	drawParameter(*this); // 自機のシールドなどのパラメーターを表示
 	gameData.timer++; // タイマーをカウント
 
 	sceneManager.run(*this);
@@ -89,18 +76,23 @@ void GameManager::scrollBG(int spd)
 // ゲーム開始時の初期値を代入する関数
 void GameManager::initVariable(void)
 {
-	GameData::player.x = GameConfig::WIDTH / 2;
-	GameData::player.vx = 5;
-	GameData::player.vy = 5;
-	GameData::player.y = GameConfig::HEIGHT / 2;
-	GameData::player.shield = GameConfig::PLAYER_SHIELD_MAX;
-	GetGraphSize(GameData::imgFighter, &GameData::player.wid, &GameData::player.hei); // 自機の画像の幅と高さを代入
-	for (int i = 0; i < GameConfig::ENEMY_MAX; i++) GameData::enemy[i].state = 0; // 全ての敵機を存在しない状態に
-	GameData::score = 0;
-	GameData::stage = 1;
-	GameData::noDamage = 0;
-	GameData::weaponLv = 1;
-	GameData::distance = GameConfig::STAGE_DISTANCE;
+	player.setX(GameConfig::WIDTH / 2);
+	player.setVX(5);
+	player.setVY(5);
+
+	player.setX(GameConfig::HEIGHT / 2);
+	player.setShield(GameConfig::PLAYER_SHIELD_MAX);
+
+	GetGraphSize(images.getFighter().getId(), &player.refWidth(), &player.refHeight()); // 自機の画像の幅と高さを代入
+	//GetGraphSize(GameData::imgFighter, &GameData::player.wid, &GameData::player.hei); // 自機の画像の幅と高さを代入
+
+	enemies.resetAllEnemies();
+
+	gameData.score = 0;
+	gameData.stage = 1;
+	gameData.noDamage = 0;
+	gameData.weaponLv = 1;
+	gameData.distance = GameConfig::STAGE_DISTANCE;
 }
 
 // 自機に関するパラメーターを表示
@@ -117,38 +109,20 @@ void GameManager::drawParameter(GameManager& game)
 		DrawBox(x + 2 + i * 30, y + 2, x + 28 + i * 30, y + 18, GetColor(r, g, b), TRUE);
 	}
 	game.getDrawer().drawText(x, y - 25, "SHIELD Lv %02d", game.getPlayer().getShield(), 0xffffff, 20); // シールド値
-	drawText(x, y - 50, "WEAPON Lv %02d", game.getGameData().weaponLv, 0xffffff, 20); // 武器レベル
-	drawText(x, y - 75, "SPEED %02d", game.getPlayer().getVX(), 0xffffff, 20); // 移動速度
+	drawer.drawText(x, y - 50, "WEAPON Lv %02d", game.getGameData().weaponLv, 0xffffff, 20); // 武器レベル
+	drawer.drawText(x, y - 75, "SPEED %02d", game.getPlayer().getVX(), 0xffffff, 20); // 移動速度
 }
 
 // 初期化用の関数
 void GameManager::initGame(void)
-{
-	// 背景用の画像の読み込み
-	GameData::imgGalaxy = LoadGraph("image/bg0.png");
-	GameData::imgFloor = LoadGraph("image/bg1.png");
-	GameData::imgWallL = LoadGraph("image/bg2.png");
-	GameData::imgWallR = LoadGraph("image/bg3.png");
-	// 自機と自機の弾の画像の読み込み
-	GameData::imgFighter = LoadGraph("image/fighter.png");
-	GameData::imgBullet = LoadGraph("image/bullet.png");
-	// 敵機の画像の読み込み
-	for (int i = 0; i < GameConfig::IMG_ENEMY_MAX; i++) {
-		std::string file = "image/enemy" + std::to_string(i) + ".png";
-		GameData::imgEnemy[i] = LoadGraph(file.c_str());
-	}
-	// その他の画像の読み込み
-	GameData::imgExplosion = LoadGraph("image/explosion.png"); // 爆発演出
-	GameData::imgItem = LoadGraph("image/item.png"); // アイテム
+{	
+	// ゲームスタート時に必要な画像を読み込み
+	images.load();
 
 	// サウンドの読み込みと音量設定
-	GameData::bgm = LoadSoundMem("sound/bgm.mp3");
-	GameData::jinOver = LoadSoundMem("sound/gameover.mp3");
-	GameData::jinClear = LoadSoundMem("sound/stageclear.mp3");
-	GameData::seExpl = LoadSoundMem("sound/explosion.mp3");
-	GameData::seItem = LoadSoundMem("sound/item.mp3");
-	GameData::seShot = LoadSoundMem("sound/shot.mp3");
-	(128, GameData::bgm);
-	ChangeVolumeSoundMem(128, GameData::jinOver);
-	ChangeVolumeSoundMem(128, GameData::jinClear);
+	soundLoader.loadAll(soundContainer);
+
+	soundPlayer.setVolume(soundContainer.bgm.filePath, 128);
+	soundPlayer.setVolume(soundContainer.jinOver.filePath, 128);
+	soundPlayer.setVolume(soundContainer.jinClear.filePath, 128);
 }

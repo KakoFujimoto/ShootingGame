@@ -8,6 +8,7 @@
 #include "Drawer.h"
 #include "SoundContainer.h"
 #include "SoundPlayer.h"
+#include "SoundLoader.h"
 #include "ItemManager.h"
 #include "GameData.h"
 
@@ -48,6 +49,7 @@ private:
 	EffectManager effects;
     ImageContainer images;
     SoundContainer soundContainer;
+    SoundLoader soundLoader;
     SoundPlayer soundPlayer;
 	ItemManager itemManager;
 	GameData gameData;

@@ -46,4 +46,7 @@ public:
 	int getShield() const override { return shield; }
 
 	void movePlayer(BulletManager& bulletManager, GameManager& game);
+
+	int& refWidth() { return width; }
+	int& refHeight() { return height; }
 };
