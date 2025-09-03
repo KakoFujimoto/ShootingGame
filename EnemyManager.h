@@ -1,7 +1,8 @@
 #pragma once
 #include "Enemy.h"
 #include "GameConfig.h"
-#include "GameManager.h"
+
+class GameManager;
 
 class EnemyManager {
 public:

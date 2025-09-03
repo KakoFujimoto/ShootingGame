@@ -4,6 +4,7 @@
 #include "GameManager.h"
 #include "GameConfig.h"
 #include "DxLib.h"
+#include "ScenePlay.h"
 
 class SceneTitle: public IScene
 {
