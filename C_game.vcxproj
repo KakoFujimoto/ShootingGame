@@ -153,7 +153,10 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="previous_code.cpp" />
     <ClCompile Include="SceneClear.cpp" />
-    <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="SceneManager.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="SceneManager.h" />
     <ClCompile Include="SceneOver.cpp" />
     <ClCompile Include="ScenePlay.cpp" />
