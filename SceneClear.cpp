@@ -53,7 +53,7 @@ std::shared_ptr<IScene> SceneClear::run(GameManager& game)
 	return nullptr;
 }
 
-SceneType ScenePlay::getType() const
+SceneType SceneClear::getType() const
 {
 	return SceneType::Clear;
 }
