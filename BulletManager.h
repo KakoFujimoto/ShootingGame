@@ -12,11 +12,10 @@ public:
 		bullets.resize(GameConfig::BULLET_MAX);
 	}
 
-	// 弾の移動
+	// 弾のセット（発射）
 	void setBullet(const Player& player, GameManager& game);
 
-
-	// 弾のセット（発射）
+	// 弾の移動
 	void moveBullet(ImageContainer& imageContainer, GameManager& game);
 
 private:

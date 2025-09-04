@@ -6,6 +6,7 @@
 #include "GameManager.h"
 
 
+// 弾のセット（発射）
 	void BulletManager::setBullet(const Player& player, GameManager& game)
 	{	
 		auto& soundPlayer = game.getSoundPlayer();

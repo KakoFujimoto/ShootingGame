@@ -1,5 +1,6 @@
 #include "GameManager.h"
 #include "SceneType.h"
+#include "BulletManager.h"
 
 void GameManager::gameLoop()
 {
@@ -15,7 +16,7 @@ void GameManager::gameLoop()
 	scrollBG(spd); 
 	enemies.moveEnemy(*this); // 敵機の制御
 	bullets.moveBullet(images, *this); // 弾の制御
-	itemManager.moveItem(*this); // アイテムの制御
+	itemManager.moveItem(*this, sceneManager); // アイテムの制御
 	effects.drawEffect(*this);
 
 

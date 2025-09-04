@@ -192,7 +192,7 @@
 	//	if (CheckHitKey(KEY_INPUT_ESCAPE) == 1) break; // ESCキーが押されたら終了
 	//}
 
-}
+//}
 
 // ここから下に自作した関数を記述する
 //// 初期化用の関数

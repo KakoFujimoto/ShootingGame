@@ -1,12 +1,13 @@
 #include "GameData.h"
 #include "GameConfig.h"
+#include "GameManager.h"
+#include "SceneManager.h"
 #include "SoundContainer.h"
 #include "SoundPlayer.h"
 #include "ItemManager.h"
 #include "ItemType.h"
 #include "ImageContainer.h"
 #include "SceneType.h"
-#include "GameManager.h"
 #include "EffectType.h"
 
 void ItemManager::setItem(void)
@@ -50,12 +51,19 @@ void ItemManager::moveItem(GameManager& game, SceneManager& scene)
 	item.setTimer(item.getTimer() + 1);
 
 
-	DrawRectGraph(item.getX() - 20,
-		item.getY() - 16,
-		static_cast<int>(item.getPattern()) * 40,
-		0, 40, 32,
-		img.getItem().getId(),
-		TRUE, FALSE);
+	DrawRectGraph
+	(
+		item.getX() - 20, //int DestX
+		item.getY() - 16, //int DestY
+		static_cast<int>(item.getPattern()) * 40, // int SrcX
+		0, // int SrcY
+		40, // int Width
+		32, //  int Height
+		img.getItem().getId(), // int GraphHandle
+		TRUE,
+		FALSE,
+		FALSE
+	);
 
 
 	if (scene.getCurrentType() == SceneType::Over)

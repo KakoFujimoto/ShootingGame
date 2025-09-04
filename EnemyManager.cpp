@@ -28,7 +28,7 @@
 				}
 				else if (enemy.getVY() > 0) // 弾発射、飛び去る
 				{
-					setEnemy(enemy.getX(), enemy.getY(), 0, 6, EnemyType::Bullet, ene_bullet, 0); // 弾
+					setEnemy(enemy.getX(), enemy.getY(), 0, 6, EnemyType::Bullet, ene_bullet, 0, game); // 弾
 
 					enemy.setVX(8);
 					enemy.setVY(-4);
@@ -48,7 +48,7 @@
 							for (int by = 0; by <= 3; by++)
 							{
 								if (bx == 0 && by == 0) continue;
-								setEnemy(enemy.getX(), enemy.getY(), bx * 2, by * 3, EnemyType::Bullet, ene_bullet, 0);
+								setEnemy(enemy.getX(), enemy.getY(), bx * 2, by * 3, EnemyType::Bullet, ene_bullet, 0, game);
 							}
 					}
 					enemy.setVY(2);
@@ -80,7 +80,7 @@
 					if (dx < enemy.getWidth() / 2 && dy < enemy.getHeight() / 2) // 接触しているか
 					{
 						bullet.setState(0); // 弾を消す
-						damageEnemy(i, 1); // 敵にダメージ
+						damageEnemy(i, 1, game); // 敵にダメージ
 					}
 				}
 			}
@@ -97,7 +97,7 @@
 						player.setShield(player.getShield() - 1); // シールドを減らす
 					}
 					game.getGameData().noDamage = GameConfig::FPS; // 無敵状態をセット
-					damageEnemy(i, 1); // 敵にダメージ
+					damageEnemy(i, 1, game); // 敵にダメージ
 				}
 			}
 		}

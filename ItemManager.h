@@ -1,5 +1,7 @@
 #pragma once
 #include "Item.h"
+#include "GameManager.h"
+
 
 class ItemManager {
 public:

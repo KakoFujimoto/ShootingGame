@@ -1,5 +1,9 @@
 #pragma once
 #include "Effetct.h"
+#include "EffectType.h"
+#include "ImageContainer.h"
+#include "GameManager.h"
+
 
 class EffectManager {
 public:
