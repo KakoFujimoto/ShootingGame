@@ -1,6 +1,8 @@
 #include "Player.h"
+#include "GameManager.h"
 #include "GameConfig.h"
 #include "GameData.h"
+#include "BulletManager.h"
 #include "DxLib.h"
 
 void Player::movePlayer(BulletManager& bulletManager, GameManager& game)
