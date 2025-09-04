@@ -1,9 +1,9 @@
 #pragma once
 #include "SceneTitle.h"
 #include "SceneType.h"
-#include "GameManager.h"
 
 class IScene;
+class GameManager;
 
 class SceneManager
 {

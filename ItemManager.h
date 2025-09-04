@@ -2,6 +2,7 @@
 #include "Item.h"
 #include "GameManager.h"
 
+class SceneManager;
 
 class ItemManager {
 public:
