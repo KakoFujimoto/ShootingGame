@@ -28,10 +28,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	while (1) // メインループ
 	{
 		game.gameLoop();
-
-		DxLib_End(); // ＤＸライブラリ使用の終了処理
-		return 0; // ソフトの終了
-
 	}
+	DxLib_End(); // ＤＸライブラリ使用の終了処理
+	return 0; // ソフトの終了
 }
 
