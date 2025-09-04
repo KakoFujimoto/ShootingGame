@@ -1,9 +1,9 @@
 #include "BulletManager.h"
-#include "GameData.h"
-#include "Player.h"
-#include "DxLib.h"
-#include "ImageContainer.h"
 #include "GameManager.h"
+
+BulletManager::BulletManager() {
+	bullets.resize(GameConfig::BULLET_MAX);
+}
 
 
 // 弾のセット（発射）

@@ -1,16 +1,14 @@
 #pragma once
 #include <vector>
 #include "Bullet.h"
-#include "GameManager.h"
+#include "Player.h"
 
 
 class ImageContainer;
 
 class BulletManager {
 public:
-	BulletManager() {
-		bullets.resize(GameConfig::BULLET_MAX);
-	}
+	BulletManager();
 
 	// 弾のセット（発射）
 	void setBullet(const Player& player, GameManager& game);

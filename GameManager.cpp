@@ -1,6 +1,4 @@
 #include "GameManager.h"
-#include "SceneType.h"
-#include "BulletManager.h"
 
 void GameManager::gameLoop()
 {
@@ -15,7 +13,7 @@ void GameManager::gameLoop()
 
 	scrollBG(spd); 
 	enemies.moveEnemy(*this); // “G‹@‚Ì§Œä
-	bullets.moveBullet(images, *this); // ’e‚Ì§Œä
+	bullets.moveBullet(images, *this); // ’e‚ÌˆÚ“®
 	itemManager.moveItem(*this, sceneManager); // ƒAƒCƒeƒ€‚Ì§Œä
 	effects.drawEffect(*this);
 

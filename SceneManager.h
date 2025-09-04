@@ -1,28 +1,14 @@
 #pragma once
 #include "SceneTitle.h"
 #include "SceneType.h"
+#include "GameManager.h"
 
 class SceneManager
 {
 public:
-	SceneManager()
-	{
-		scene = std::make_shared<SceneTitle>();
-	}
-
-	void run(GameManager& game)
-	{
-		auto nextScene = scene->run(game);
-
-		if (nextScene != nullptr) {
-			scene = nextScene;
-		}
-	}
-
-	SceneType getCurrentType() const
-	{
-		return scene->getType();
-	}
+	SceneManager();
+	void run(GameManager& game);
+	SceneType getCurrentType() const;
 
 private:
 	std::shared_ptr<IScene> scene;

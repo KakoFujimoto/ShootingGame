@@ -2,6 +2,7 @@
 #include <string>
 #include <memory>
 #include "GameManager.h"
+#include "SceneType.h"
 
 class IScene
 {

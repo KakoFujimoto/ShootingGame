@@ -5,9 +5,10 @@
 #include "IShield.h"
 #include "Image.h"
 #include "IVelocity.h"
-#include "GameManager.h"
 
 class BulletManager;
+class GameManager;
+
 
 class Player : public IPosition, IImage, ISize, IShield, IVelocity
 {
