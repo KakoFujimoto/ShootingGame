@@ -10,4 +10,6 @@ class SceneOver
 {
 public:
 	virtual std::shared_ptr<IScene> run(GameManager& game);
+	SceneType getType() const override;
+
 };

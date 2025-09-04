@@ -33,3 +33,8 @@ std::shared_ptr<IScene> SceneOver::run(GameManager& game)
 		}
 	return nullptr;
 }
+
+SceneType ScenePlay::getType() const
+{
+	return SceneType::Over;
+}
