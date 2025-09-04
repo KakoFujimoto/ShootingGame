@@ -1,5 +1,7 @@
 #include "SceneOver.h"
 #include "SceneType.h"
+#include "GameManager.h"
+
 
 std::shared_ptr<IScene> SceneOver::run(GameManager& game)
 {

@@ -3,6 +3,8 @@
 #include "SceneType.h"
 #include "GameManager.h"
 
+class IScene;
+
 class SceneManager
 {
 public:

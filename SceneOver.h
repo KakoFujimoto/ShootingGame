@@ -1,8 +1,9 @@
 #pragma once
 #include <string>
 #include "IScene.h"
-#include "GameManager.h"
 #include "GameConfig.h"
+
+class GameManager;
 
 class SceneOver
 	: public IScene
