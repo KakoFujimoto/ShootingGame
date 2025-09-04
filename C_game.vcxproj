@@ -156,6 +156,8 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SceneManager.h" />
     <ClCompile Include="SceneOver.cpp" />
+    <ClCompile Include="ScenePlay.cpp" />
+    <ClCompile Include="SceneTitle.cpp" />
     <ClCompile Include="shootingGame.cpp" />
   </ItemGroup>
   <ItemGroup>
