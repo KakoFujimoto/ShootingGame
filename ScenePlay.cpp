@@ -61,14 +61,14 @@ std::shared_ptr<IScene> ScenePlay::run(GameManager& game)
 	if (distance == 1)
 	{
 		//GameData::bossIdx = enemy.setEnemy
-		game.getGameData().bossIdx = enemy.setEnemy(); // ボス出現
+		game.getGameData().bossIdx = enemy.setEnemy // ボス出現
 		(
 			GameConfig::WIDTH / 2,
 			-120, 0, 1,
 			EnemyType::Boss,
 			image.getEnemy(EnemyType::Boss),
 			200, game
-			); // ボス出現
+		);
 	}
 
 	if (distance % 800 == 1)
@@ -91,4 +91,9 @@ std::shared_ptr<IScene> ScenePlay::run(GameManager& game)
 		return std::make_shared<SceneClear>();
 	}
 	return;
+}
+
+SceneType ScenePlay::getType() const 
+{
+	return SceneType::Play;
 }

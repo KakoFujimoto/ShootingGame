@@ -9,10 +9,13 @@
 #include "SceneOver.h"
 #include "SceneClear.h"
 
+class GameManager;
 
 class ScenePlay
 	: public IScene
 {
 public:
-	virtual std::shared_ptr<IScene> run(GameManager& game);
+	std::shared_ptr<IScene> run(GameManager& game);
+	SceneType getType() const override;
+
 };
