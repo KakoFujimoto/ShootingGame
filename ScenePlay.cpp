@@ -35,7 +35,7 @@ std::shared_ptr<IScene> ScenePlay::run(GameManager& game)
 
 		if (e == EnemyType::Zako1)
 		{
-			enemy.setEnemy(x, y, 0, 3, EnemyType::Zako1, image.getEnemy(EnemyType::Zako1), 1);
+			enemy.setEnemy(x, y, 0, 3, EnemyType::Zako1, image.getEnemy(EnemyType::Zako1), 1, game);
 		}
 		if (e == EnemyType::Zako2)
 		{
@@ -48,7 +48,7 @@ std::shared_ptr<IScene> ScenePlay::run(GameManager& game)
 			{
 				vx = 3;
 			}
-			enemy.setEnemy(x, -100, vx, 5, EnemyType::Zako2, image.getEnemy(EnemyType::Zako2), 3);
+			enemy.setEnemy(x, -100, vx, 5, EnemyType::Zako2, image.getEnemy(EnemyType::Zako2), 3, game);
 		}
 	}
 	if (300 < distance && distance < 900 && distance % 30 == 0) // ƒUƒR3‚ÌoŒ»
@@ -56,7 +56,7 @@ std::shared_ptr<IScene> ScenePlay::run(GameManager& game)
 		int x = 100 + rand() % (GameConfig::WIDTH - 200);
 		int y = -50;
 		int vy = 40 + rand() % 20;
-		enemy.setEnemy(x, -100, 0, vy, EnemyType::Zako3, image.getEnemy(EnemyType::Zako3), 5);
+		enemy.setEnemy(x, -100, 0, vy, EnemyType::Zako3, image.getEnemy(EnemyType::Zako3), 5, game);
 	}
 	if (distance == 1)
 	{
