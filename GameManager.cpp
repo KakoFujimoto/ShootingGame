@@ -121,7 +121,7 @@ void GameManager::initGame(void)
 	// ƒTƒEƒ“ƒh‚Ì“Ç‚İ‚İ‚Æ‰¹—Êİ’è
 	soundLoader.loadAll(soundContainer);
 
-	soundPlayer.setVolume(soundContainer.bgm.filePath, 128);
-	soundPlayer.setVolume(soundContainer.jinOver.filePath, 128);
-	soundPlayer.setVolume(soundContainer.jinClear.filePath, 128);
+	soundPlayer.setVolume(soundContainer.bgm, 128);
+	soundPlayer.setVolume(soundContainer.jinOver, 128);
+	soundPlayer.setVolume(soundContainer.jinClear, 128);
 }

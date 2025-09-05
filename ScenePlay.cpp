@@ -25,7 +25,7 @@ std::shared_ptr<IScene> ScenePlay::run(GameManager& game)
 	}
 	if (distance > 0)
 	{
-		distance--;
+		game.getGameData().distance--;
 	}
 	if (300 < distance && distance % 20 == 0) // ƒUƒR1‚Æ2‚ÌoŒ»
 	{
