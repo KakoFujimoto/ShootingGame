@@ -95,7 +95,15 @@ void ItemManager::moveItem(GameManager& game, SceneManager& scene)
 
 			}
 
-			game.getEffect().setEffect(game.getPlayer().getX(), game.getPlayer().getY(), EffectType::Recover, game.getImage()); // 回復エフェクトを表示
+			game.getEffect().setEffect
+			(
+				game.getPlayer().getX(),
+				game.getPlayer().getY(),
+				EffectType::Recover,
+				game.getImage(),
+				game.getSoundPlayer(),
+				game.getSoundContainer()
+			); // 回復エフェクトを表示
 		}
 		if (item.getPattern() == ItemType::WeaponLvUp) // 武器レベルアップ
 		{

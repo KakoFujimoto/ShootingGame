@@ -151,7 +151,14 @@
 		{
 			enemies[n].setState(0); // シールド0以下で消す
 
-			game.getEffect().setEffect(enemies[n].getX(), enemies[n].getY(), EffectType::Explode, game.getImage()); // 爆発演出
+			game.getEffect().setEffect(
+				enemies[n].getX(),
+				enemies[n].getY(),
+				EffectType::Explode,
+				game.getImage(),
+				game.getSoundPlayer(),
+				game.getSoundContainer()
+			); // 爆発演出
 
 			if (enemies[n].getPattern() == EnemyType::Boss) // ボスを倒した
 			{

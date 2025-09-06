@@ -15,7 +15,9 @@ std::shared_ptr<IScene> SceneOver::run(GameManager& game)
 					game.getPlayer().getX() + rand() % 81 - 40,
 					game.getPlayer().getY() + rand() % 81 - 40,
 					EffectType::Explode,
-					game.getImage()
+					game.getImage(),
+					game.getSoundPlayer(),
+					game.getSoundContainer()
 				);
 			}
 	}

@@ -29,9 +29,10 @@ std::shared_ptr<IScene> SceneClear::run(GameManager& game)
 			(
 				enemy.getEnemy(bossIdx).getX() + rand() % 201 - 100,
 				enemy.getEnemy(bossIdx).getY() + rand() % 201 - 100,
-
 				EffectType::Explode,
-				image
+				image,
+				game.getSoundPlayer(),
+				game.getSoundContainer()
 			);
 		}
 	}

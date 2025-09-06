@@ -3,8 +3,18 @@
 #include "ImageContainer.h"
 #include "DxLib.h"
 #include "GameManager.h"
+#include "SoundPlayer.h"
+#include "SoundContainer.h"
 
-void EffectManager::setEffect(int x, int y, EffectType ptn, ImageContainer& imageContainer)
+void EffectManager::setEffect
+(
+	int x,
+	int y,
+	EffectType ptn, 
+	ImageContainer& imageContainer,
+	SoundPlayer& soundPlayer,
+	SoundContainer& soundContainer
+)
 {
 	for (auto& e : effects) {
 		if (e.getState() == 0) {
@@ -22,6 +32,12 @@ void EffectManager::setEffect(int x, int y, EffectType ptn, ImageContainer& imag
 
 			e.setState(1);
 			e.setTimer(0);
+
+			if (ptn == EffectType::Explode)
+			{
+				soundPlayer.play(soundContainer.seExpl);
+			}
+
 			break;
 		}
 	}
