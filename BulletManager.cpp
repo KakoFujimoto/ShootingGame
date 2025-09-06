@@ -44,3 +44,8 @@ BulletManager::BulletManager() {
 			}
 		}
 	}
+
+	Bullet& BulletManager::getBullet(int index)
+	{
+		return bullets[index];
+	}

@@ -70,7 +70,9 @@
 			if (enemy.getShield() > 0) // ヒットチェックを行う敵機（弾以外）
 			{
 				for (int j = 0; j < GameConfig::BULLET_MAX; j++) { // 自機の弾とヒットチェック
-					auto& bullet = game.getBullet();
+					//auto& bullet = game.getBullet();
+					auto& bullet = game.getBulletManager().getBullet(j);
+
 					if (bullet.getState() == 0)
 					{
 						continue;
