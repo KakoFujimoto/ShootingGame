@@ -6,8 +6,8 @@ void ImageContainer::load()
 {
     imgGalaxy.setId(LoadGraph("image/bg0.png"));
     imgFloor.setId(LoadGraph("image/floor.png"));
-    imgWallL.setId(LoadGraph("image/wallL.png"));
-    imgWallR.setId(LoadGraph("image/wallR.png"));
+    imgWallL.setId(LoadGraph("image/bg2.png"));
+    imgWallR.setId(LoadGraph("image/bg3.png"));
 
     imgFighter.setId(LoadGraph("image/fighter.png"));
     imgBullet.setId(LoadGraph("image/bullet.png"));
