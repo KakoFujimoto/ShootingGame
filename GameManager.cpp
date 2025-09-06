@@ -79,7 +79,7 @@ void GameManager::initVariable(void)
 	player.setVX(5);
 	player.setVY(5);
 
-	player.setX(GameConfig::HEIGHT / 2);
+	player.setY(GameConfig::HEIGHT / 2);
 	player.setShield(GameConfig::PLAYER_SHIELD_MAX);
 
 	GetGraphSize(images.getFighter().getId(), &player.refWidth(), &player.refHeight()); // ©‹@‚Ì‰æ‘œ‚Ì•‚Æ‚‚³‚ğ‘ã“ü
