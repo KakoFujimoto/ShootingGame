@@ -91,7 +91,7 @@ std::shared_ptr<IScene> ScenePlay::run(GameManager& game)
 		return std::make_shared<SceneClear>();
 	}
 	return nullptr;
-}
+ }
 
 SceneType ScenePlay::getType() const 
 {

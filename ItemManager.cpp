@@ -29,8 +29,8 @@ void ItemManager::moveItem(GameManager& game, SceneManager& scene)
 	{
 		return;
 	}
-	item.setX(item.getVX());
-	item.setY(item.getVY());
+	item.setX(item.getX() + item.getVX());
+	item.setY(item.getX() + item.getVY());
 
 	if ((item.getTimer() % 60) < 30)
 	{
@@ -43,7 +43,7 @@ void ItemManager::moveItem(GameManager& game, SceneManager& scene)
 
 	if (item.getY() > GameConfig::HEIGHT + 16)
 	{
-		item.setShield(0);
+		item.setState(0);
 	}
 	int index = (item.getTimer() / 120) % GameConfig::ITEM_TYPE; // 現在、どのアイテムになっているか
 	item.setPattern(static_cast<ItemType>(index));
