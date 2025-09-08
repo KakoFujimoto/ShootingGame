@@ -49,6 +49,7 @@ std::shared_ptr<IScene> SceneClear::run(GameManager& game)
 		stage++;
 		distance = GameConfig::STAGE_DISTANCE;
 		timer = 0;
+		game.setIsClear(false);
 		return std::make_shared<ScenePlay>();
 
 	}
