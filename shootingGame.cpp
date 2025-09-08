@@ -25,7 +25,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	game.getGameData().distance = GameConfig::STAGE_DISTANCE; // 【記述位置は仮】ステージの長さを代入
 
 
-	while (1) // メインループ
+	while (game.getGameData().isRunning) // メインループ
 	{
 		game.gameLoop();
 	}

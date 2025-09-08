@@ -37,7 +37,7 @@ void GameManager::gameLoop()
 	}
 	if (CheckHitKey(KEY_INPUT_ESCAPE) == 1)
 	{
-		return; // ESCキーが押されたら終了
+		getGameData().isRunning = false; // ESCキーが押されたら終了
 	}
 }
 
