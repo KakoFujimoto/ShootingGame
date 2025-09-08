@@ -13,4 +13,5 @@ public:
 	int weaponLv = 1; // 自機の武器のレベル（同時に発射される弾数）
 	SceneType scene = SceneType::Title; // シーンを管理
 	int timer = 0; // 時間の進行を管理
+	bool isRapidMode = false; // 連射モードのフラグ
 };

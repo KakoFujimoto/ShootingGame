@@ -40,15 +40,31 @@ void Player::movePlayer(BulletManager& bulletManager, GameManager& game)
 		}
 	}
 	if (CheckHitKey(KEY_INPUT_SPACE)) { // スペースキー
-		if (oldSpcKey == 0)
-		{
-			bulletManager.setBullet(*this, game); // 押した瞬間、発射
-		}
-		else if (countSpcKey % 20 == 0)
-		{
-			bulletManager.setBullet(*this, game); // 一定間隔で発射
-		}
 		countSpcKey++;
+
+		if (CheckHitKey(KEY_INPUT_SPACE)) {
+			countSpcKey++;
+
+			// 2秒押しっぱなしなら連射モードON
+			if (countSpcKey >= GameConfig::RapidModeThreshold) {
+				game.getGameData().isRapidMode = true;
+			}
+
+			int interval = game.getGameData().isRapidMode
+				? GameConfig::FireIntervalHidden
+				: GameConfig::FireInterval;
+
+			// 発射タイミング
+			if (countSpcKey == 1 || countSpcKey % interval == 0) {
+				bulletManager.setBullet(*this, game); // 押した瞬間、発射
+
+			}
+		}
+		else {
+			// 離したらリセット
+			countSpcKey = 0;
+			game.getGameData().isRapidMode = false;
+		}
 	}
 	oldSpcKey = CheckHitKey(KEY_INPUT_SPACE); // スペースキーの状態を保持
 
