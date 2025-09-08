@@ -30,7 +30,7 @@ void ItemManager::moveItem(GameManager& game, SceneManager& scene)
 		return;
 	}
 	item.setX(item.getX() + item.getVX());
-	item.setY(item.getX() + item.getVY());
+	item.setY(item.getY() + item.getVY());
 
 	if ((item.getTimer() % 60) < 30)
 	{
@@ -61,7 +61,6 @@ void ItemManager::moveItem(GameManager& game, SceneManager& scene)
 		32, //  int Height
 		img.getItem().getId(), // int GraphHandle
 		TRUE,
-		FALSE,
 		FALSE
 	);
 

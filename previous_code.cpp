@@ -546,8 +546,22 @@
 //		GameData::item.vx += 1;
 //	if (GameData::item.y > GameConfig::HEIGHT + 16) GameData::item.state = 0;
 //	GameData::item.pattern = (GameData::item.timer / 120) % GameConfig::ITEM_TYPE; // 現在、どのアイテムになっているか
+// 
 //	GameData::item.timer++;
-//	DrawRectGraph(GameData::item.x - 20, GameData::item.y - 16, GameData::item.pattern * 40, 0, 40, 32, GameData::imgItem, TRUE, FALSE);
+// 
+//	DrawRectGraph(
+	// GameData::item.x - 20,
+	// GameData::item.y - 16,
+	// GameData::item.pattern * 40,
+	// 0,
+	// 40,
+	// 32,
+	// GameData::imgItem,
+	// TRUE,
+	// FALSE
+// );
+// 
+// 
 //	if (GameData::scene == OVER) return; // ゲームオーバー画面では回収できない
 //	int dis = (GameData::item.x - GameData::player.x) * (GameData::item.x - GameData::player.x) + (GameData::item.y - GameData::player.y) * (GameData::item.y - GameData::player.y);
 //	if (dis < 60 * 60) // アイテムと自機とのヒットチェック（円による当たり判定）

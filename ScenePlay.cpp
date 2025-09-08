@@ -23,7 +23,7 @@ std::shared_ptr<IScene> ScenePlay::run(GameManager& game)
 		soundPlayer.play(soundContainer.bgm); // ‚a‚f‚lƒ‹[ƒvo—Í
 
 	}
-	if (distance > 0)
+ 	if (distance > 0)
 	{
 		game.getGameData().distance--;
 	}
