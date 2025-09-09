@@ -42,9 +42,6 @@ void Player::movePlayer(BulletManager& bulletManager, GameManager& game)
 	if (CheckHitKey(KEY_INPUT_SPACE)) { // スペースキー
 		countSpcKey++;
 
-		if (CheckHitKey(KEY_INPUT_SPACE)) {
-			countSpcKey++;
-
 			// 2秒押しっぱなしなら連射モードON
 			if (countSpcKey >= GameConfig::RapidModeThreshold) {
 				game.getGameData().isRapidMode = true;
@@ -65,7 +62,6 @@ void Player::movePlayer(BulletManager& bulletManager, GameManager& game)
 			countSpcKey = 0;
 			game.getGameData().isRapidMode = false;
 		}
-	}
 	oldSpcKey = CheckHitKey(KEY_INPUT_SPACE); // スペースキーの状態を保持
 
 	int& noDamage = game.getGameData().noDamage;
