@@ -58,7 +58,7 @@
 			enemy.setY(enemy.getY() + enemy.getVY()); //„£
 
 
-			drawer.drawImage(game.getImage().getEnemy(enemy.getPattern()).getId(), enemy.getX(), enemy.getY()); // “G‹@‚Ì•`‰æ
+			drawer.drawImage(game.getImage().getEnemy(enemy.getPattern()), enemy.getX(), enemy.getY()); // “G‹@‚Ì•`‰æ
 
 			// ‰æ–ÊŠO‚Éo‚½‚©H
 			if (enemy.getX() < -200 || GameConfig::WIDTH + 200 < enemy.getX()

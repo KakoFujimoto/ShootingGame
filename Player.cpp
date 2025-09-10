@@ -76,6 +76,6 @@ void Player::movePlayer(BulletManager& bulletManager, GameManager& game)
 		auto& drawer = game.getDrawer();
 		auto& image = game.getImage();
 
-		drawer.drawImage(image.getFighter().getId(), x, y); // Ž©‹@‚Ì•`‰æ
+		drawer.drawImage(image.getFighter(), x, y); // Ž©‹@‚Ì•`‰æ
 	}
 }

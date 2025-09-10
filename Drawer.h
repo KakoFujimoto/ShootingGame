@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 
+class Image;
 class Drawer
 {
 public:
@@ -11,6 +12,6 @@ public:
 	void drawTextC(int x, int y, const char* txt, int col, int siz);
 
 	// 中心座標を指定して画像を表示する関数
-	void drawImage(int img, int x, int y);
+	void drawImage(const Image& img, int x, int y);
 
 };

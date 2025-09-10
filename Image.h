@@ -6,10 +6,7 @@ class Image
 {
 public:
 	Image() : imageId(-1) {}
-	Image(int id)
-		: imageId(id)
-	{
-	}
+	Image(int id): imageId(id){}
 
 	void setId(int id)
 	{

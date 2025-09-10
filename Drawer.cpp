@@ -1,6 +1,7 @@
 #include "Drawer.h"
 #include "GameConfig.h"
 #include "GameData.h"
+#include "Image.h"
 #include <DxLib.h>
 
 // 影を付けた文字列と値を表示する関数
@@ -23,11 +24,12 @@ void Drawer::drawTextC(int x, int y, const char* txt, int col, int siz)
 }
 
 // 中心座標を指定して画像を表示する関数
-void Drawer::drawImage(int img, int x, int y)
-{
+void Drawer::drawImage(const Image& img, int x, int y)
+{	
+	int imgId = img.getId();
 	int w, h;
-	GetGraphSize(img, &w, &h);
-	DrawGraph(x - w / 2, y - h / 2, img, TRUE);
+	GetGraphSize(imgId, &w, &h);
+	DrawGraph(x - w / 2, y - h / 2, imgId, TRUE);
 }
 
 
