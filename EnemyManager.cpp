@@ -106,7 +106,7 @@
 	}
 
 	// 敵機をセットする
-	int EnemyManager::setEnemy(int x, int y, int vx, int vy, EnemyType ptn, Image img, int sld, GameManager& game)
+	int EnemyManager::setEnemy(int x, int y, int vx, int vy, EnemyType ptn, const Image& img, int sld, GameManager& game)
 	{
 		for (int i = 0; i < GameConfig::ENEMY_MAX; i++) {
 			auto& enemy = enemies[i];
