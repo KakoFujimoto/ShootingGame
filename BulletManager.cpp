@@ -1,5 +1,6 @@
 #include "BulletManager.h"
 #include "GameManager.h"
+#include "IMovable.h"
 
 BulletManager::BulletManager() {
 	bullets.resize(GameConfig::BULLET_MAX);
@@ -35,8 +36,7 @@ BulletManager::BulletManager() {
 	{
 		for (auto& b : bullets) {
 			if (b.getState() == 0) continue; // ‹ó‚¢‚Ä‚¢‚é”z—ñ‚È‚çˆ—‚µ‚È‚¢
-			b.setX(b.getX() + b.getVX()); // „¦ À•W‚ğ•Ï‰»‚³‚¹‚é
-			b.setY(b.getY() + b.getVY()); // „£
+			b.updatePosition();
 			game.getDrawer().drawImage(imageContainer.getBullet(), b.getX(), b.getY()); // ’e‚Ì•`‰æ¦drawImage‚Í–¢À‘•
 			if (b.getY() < -100)
 			{

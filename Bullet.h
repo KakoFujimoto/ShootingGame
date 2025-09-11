@@ -1,13 +1,14 @@
 #pragma once
 #include <array>
 #include "GameConfig.h"
-#include "IPosition.h"
 #include "IState.h"
 #include "IImage.h"
-#include "IVelocity.h"
+#include "IMovable.h"
 
 
-class Bullet : public IPosition, IState, IImage, IVelocity
+class Bullet : public IState,
+			   public IImage,
+			   public IMovable
 {
 	int x;
 	int y;

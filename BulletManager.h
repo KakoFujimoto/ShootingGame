@@ -6,7 +6,8 @@
 
 class ImageContainer;
 
-class BulletManager {
+class BulletManager
+{
 public:
 	BulletManager();
 	void setBullet(const Player& player, GameManager& game); // 弾のセット（発射）
