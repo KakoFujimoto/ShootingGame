@@ -29,8 +29,7 @@ void ItemManager::moveItem(GameManager& game, SceneManager& scene)
 	{
 		return;
 	}
-	item.setX(item.getX() + item.getVX());
-	item.setY(item.getY() + item.getVY());
+	item.updatePosition();
 
 	if ((item.getTimer() % 60) < 30)
 	{

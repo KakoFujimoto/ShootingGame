@@ -1,15 +1,18 @@
 #pragma once
-#include "IPosition.h"
 #include "IImage.h"
 #include "IShield.h"
 #include "Image.h"
-#include "IVelocity.h"
 #include "ItemType.h"
 #include "ITimer.h"
 #include "IState.h"
+#include "IMovable.h"
 
 
-class Item : public IPosition, IImage, IShield, IVelocity, ITimer, IState
+class Item : public IImage,
+			 public IShield,
+			 public ITimer,
+			 public IState,
+			 public IMovable
 {
 	int x;
 	int y;

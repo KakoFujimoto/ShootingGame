@@ -54,8 +54,7 @@
 					enemy.setVY(2);
 				}
 			}
-			enemy.setX(enemy.getX() + enemy.getVX()); //„¦“G‹@‚ÌˆÚ“®
-			enemy.setY(enemy.getY() + enemy.getVY()); //„£
+			enemy.updatePosition();// “G‹@‚ÌˆÚ“®
 
 
 			drawer.drawImage(game.getImage().getEnemy(enemy.getPattern()), enemy.getX(), enemy.getY()); // “G‹@‚Ì•`‰æ

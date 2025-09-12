@@ -1,15 +1,18 @@
 #pragma once
 #include <array>
 #include "GameConfig.h"
-#include "IPosition.h"
 #include "IState.h"
 #include "IImage.h"
 #include "ISize.h"
 #include "IShield.h"
 #include "EnemyType.h"
-#include "IVelocity.h"
+#include "IMovable.h"
 
-class Enemy : public IPosition, IState, IImage, ISize, IShield, IVelocity
+class Enemy : public IState,
+			  public IImage,
+			  public ISize,
+			  public IShield,
+			  public IMovable
 {
 	int x;
 	int y;
