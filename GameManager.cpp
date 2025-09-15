@@ -82,20 +82,9 @@ void GameManager::initVariable(void)
 	player.setY(GameConfig::HEIGHT / 2);
 	player.setShield(GameConfig::PLAYER_SHIELD_MAX);
 
-	GetGraphSize(images.getFighter().getId(), &player.refWidth(), &player.refHeight()); // ©‹@‚Ì‰æ‘œ‚Ì•‚Æ‚‚³‚ğ‘ã“ü
-	
+	// ©‹@‚Ì‰æ‘œ‚Ì•‚Æ‚‚³‚ğ‘ã“ü
 	player.refWidth() = images.getFighter().getWidth();
 	player.refHeight() = images.getFighter().getHeight();
-
-
-	//int& playerWidth = player.refWidth();
-	//int& playerHeight = player.refHeight();
-	//playerWidth = images.getFighter().getWidth();
-	//playerHeight = images.getFighter().getHeight();
-
-
-
-	//GetGraphSize(GameData::imgFighter, &GameData::player.wid, &GameData::player.hei); // ©‹@‚Ì‰æ‘œ‚Ì•‚Æ‚‚³‚ğ‘ã“ü
 
 	enemies.resetAllEnemies();
 

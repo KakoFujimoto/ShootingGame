@@ -4,7 +4,7 @@
 #include "Image.h"
 #include <DxLib.h>
 
-// 影を付けた文字列と値を表示する関数
+// 影を付けた文字列と値を表示する
 void Drawer::drawText(int x, int y, const char* txt, int val, int col, int siz)
 {
 	SetFontSize(siz); // フォントの大きさを指定
@@ -12,7 +12,7 @@ void Drawer::drawText(int x, int y, const char* txt, int val, int col, int siz)
 	DrawFormatString(x, y, col, txt, val); // 引数の色で文字列を表示
 }
 
-// 文字列をセンタリングして表示する関数
+// 文字列をセンタリングして表示する
 void Drawer::drawTextC(int x, int y, const char* txt, int col, int siz)
 {
 	SetFontSize(siz);
@@ -23,7 +23,7 @@ void Drawer::drawTextC(int x, int y, const char* txt, int col, int siz)
 	DrawString(x, y, txt, col);
 }
 
-// 中心座標を指定して画像を表示する関数
+// 中心座標を指定して画像を表示する
 void Drawer::drawImage(const Image& img, int x, int y)
 {	
 	int imgId = img.getId();
@@ -32,50 +32,26 @@ void Drawer::drawImage(const Image& img, int x, int y)
 	DrawGraph(x - w / 2, y - h / 2, imgId, TRUE);
 }
 
+// 通常のDrawGraph()を実行する
+void Drawer::drawGraphic(const ImageData& data)
+{
+	DrawGraph(data.x, data.y, data.img.getId(), data.isTransParent);
+}
 
-//void Drawer::drawText(int x, int y, const std::string& text, const DrawerManager::TextStyle& style)
-//{
-//
-//	SetFontSize(style.size);
-//
-//	int drawX = x;
-//	int drawY = y;
-//
-//    if (style.center) {
-//        int strWidth = GetDrawStringWidth(text.c_str(), text.size());
-//        drawX -= strWidth / 2;
-//        drawY -= style.size / 2;
-//    }
-//
-//    if (style.shadow) {
-//        DrawString(drawX + 1, drawY + 1, text.c_str(), GetColor(0, 0, 0));
-//    }
-//    DrawString(drawX, drawY, text.c_str(), style.color);
-//}
+// 指定矩形部分のみを描画する(rawRectGraph)を実行する
+void Drawer::drawGraphic(const RectData& data)
+{	
+	DrawRectGraph(data.x, data.y, data.srcX, data.srcY, data.w, data.h, data.img.getId(), TRUE, FALSE);
+}
 
-//使用イメージ
-//Drawer drawer;
-//DrawerManager::TextStyle style = DrawerManager::DefaultTextStyle();
-//style.size = 20;
-//style.color = GetColor(255, 0, 0);
-//style.shadow = true;
-//drawer.drawText(400, 300, "Hello, World!", style);
+// 円の描画(DrawCircle)を実行する
+void Drawer::drawGraphic(const CircleData& data)
+{
+	DrawCircle(data.x, data.y, data.r, data.color, data.isFilled);
+}
 
-//void Drawer::drawImage(int x, int y, int img, const DrawerManager::ImageStyle& style) {
-//    int w, h;
-//    GetGraphSize(img, &w, &h);
-//
-//    int drawX = x;
-//    int drawY = y;
-//
-//    if (style.center) {
-//        drawX -= w / 2;
-//        drawY -= h / 2;
-//    }
-//
-//    DrawGraph(drawX, drawY, img, TRUE);
-//}
-
-//DrawerManager::TextStyle DrawerManager::DefaultTextStyle() {
-//	return TextStyle();
-//}
+// 四角形の描画(DrawBox)を実行する
+void Drawer::drawGraphic(const BoxData& data)
+{
+	DrawBox(data.left, data.top, data.right, data.bottom, data.color, data.isFilled);
+}
