@@ -4,12 +4,12 @@
 
 class Image;
 
-struct DrawData {
-	virtual ~DrawData() = default;
+struct IDrawable {
+	virtual ~IDrawable() = default;
 	virtual void drawGraphic() const = 0;
 };
 
-struct ImageData : public DrawData {
+struct ImageData : public IDrawable {
 	const Image& img;
 	int x, y;
 	bool isTransParent;
@@ -18,7 +18,7 @@ struct ImageData : public DrawData {
 	}
 };
 
-struct RectGraph : public DrawData {
+struct RectGraph : public IDrawable {
 	int x, y, srcX, srcY, w, h;
 	const Image& img;
 	void drawGraphic() const override {
@@ -26,7 +26,7 @@ struct RectGraph : public DrawData {
 	}
 };
 
-struct CircleData : public DrawData {
+struct CircleData : public IDrawable {
 	int x, y, r;
 	int color;
 	bool isFilled;
@@ -35,7 +35,7 @@ struct CircleData : public DrawData {
 	}
 };
 
-struct BoxData : public DrawData {
+struct BoxData : public IDrawable {
 	int left, top, right, bottom;
 	int color;
 	bool isFilled;
