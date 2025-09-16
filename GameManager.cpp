@@ -59,12 +59,12 @@ void GameManager::stageMap(void)
 // 背景のスクロール
 void GameManager::scrollBG(int spd)
 {	
-	// 
+	// ここも実質グローバル変数なので良くない
 	static int galaxyY, floorY, wallY; // スクロール位置を管理する変数（静的記憶領域に保持される）
 	galaxyY = (galaxyY + spd) % GameConfig::HEIGHT; // 星空（宇宙）
 
 	//DrawGraph(0, galaxyY - GameConfig::HEIGHT, images.getGalaxy().getId(), FALSE);
-	ImageData image{ 0, galaxyY - GameConfig::HEIGHT, images.getGalaxy(), FALSE };
+	ImageData image{ 0, galaxyY - GameConfig::HEIGHT, &images.getGalaxy(), FALSE };
 	drawer.drawGraphic(image);
 
 

@@ -1,5 +1,6 @@
 #pragma once
 #include <DxLib.h>
+#include "Image.h"
 
 
 class Image;
@@ -10,11 +11,11 @@ struct IDrawable {
 };
 
 struct ImageData : public IDrawable {
-	const Image& img;
 	int x, y;
+	const Image* img;
 	bool isTransParent;
 	void drawGraphic() const override {
-		DrawGraph(x, y, img.getId(), isTransParent);
+		DrawGraph(x, y, img->getId(), isTransParent);
 	}
 };
 
@@ -43,27 +44,3 @@ struct BoxData : public IDrawable {
 		DrawBox(left, top, right, bottom, color, isFilled);
 	}
 };
-
-//// 描画データ構造
-//struct ImageData {
-//	int x, y;
-//	const Image& img;
-//	bool isTransParent;
-//};
-//
-//struct RectData {
-//	int x, y, srcX, srcY, w, h;
-//	const Image& img;
-//};
-//
-//struct CircleData {
-//	int x, y, r;
-//	int color;
-//	bool isFilled;
-//};
-//
-//struct BoxData {
-//	int left, top, right, bottom;
-//	int color;
-//	bool isFilled;
-//};
