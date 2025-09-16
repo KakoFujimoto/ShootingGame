@@ -179,7 +179,7 @@
     <ClInclude Include="IImage.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageContainer.h" />
-    <ClInclude Include="DrawData.h" />
+    <ClInclude Include="IDrawable.h" />
     <ClInclude Include="IMovable.h" />
     <ClInclude Include="IScene.h" />
     <ClInclude Include="IShield.h" />
