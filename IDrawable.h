@@ -12,10 +12,15 @@ struct IDrawable {
 
 struct ImageData : public IDrawable {
 	int x, y;
-	const Image* img;
+	const Image& img;
 	bool isTransParent;
+
+	ImageData(int x, int y, const Image& img, bool isTransParent)
+		: x(x), y(y), img(img), isTransParent(isTransParent){ }
+
+
 	void drawGraphic() const override {
-		DrawGraph(x, y, img->getId(), isTransParent);
+		DrawGraph(x, y, img.getId(), isTransParent);
 	}
 };
 
@@ -40,6 +45,10 @@ struct BoxData : public IDrawable {
 	int left, top, right, bottom;
 	int color;
 	bool isFilled;
+
+	BoxData(int left, int top, int right, int bottom, int color, bool isFilled)
+		:left(left), top(top), right(right), bottom(bottom), color(color), isFilled(isFilled){ }
+
 	void drawGraphic() const override {
 		DrawBox(left, top, right, bottom, color, isFilled);
 	}
