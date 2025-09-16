@@ -36,6 +36,8 @@ BulletManager::BulletManager() {
 	{
 		for (auto& b : bullets) {
 			if (b.getState() == 0) continue; // ‹ó‚¢‚Ä‚¢‚é”z—ñ‚È‚çˆ—‚µ‚È‚¢
+			// b.update();
+			// —á‚¦‚ÎA‚±‚±‚æ‚è‰º‚Ìˆ—‚ğã‹L‚Ì‚æ‚¤‚É‚Ü‚Æ‚ß‚é
 			b.updatePosition();
 			game.getDrawer().drawImage(imageContainer.getBullet(), b.getX(), b.getY()); // ’e‚Ì•`‰æ¦drawImage‚Í–¢À‘•
 			if (b.getY() < -100)

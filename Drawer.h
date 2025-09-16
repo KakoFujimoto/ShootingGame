@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include "DrawData.h"
+#include "IDrawable.h"
 
 class Image;
 
@@ -16,16 +16,19 @@ public:
 	// 中心座標を指定して画像を表示する
 	void drawImage(const Image& img, int x, int y);
 
-	// 通常のDrawGraph()を実行する
-	void drawGraphic(const ImageData& data);
+	void drawGraphic(const IDrawable& data);
 
-	// 指定矩形部分のみを描画する(rawRectGraph)を実行する
-	void drawGraphic(const RectData& data);
 
-	// 円の描画(DrawCircle)を実行する
-	void drawGraphic(const CircleData& data);
+	//// 通常のDrawGraph()を実行する
+	//void drawGraphic(const ImageData& data);
 
-	// 四角形の描画(DrawBox)を実行する
-	void drawGraphic(const BoxData& data);
+	//// 指定矩形部分のみを描画する(rawRectGraph)を実行する
+	//void drawGraphic(const RectData& data);
+
+	//// 円の描画(DrawCircle)を実行する
+	//void drawGraphic(const CircleData& data);
+
+	//// 四角形の描画(DrawBox)を実行する
+	//void drawGraphic(const BoxData& data);
 
 };

@@ -48,6 +48,7 @@ void GameManager::stageMap(void)
 	int wi = 20, he = GameConfig::HEIGHT - 120; // マップの幅、高さ
 	int pos = (GameConfig::HEIGHT - 140) * gameData.distance / GameConfig::STAGE_DISTANCE; // 自機の飛行している位置
 
+	// drawer.～～となっていればOK
 	SetDrawBlendMode(DX_BLENDMODE_SUB, 128); // 減算による描画の重ね合わせ
 	DrawBox(mx, my, mx + wi, my + he, 0xffffff, TRUE);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0); // ブレンドモードを解除
@@ -57,11 +58,16 @@ void GameManager::stageMap(void)
 
 // 背景のスクロール
 void GameManager::scrollBG(int spd)
-{
+{	
+	// 
 	static int galaxyY, floorY, wallY; // スクロール位置を管理する変数（静的記憶領域に保持される）
 	galaxyY = (galaxyY + spd) % GameConfig::HEIGHT; // 星空（宇宙）
 
-	DrawGraph(0, galaxyY - GameConfig::HEIGHT, images.getGalaxy().getId(), FALSE);
+	//DrawGraph(0, galaxyY - GameConfig::HEIGHT, images.getGalaxy().getId(), FALSE);
+	ImageData image{ 0, galaxyY - GameConfig::HEIGHT, images.getGalaxy(), FALSE };
+	drawer.drawGraphic(image);
+
+
 	DrawGraph(0, galaxyY, images.getGalaxy().getId(), FALSE);
 
 	floorY = (floorY + spd * 2) % 120;  // 床

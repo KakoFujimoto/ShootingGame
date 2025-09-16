@@ -24,6 +24,6 @@ public:
 	// --- 弾の発射間隔 ---
 	static constexpr int FireInterval = 20;       // 通常モード
 	static constexpr int FireIntervalHidden = 3; // 隠し要素モード
-	static constexpr int RapidModeThreshold = 120; // 隠し要素モードまでの待機時間
+	static constexpr int RapidModeThreshold = FPS * 2 ; // 隠し要素モードまでの待機時間
 
 };

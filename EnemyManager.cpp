@@ -137,14 +137,18 @@
 
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0); // ブレンドモードを解除
 
-		int& score = game.getGameData().score;
-		score += 100; // スコアの加算
+		addScore(100);
+		// 例えば、まず↑のようにする
+		// その後で、addScoreはどのクラスに属するべきかを考える
+		// 
+		//int& score = game.getGameData().score;
+		//score += 100; // スコアの加算
 
-		int& hisco = game.getGameData().hisco;
-		if (score > hisco)
-		{
-			hisco = score; // ハイスコアの更新
-		}
+		//int& hisco = game.getGameData().hisco;
+		//if (score > hisco)
+		//{
+		//	hisco = score; // ハイスコアの更新
+		//}
 
 		enemies[n].setShield(enemies[n].getShield() - dmg); // シールドを減らす
 
