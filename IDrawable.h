@@ -24,7 +24,7 @@ struct ImageData : public IDrawable {
 	}
 };
 
-struct RectGraph : public IDrawable {
+struct RectData : public IDrawable {
 	int x, y, srcX, srcY, w, h;
 	const Image& img;
 	void drawGraphic() const override {
