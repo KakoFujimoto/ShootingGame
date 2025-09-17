@@ -99,8 +99,8 @@ void GameManager::initVariable(void)
 	player.setShield(GameConfig::PLAYER_SHIELD_MAX);
 
 	// ©‹@‚Ì‰æ‘œ‚Ì•‚Æ‚‚³‚ğ‘ã“ü
-	player.refWidth() = images.getFighter().getWidth();
-	player.refHeight() = images.getFighter().getHeight();
+	player.setWidth(images.getFighter().getWidth());
+	player.setHeight(images.getFighter().getHeight());
 
 	enemies.resetAllEnemies();
 
