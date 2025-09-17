@@ -1,4 +1,6 @@
 #include "GameManager.h"
+#include "BlendMode.h"
+#include "DxLib.h"
 
 void GameManager::gameLoop()
 {
@@ -49,7 +51,8 @@ void GameManager::stageMap(void)
 	int pos = (GameConfig::HEIGHT - 140) * gameData.distance / GameConfig::STAGE_DISTANCE; // 自機の飛行している位置
 
 	// 修正（drawer.～～となっていればOK）
-	SetDrawBlendMode(DX_BLENDMODE_SUB, 128); // 減算による描画の重ね合わせ
+	//SetDrawBlendMode(DX_BLENDMODE_SUB, 128); // 減算による描画の重ね合わせ
+	drawer.setBlendMode(BlendMode::Sub, 128);// 減算による描画の重ね合わせ
 
 	BoxData box{ mx, my, mx + wi, my + he, 0xffffff, TRUE };
 	drawer.drawGraphic(box);
@@ -74,8 +77,8 @@ void GameManager::scrollBG(int spd)
 	ImageData image{ 0, galaxyY - GameConfig::HEIGHT, images.getGalaxy(), FALSE };
 	drawer.drawGraphic(image);
 
-	// 修正
-	DrawGraph(0, galaxyY, images.getGalaxy().getId(), FALSE);
+	ImageData gfc{ 0, galaxyY, images.getGalaxy().getId(), FALSE };
+	drawer.drawGraphic(gfc);
 
 
 	floorY = (floorY + spd * 2) % 120;  // 床
@@ -83,9 +86,11 @@ void GameManager::scrollBG(int spd)
 
 	wallY = (wallY + spd * 4) % 240;    // 左右の壁
 
-	// 修正
-	DrawGraph(0, wallY - 240, images.getWallL().getId(), TRUE);
-	DrawGraph(GameConfig::WIDTH - 300, wallY - 240, images.getWallR().getId(), TRUE);
+	ImageData wallL{ 0, wallY - 240, images.getWallL().getId(), TRUE };
+	drawer.drawGraphic(wallL);
+
+	ImageData wallR{ GameConfig::WIDTH - 300, wallY - 240, images.getWallR().getId(), TRUE };
+	drawer.drawGraphic(wallR);
 }
 
 // ゲーム開始時の初期値を代入する関数
@@ -115,6 +120,7 @@ void GameManager::initVariable(void)
 void GameManager::drawParameter(GameManager& game)
 {
 	int x = 10, y = GameConfig::HEIGHT - 30; // 表示位置
+	// 修正
 	DrawBox(x, y, x + GameConfig::PLAYER_SHIELD_MAX * 30, y + 20, 0x000000, TRUE);
 
 	for (int i = 0; i < game.getPlayer().getShield(); i++) // シールドのメーター
@@ -122,6 +128,7 @@ void GameManager::drawParameter(GameManager& game)
 		int r = 128 * (GameConfig::PLAYER_SHIELD_MAX - i) / GameConfig::PLAYER_SHIELD_MAX; // RGB値を計算
 		int g = 255 * i / GameConfig::PLAYER_SHIELD_MAX;
 		int b = 160 + 96 * i / GameConfig::PLAYER_SHIELD_MAX;
+		// 修正
 		DrawBox(x + 2 + i * 30, y + 2, x + 28 + i * 30, y + 18, GetColor(r, g, b), TRUE);
 	}
 	game.getDrawer().drawText(x, y - 25, "SHIELD Lv %02d", game.getPlayer().getShield(), 0xffffff, 20); // シールド値

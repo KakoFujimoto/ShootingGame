@@ -164,6 +164,7 @@
     <ClCompile Include="shootingGame.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BlendMode.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="BulletManager.h" />
     <ClInclude Include="Drawer.h" />
