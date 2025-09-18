@@ -50,4 +50,7 @@ public:
 
 	int& refWidth() { return width; }
 	int& refHeight() { return height; }
+
+private:
+	int countSpcKey = 0; // スペースキーを押し続けている間、カウントアップする変数
 };

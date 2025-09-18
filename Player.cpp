@@ -7,8 +7,6 @@
 
 void Player::movePlayer(BulletManager& bulletManager, GameManager& game)
 {
-	static int countSpcKey; // スペースキーを押し続けている間、カウントアップする変数
-
 
 	if (CheckHitKey(KEY_INPUT_UP)) { // 上キー
 		y -= vy;
