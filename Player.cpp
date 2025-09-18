@@ -7,7 +7,6 @@
 
 void Player::movePlayer(BulletManager& bulletManager, GameManager& game)
 {
-	static char oldSpcKey; // 1つ前のスペースキーの状態を保持する変数
 	static int countSpcKey; // スペースキーを押し続けている間、カウントアップする変数
 
 
@@ -62,7 +61,6 @@ void Player::movePlayer(BulletManager& bulletManager, GameManager& game)
 			countSpcKey = 0;
 			game.getGameData().isRapidMode = false;
 		}
-	oldSpcKey = CheckHitKey(KEY_INPUT_SPACE); // スペースキーの状態を保持
 
 	int& noDamage = game.getGameData().noDamage;
 
