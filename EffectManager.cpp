@@ -1,10 +1,11 @@
 #include "EffectManager.h"
 #include "EffectType.h"
 #include "ImageContainer.h"
-#include "DxLib.h"
 #include "GameManager.h"
 #include "SoundPlayer.h"
 #include "SoundContainer.h"
+#include "BlendMode.h"
+#include "IDrawable.h"
 
 void EffectManager::setEffect
 (
@@ -51,27 +52,32 @@ void EffectManager::drawEffect(GameManager& game)
 		switch (e.getPattern()) // エフェクトごとに処理を分ける
 		{
 		case EffectType::Explode: // 爆発演出
+		{
 			ix = e.getTimer() * 128; // 画像の切り出し位置
 
-			DrawRectGraph(e.getX() - 64, e.getY() - 64,
+			RectData exp{ e.getX() - 64, e.getY() - 64,
 				ix, 0, 128, 128,
-				e.getImage()->getId(), TRUE, FALSE);
+				*e.getImage() };
+			game.getDrawer().drawGraphic(exp);
+
 
 			e.setTimer(e.getTimer() + 1);
 			if (e.getTimer() == 7) e.setState(0);
+		}
 			break;
 		case EffectType::Recover: // 回復演出
 			if (e.getTimer() < 30) // 加算による描画の重ね合わせ
-				SetDrawBlendMode(DX_BLENDMODE_ADD, e.getTimer() * 8);
+				game.getDrawer().setBlendMode(BlendMode::Add, e.getTimer() * 8);
 			else
-				SetDrawBlendMode(DX_BLENDMODE_ADD, (60 - e.getTimer()) * 8);
+				game.getDrawer().setBlendMode(BlendMode::Add, 60 - e.getTimer() * 8);
+
 			for (int i = 3; i < 8; i++)
 			{
-				DrawCircle(e.getX(), e.getY(),
-					(game.getPlayer().getWidth() + game.getPlayer().getHeight()) / i,
-					0x2040c0, TRUE);
+				CircleData rcv{ e.getX(), e.getY(), game.getPlayer().getWidth() + game.getPlayer().getHeight() / i,
+					0x2040c0, TRUE };
+				game.getDrawer().drawGraphic(rcv);
 			}
-			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0); // ブレンドモードを解除
+			game.getDrawer().setBlendMode(BlendMode::NoBlend, 0); // ブレンドモードを解除
 			e.setTimer(e.getTimer() + 1);
 
 			if (e.getTimer() == 60)

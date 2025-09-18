@@ -27,6 +27,10 @@ struct ImageData : public IDrawable {
 struct RectData : public IDrawable {
 	int x, y, srcX, srcY, w, h;
 	const Image& img;
+
+	RectData(int x, int y, int srcX, int srcY, int w, int h, const Image& img)
+		: x(x), y(y), srcX(srcX), srcY(srcY),w(w), h(h), img(img){ }
+
 	void drawGraphic() const override {
 		DrawRectGraph(x, y, srcX, srcY, w, h,img.getId(), TRUE, FALSE);
 	}
@@ -36,6 +40,10 @@ struct CircleData : public IDrawable {
 	int x, y, r;
 	int color;
 	bool isFilled;
+
+	CircleData(int x, int y, int r, int color, bool isFilled)
+		: x(x), y(y), r(r), color(color), isFilled(isFilled){ }
+
 	void drawGraphic() const override {
 		DrawCircle(x, y, r, color, isFilled);
 	}

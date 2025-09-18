@@ -9,6 +9,7 @@
 #include "ImageContainer.h"
 #include "SceneType.h"
 #include "EffectType.h"
+#include "IDrawable.h"
 
 void ItemManager::setItem(void)
 {
@@ -49,19 +50,16 @@ void ItemManager::moveItem(GameManager& game, SceneManager& scene)
 
 	item.setTimer(item.getTimer() + 1);
 
-
-	DrawRectGraph
-	(
-		item.getX() - 20, //int DestX
-		item.getY() - 16, //int DestY
-		static_cast<int>(item.getPattern()) * 40, // int SrcX
-		0, // int SrcY
-		40, // int Width
-		32, //  int Height
-		img.getItem().getId(), // int GraphHandle
-		TRUE,
-		FALSE
-	);
+	RectData rct{ 
+		item.getX() - 20,
+		item.getY() - 16,
+		static_cast<int>(item.getPattern()) * 40,
+		0,
+		40,
+		32,
+		img.getItem()
+	};
+	game.getDrawer().drawGraphic(rct);
 
 
 	if (scene.getCurrentType() == SceneType::Over)

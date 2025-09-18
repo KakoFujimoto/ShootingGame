@@ -1,12 +1,13 @@
 #include "Bullet.h"
 #include "GameData.h"
 #include "EnemyManager.h"
-#include "DxLib.h"
 #include "Image.h"
 #include "EnemyType.h"
 #include "GameManager.h"
 #include "EffectType.h"
 #include "SceneClear.h"
+#include "BlendMode.h"
+#include "IDrawable.h"
 
 	// 敵機を動かす
 	void EnemyManager::moveEnemy(GameManager& game)
@@ -132,11 +133,15 @@
 	void EnemyManager::damageEnemy(int n, int dmg, GameManager& game)
 	{	
 
-		SetDrawBlendMode(DX_BLENDMODE_ADD, 192); // 加算による描画の重ね合わせ
-		DrawCircle(enemies[n].getX(), enemies[n].getY(), (enemies[n].getWidth() + enemies[n].getHeight()) / 4, 0xff0000, TRUE);
+		game.getDrawer().setBlendMode(BlendMode::Add, 192); // 加算による描画の重ね合わせ
 
-		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0); // ブレンドモードを解除
+		CircleData enemy{ 
+			enemies[n].getX(), enemies[n].getY(),
+			(enemies[n].getWidth() + enemies[n].getHeight()) / 4, 0xff0000, TRUE };
+		game.getDrawer().drawGraphic(enemy);
 
+		game.getDrawer().setBlendMode(BlendMode::NoBlend, 0); // ブレンドモードを解除
+		
 		//addScore(100);
 		// 例えば、まず↑のようにする
 		// その後で、addScoreはどのクラスに属するべきかを考える

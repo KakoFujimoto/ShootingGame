@@ -50,15 +50,12 @@ void GameManager::stageMap(void)
 	int wi = 20, he = GameConfig::HEIGHT - 120; // マップの幅、高さ
 	int pos = (GameConfig::HEIGHT - 140) * gameData.distance / GameConfig::STAGE_DISTANCE; // 自機の飛行している位置
 
-	// 修正（drawer.～～となっていればOK）
-	//SetDrawBlendMode(DX_BLENDMODE_SUB, 128); // 減算による描画の重ね合わせ
 	drawer.setBlendMode(BlendMode::Sub, 128);// 減算による描画の重ね合わせ
 
 	BoxData box{ mx, my, mx + wi, my + he, 0xffffff, TRUE };
 	drawer.drawGraphic(box);
 
-	// 修正
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0); // ブレンドモードを解除
+	drawer.setBlendMode(BlendMode::NoBlend, 0);// ブレンドモードを解除
 
 	BoxData frame{ mx - 1, my - 1, mx + wi + 1, my + he + 1, 0xffffff, FALSE }; // 枠線
 	drawer.drawGraphic(frame);
@@ -120,7 +117,6 @@ void GameManager::initVariable(void)
 void GameManager::drawParameter(GameManager& game)
 {
 	int x = 10, y = GameConfig::HEIGHT - 30; // 表示位置
-	// 修正
 	DrawBox(x, y, x + GameConfig::PLAYER_SHIELD_MAX * 30, y + 20, 0x000000, TRUE);
 
 	for (int i = 0; i < game.getPlayer().getShield(); i++) // シールドのメーター
@@ -128,7 +124,6 @@ void GameManager::drawParameter(GameManager& game)
 		int r = 128 * (GameConfig::PLAYER_SHIELD_MAX - i) / GameConfig::PLAYER_SHIELD_MAX; // RGB値を計算
 		int g = 255 * i / GameConfig::PLAYER_SHIELD_MAX;
 		int b = 160 + 96 * i / GameConfig::PLAYER_SHIELD_MAX;
-		// 修正
 		DrawBox(x + 2 + i * 30, y + 2, x + 28 + i * 30, y + 18, GetColor(r, g, b), TRUE);
 	}
 	game.getDrawer().drawText(x, y - 25, "SHIELD Lv %02d", game.getPlayer().getShield(), 0xffffff, 20); // シールド値

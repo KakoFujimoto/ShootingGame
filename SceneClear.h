@@ -1,6 +1,5 @@
 #pragma once
 #include <string>
-#include "DxLib.h"
 #include "IScene.h"
 #include "GameConfig.h"
 #include "GameData.h"
