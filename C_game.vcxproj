@@ -147,6 +147,7 @@
     <ClCompile Include="Drawer.cpp" />
     <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
+    <ClCompile Include="GameData.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="ImageContainer.cpp" />
     <ClCompile Include="ItemManager.cpp" />

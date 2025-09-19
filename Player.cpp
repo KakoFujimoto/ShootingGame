@@ -45,7 +45,7 @@ void Player::movePlayer(BulletManager& bulletManager, GameManager& game)
 			}
 
 			int interval = game.getGameData().isRapidMode
-				? GameConfig::FireIntervalHidden
+				? GameConfig::RapidFireInterval
 				: GameConfig::FireInterval;
 
 			// 発射タイミング

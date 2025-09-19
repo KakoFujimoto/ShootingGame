@@ -46,10 +46,8 @@ std::shared_ptr<IScene> SceneClear::run(GameManager& game)
 	}
 	if (timer > GameConfig::FPS * 10) // ƒQ[ƒ€ƒvƒŒƒC‚Ö‘JˆÚ
 	{
-		stage++;
-		distance = GameConfig::STAGE_DISTANCE;
-		timer = 0;
-		game.setIsClear(false);
+		
+		game.getGameData().stageIncrement(game);
 		return std::make_shared<ScenePlay>();
 
 	}
