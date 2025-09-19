@@ -17,5 +17,8 @@ public:
 	int timer = 0; // 時間の進行を管理
 	bool isRapidMode = false; // 連射モードのフラグ
 	bool isRunning = true;
+
 	void stageIncrement(GameManager& game);
+	void distanceDecrement();
+	void resetTimer();
 };

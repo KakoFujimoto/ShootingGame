@@ -25,7 +25,8 @@ std::shared_ptr<IScene> ScenePlay::run(GameManager& game)
 	}
  	if (distance > 0)
 	{
-		game.getGameData().distance--;
+		//game.getGameData().distance--;
+		game.getGameData().distanceDecrement();
 	}
 	if (300 < distance && distance % 20 == 0) // ÉUÉR1Ç∆2ÇÃèoåª
 	{
@@ -60,7 +61,6 @@ std::shared_ptr<IScene> ScenePlay::run(GameManager& game)
 	}
 	if (distance == 1)
 	{
-		//GameData::bossIdx = enemy.setEnemy
 		game.getGameData().bossIdx = enemy.setEnemy // É{ÉXèoåª
 		(
 			GameConfig::WIDTH / 2,
@@ -80,9 +80,9 @@ std::shared_ptr<IScene> ScenePlay::run(GameManager& game)
 	{
 		soundPlayer.stop(soundContainer.bgm); // ÇaÇfÇlí‚é~
 
-		game.getGameData().timer = 0;
+		//game.getGameData().timer = 0;
+		game.getGameData().resetTimer();
 
-		//GameData::scene = static_cast<int>(SceneType::Over);
 		return std::make_shared<SceneOver>();
 
 	}
