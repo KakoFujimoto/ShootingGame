@@ -20,3 +20,23 @@ void GameData::resetTimer() {
 void GameData::noDamageCount() {
 	noDamage--;
 }
+
+void GameData::resetScore() {
+	score = 0;
+}
+
+void GameData::setStage(int s) {
+	stage = s;
+}
+
+void GameData::setNoDamage(int n) {
+	noDamage = n;
+}
+
+void GameData::setWeaponLv(int lv) {
+	weaponLv = lv;
+	}
+
+void GameData::setDistance(int d) {
+	distance = d;
+}

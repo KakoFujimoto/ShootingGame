@@ -106,11 +106,21 @@ void GameManager::initVariable(void)
 
 	enemies.resetAllEnemies();
 
-	gameData.score = 0;
-	gameData.stage = 1;
-	gameData.noDamage = 0;
-	gameData.weaponLv = 1;
-	gameData.distance = GameConfig::STAGE_DISTANCE;
+	//gameData.score = 0;
+	gameData.resetScore();
+	
+	//gameData.stage = 1;
+	gameData.setStage(1);
+
+
+	//gameData.noDamage = 0;
+	gameData.setNoDamage(0);
+
+	//gameData.weaponLv = 1;
+	gameData.setWeaponLv(1);
+
+	//gameData.distance = GameConfig::STAGE_DISTANCE;
+	gameData.setDistance(GameConfig::STAGE_DISTANCE);
 }
 
 // 自機に関するパラメーターを表示

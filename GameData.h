@@ -22,4 +22,9 @@ public:
 	void distanceDecrement();
 	void resetTimer();
 	void noDamageCount();
+	void resetScore();
+	void setStage(int s);
+	void setNoDamage(int n);
+	void setWeaponLv(int lv);
+	void setDistance(int d);
 };
