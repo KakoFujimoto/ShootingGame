@@ -64,7 +64,9 @@ void Player::movePlayer(BulletManager& bulletManager, GameManager& game)
 
 	if (noDamage > 0)
 	{
-		noDamage--; // 無敵時間のカウント
+		// 参照変数を直接書き換えするのはよくない
+		//noDamage--; // 無敵時間のカウント
+		game.getGameData().noDamageCount();// 無敵時間のカウント
 	}
 
 	if (noDamage % 4 < 2)

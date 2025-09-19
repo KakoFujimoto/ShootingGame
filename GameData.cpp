@@ -16,3 +16,7 @@ void GameData::distanceDecrement() {
 void GameData::resetTimer() {
 	timer = 0;
 }
+
+void GameData::noDamageCount() {
+	noDamage--;
+}

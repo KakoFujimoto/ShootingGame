@@ -21,4 +21,5 @@ public:
 	void stageIncrement(GameManager& game);
 	void distanceDecrement();
 	void resetTimer();
+	void noDamageCount();
 };
