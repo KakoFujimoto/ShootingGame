@@ -19,6 +19,7 @@ void EffectManager::setEffect
 {
 	for (auto& e : effects) {
 		if (e.getState() == 0) {
+			// ここからbreakまでの処理をメソッド化
 			e.setX(x);
 			e.setY(y);
 			e.setVX(0);
@@ -53,6 +54,7 @@ void EffectManager::drawEffect(GameManager& game)
 		{
 		case EffectType::Explode: // 爆発演出
 		{
+			// 爆発演出の描画
 			ix = e.getTimer() * 128; // 画像の切り出し位置
 
 			RectData exp{ e.getX() - 64, e.getY() - 64,
@@ -60,12 +62,14 @@ void EffectManager::drawEffect(GameManager& game)
 				*e.getImage() };
 			game.getDrawer().drawGraphic(exp);
 
-
+			// エフェクトの存続期間の設定
 			e.setTimer(e.getTimer() + 1);
 			if (e.getTimer() == 7) e.setState(0);
 		}
 			break;
 		case EffectType::Recover: // 回復演出
+
+			// 回復演出の描画
 			if (e.getTimer() < 30) // 加算による描画の重ね合わせ
 				game.getDrawer().setBlendMode(BlendMode::Add, e.getTimer() * 8);
 			else
@@ -78,6 +82,8 @@ void EffectManager::drawEffect(GameManager& game)
 				game.getDrawer().drawGraphic(rcv);
 			}
 			game.getDrawer().setBlendMode(BlendMode::NoBlend, 0); // ブレンドモードを解除
+
+			// エフェクトの存続期間の設定
 			e.setTimer(e.getTimer() + 1);
 
 			if (e.getTimer() == 60)
@@ -86,13 +92,5 @@ void EffectManager::drawEffect(GameManager& game)
 			}
 			break;
 		}
-	}
-}
-
-void EnemyManager::resetAllEnemies()
-{
-	for (int i = 0; i < GameConfig::ENEMY_MAX; i++)
-	{
-		enemies[i].setState(0);
 	}
 }
