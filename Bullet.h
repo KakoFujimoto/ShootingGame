@@ -40,6 +40,6 @@ public:
 	const Image* getImage() const override { return image; }
 
 	void update(ImageContainer& imageContainer, GameManager& game);
-	void setPosition(int x, int y);
+	void reset(int x, int y);
 
 };

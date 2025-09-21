@@ -10,7 +10,7 @@ void Bullet::update(ImageContainer& imageContainer,GameManager& game){
 	}
 }
 
-void Bullet::setPosition(int x, int y)
+void Bullet::reset(int x, int y)
 {
 	setX(x);
 	setY(y);

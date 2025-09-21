@@ -19,7 +19,7 @@ BulletManager::BulletManager() {
 			int y = player.getY() - 20;
 			for (auto& b : bullets) {
 				if (b.getState() == 0) {
-					b.setPosition(x, y);
+					b.reset(x, y);
 					break;
 				}
 			}
