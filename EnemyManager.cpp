@@ -187,3 +187,11 @@
 	{
 		return enemies[idx];
 	}
+
+	void EnemyManager::resetAllEnemies()
+	{
+		for (int i = 0; i < GameConfig::ENEMY_MAX; i++)
+		{
+			enemies[i].setState(0);
+		}
+	}
