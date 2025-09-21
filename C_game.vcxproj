@@ -146,6 +146,7 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="BulletManager.cpp" />
     <ClCompile Include="Drawer.cpp" />
+    <ClCompile Include="Effect.cpp" />
     <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="GameData.cpp" />
@@ -172,7 +173,7 @@
     <ClInclude Include="Drawer.h" />
     <ClInclude Include="EffectManager.h" />
     <ClInclude Include="EffectType.h" />
-    <ClInclude Include="Effetct.h" />
+    <ClInclude Include="Effect.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="EnemyType.h" />

@@ -8,7 +8,10 @@
 #include "ITimer.h"
 #include "IVelocity.h"
 #include "ISize.h"
+#include "SoundPlayer.h"
+#include "SoundContainer.h"
 
+class ImageContainer;
 
 class Effect : public IPosition, IState, IImage, ITimer, IVelocity, ISize
 {
@@ -53,4 +56,14 @@ public:
 
 	void setTimer(int v) override { timer = v; }
 	int getTimer() const override { return timer; }
+
+	void initialize
+	(
+		int x,
+		int y,
+		EffectType ptn,
+		ImageContainer& imageContainer,
+		SoundPlayer& soundPlayer,
+		SoundContainer& soundContainer
+	);
 };

@@ -19,27 +19,7 @@ void EffectManager::setEffect
 {
 	for (auto& e : effects) {
 		if (e.getState() == 0) {
-			// ‚±‚±‚©‚çbreak‚Ü‚Å‚Ìˆ—‚ðƒƒ\ƒbƒh‰»
-			e.setX(x);
-			e.setY(y);
-			e.setVX(0);
-			e.setVY(0);
-			e.setPattern(ptn);
-			e.setImage((ptn == EffectType::Explode)
-				? &imageContainer.getExplosion()
-				: &imageContainer.getItem());
-
-			e.setWidth(e.getImage()->getWidth());
-			e.setHeight(e.getImage()->getHeight());
-
-			e.setState(1);
-			e.setTimer(0);
-
-			if (ptn == EffectType::Explode)
-			{
-				soundPlayer.play(soundContainer.seExpl);
-			}
-
+			e.initialize(x, y, ptn, imageContainer, soundPlayer, soundContainer);
 			break;
 		}
 	}

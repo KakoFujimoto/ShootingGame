@@ -69,6 +69,9 @@
     <ClCompile Include="Bullet.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Effect.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="shootingGame.h">
@@ -152,7 +155,7 @@
     <ClInclude Include="EffectManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Effetct.h">
+    <ClInclude Include="Effect.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Drawer.h">

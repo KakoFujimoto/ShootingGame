@@ -1,5 +1,5 @@
 #pragma once
-#include "Effetct.h"
+#include "Effect.h"
 #include "EffectType.h"
 
 class GameManager;
