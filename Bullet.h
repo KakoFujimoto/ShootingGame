@@ -5,6 +5,9 @@
 #include "IImage.h"
 #include "IMovable.h"
 
+class ImageContainer;
+class GameManager;
+class Player;
 
 class Bullet : public IState,
 			   public IImage,
@@ -35,4 +38,8 @@ public:
 
 	void setImage(const Image* v) override { image = v; }
 	const Image* getImage() const override { return image; }
+
+	void update(ImageContainer& imageContainer, GameManager& game);
+	void setPosition(int x, int y);
+
 };

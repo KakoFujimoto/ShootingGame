@@ -19,11 +19,7 @@ BulletManager::BulletManager() {
 			int y = player.getY() - 20;
 			for (auto& b : bullets) {
 				if (b.getState() == 0) {
-					b.setX(x);
-					b.setY(y);
-					b.setVX(0);
-					b.setVY(-40);
-					b.setState(1);
+					b.setPosition(x, y);
 					break;
 				}
 			}
@@ -36,14 +32,7 @@ BulletManager::BulletManager() {
 	{
 		for (auto& b : bullets) {
 			if (b.getState() == 0) continue; // 空いている配列なら処理しない
-			// b.update();
-			// 例えば、ここより下の処理を上記のようにまとめる
-			b.updatePosition();
-			game.getDrawer().drawImage(imageContainer.getBullet(), b.getX(), b.getY()); // 弾の描画※drawImageは未実装
-			if (b.getY() < -100)
-			{
-				b.setState(0); // 画面外に出たら、存在しない状態にする
-			}
+			 b.update(imageContainer, game);
 		}
 	}
 
